@@ -1,13 +1,20 @@
-<?php
+<?php 
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route; 
+use App\Http\Controllers\AuthController; 
 
-Route::get('/', function () {
-    return redirect('/login');
-});
+Route::get('/', function () { 
+    return redirect('/login'); 
+}); 
 
-//Route::get('/login', [LoginController::class, 'index'])->name('login');
-//Route::post('/login', [LoginController::class, 'prosesLogin'])->name('proses.login');
-//Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+// Halaman Form Login
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login'); 
 
-//Route::get('/dashboard-admin', [DashboardAdminController::class, 'dashboard'])->name('admin.dashboard');
+// Proses Kirim Data Login (POST) - SESUAIKAN NAME DI SINI
+Route::post('/login', [AuthController::class, 'prosesLogin'])->name('proses.login'); 
+
+// Halaman Dashboard
+Route::get('/dashboard', [AuthController::class, 'index'])->middleware('auth')->name('dashboard');
+
+// Tambahkan route logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
