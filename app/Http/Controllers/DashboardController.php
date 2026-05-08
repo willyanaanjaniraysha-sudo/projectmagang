@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; // Tambahkan ini jika merah di bagian 'extends Controller'
 use Illuminate\Support\Facades\Auth; // Opsional, tapi bagus untuk ada
 
