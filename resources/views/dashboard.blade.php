@@ -27,29 +27,7 @@
 
 <div class="d-flex">
     <!-- SIDEBAR -->
-    <div class="sidebar d-flex flex-column">
-        <div class="sidebar-header">
-            <h4 class="mb-0 fw-bold"><i class="fas fa-school me-2"></i>E-Aspirasi</h4>
-        </div>
-        <nav class="nav flex-column mt-3">
-            <a class="nav-link active" href="#"><i class="fas fa-home me-2"></i> Dashboard</a>
-            <a class="nav-link" href="#"><i class="fas fa-file-alt me-2"></i> Pengaduan Saya</a>
-            
-            @if(Auth::user()->role == 'admin' || Auth::user()->role == 'super admin')
-                <div class="text-uppercase small px-4 mt-4 mb-2" style="color: #6c757d; letter-spacing: 1px;">Admin Menu</div>
-                <a class="nav-link" href="#"><i class="fas fa-chart-line me-2"></i> Laporan Masuk</a>
-                <a class="nav-link" href="#"><i class="fas fa-users me-2"></i> Kelola User</a>
-            @endif
-        </nav>
-        <div class="mt-auto p-3">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-outline-danger btn-sm w-100 logout-btn">
-                    <i class="fas fa-sign-out-alt me-1"></i> Keluar
-                </button>
-            </form>
-        </div>
-    </div>
+    @include('layouts.component.sidebaruser')
 
     <!-- MAIN -->
     <div class="main-content">
