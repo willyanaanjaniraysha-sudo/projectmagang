@@ -4,52 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Sistem Aspirasi</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://jsdelivr.net" rel="stylesheet">
-    <!-- Google Fonts & Font Awesome -->
-    <link href="https://googleapis.com" rel="stylesheet">
-    <link rel="stylesheet" href="https://cloudflare.com">
     
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f4f7f6; }
-        .sidebar { min-height: 100vh; background: #1a1a2e; color: #fff; width: 260px; transition: all 0.3s; }
-        .sidebar-header { padding: 20px; text-align: center; background: rgba(0,0,0,0.1); }
         .nav-link { color: #a2a2c2; padding: 12px 20px; transition: 0.3s; }
         .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255,255,255,0.1); border-left: 4px solid #818cf8; }
-        .main-content { flex: 1; padding: 30px; }
         .stat-card { border: none; border-radius: 15px; transition: transform 0.3s; }
         .stat-card:hover { transform: translateY(-5px); }
         .top-nav { background: #fff; padding: 15px 30px; border-bottom: 1px solid #e3e6f0; }
         .logout-btn { border-radius: 10px; font-weight: 600; }
+        .main-content { flex: 1; padding: 30px; }
     </style>
 </head>
 <body>
 
 <div class="d-flex">
     <!-- SIDEBAR -->
-    <div class="sidebar d-flex flex-column">
-        <div class="sidebar-header">
-            <h4 class="mb-0 fw-bold"><i class="fas fa-school me-2"></i>E-Aspirasi</h4>
-        </div>
-        <nav class="nav flex-column mt-3">
-            <a class="nav-link active" href="#"><i class="fas fa-home me-2"></i> Dashboard</a>
-            <a class="nav-link" href="#"><i class="fas fa-file-alt me-2"></i> Pengaduan Saya</a>
-            
-            @if(Auth::user()->role == 'admin' || Auth::user()->role == 'super admin')
-                <div class="text-uppercase small px-4 mt-4 mb-2" style="color: #6c757d; letter-spacing: 1px;">Admin Menu</div>
-                <a class="nav-link" href="#"><i class="fas fa-chart-line me-2"></i> Laporan Masuk</a>
-                <a class="nav-link" href="#"><i class="fas fa-users me-2"></i> Kelola User</a>
-            @endif
-        </nav>
-        <div class="mt-auto p-3">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-outline-danger btn-sm w-100 logout-btn">
-                    <i class="fas fa-sign-out-alt me-1"></i> Keluar
-                </button>
-            </form>
-        </div>
-    </div>
+    @if(Auth::user()->role == 'super admin')
+    @include('layouts.component.sidebarsuperadmin')
+@elseif(Auth::user()->role == 'admin')
+    @include('layouts.component.sidebaradmin')
+@else
+    @include('layouts.component.sidebaruser')
+@endif
 
     <!-- MAIN -->
     <div class="main-content">
@@ -93,17 +77,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card stat-card shadow-sm p-3 text-success">
-                    <div class="bg-success text-white rounded-circle p-3 me-3">
-                        <i class="fas fa-check-circle fa-lg"></i>
-                    </div>
-                    <div>
-                        <h6 class="text-muted mb-0">Selesai</h6>
-                        <h4 class="fw-bold mb-0">7</h4>
-                    </div>
-                </div>
+        <div class="col-md-4">
+    <div class="card stat-card shadow-sm p-3">
+        <div class="d-flex align-items-center">
+            <div class="bg-success text-white rounded-circle p-3 me-3">
+                <i class="fas fa-check-circle fa-lg"></i>
             </div>
+            <div>
+                <h6 class="text-muted mb-0">Selesai</h6>
+                <h4 class="fw-bold mb-0">7</h4>
+            </div>
+        </div>
+    </div>
+</div>
         </div>
 
         <!-- INFO SECTION -->
