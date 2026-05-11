@@ -17,20 +17,49 @@
     </div>
 
     <!-- Menu -->
-    <nav class="nav flex-column mt-3 flex-grow-1">
-        <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">
-            <i class="fas fa-home me-2"></i> Dashboard
+   <nav class="nav flex-column mt-2 flex-grow-1">
+    <!-- DASHBOARD -->
+    <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }} py-2" href="/dashboard">
+        <i class="fas fa-fw fa-tachometer-alt me-2"></i> Dashboard
+    </a>
+
+    <!-- MANAJEMEN ASPIRASI -->
+    <div class="text-uppercase small fw-bold px-3 mt-2 text-muted" style="font-size: 0.65rem; opacity: 0.6;">
+        Manajemen Aspirasi
+    </div>
+    <a class="nav-link {{ request()->is('aspirasi/masuk*') ? 'active' : '' }} py-2" href="/aspirasi/masuk">
+        <i class="fas fa-fw fa-envelope-open-text me-2"></i> Laporan Masuk
+    </a>
+    <a class="nav-link {{ request()->is('aspirasi/proses*') ? 'active' : '' }} py-2" href="/aspirasi/proses">
+        <i class="fas fa-fw fa-spinner me-2"></i> Dalam Proses
+    </a>
+    <a class="nav-link {{ request()->is('aspirasi/selesai*') ? 'active' : '' }} py-2" href="/aspirasi/selesai">
+        <i class="fas fa-fw fa-check-double me-2"></i> Riwayat Selesai
+    </a>
+
+    <!-- DATA MASTER -->
+    @if(auth()->user()->role == 'admin' || auth()->user()->role == 'super admin')
+        <div class="text-uppercase small fw-bold px-3 mt-2 text-muted" style="font-size: 0.65rem; opacity: 0.6;">
+            Data Master
+        </div>
+        <a class="nav-link {{ request()->is('user*') ? 'active' : '' }} py-2" href="/user">
+            <i class="fas fa-fw fa-users-cog me-2"></i> Kelola User
         </a>
-        <a class="nav-link {{ request()->is('pengaduan*') ? 'active' : '' }}" href="/pengaduan">
-            <i class="fas fa-bullhorn me-2"></i> Pengaduan
+        <a class="nav-link {{ request()->is('kategori*') ? 'active' : '' }} py-2" href="/kategori">
+            <i class="fas fa-fw fa-tags me-2"></i> Kategori Aspirasi
         </a>
-        <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}" href="/laporan">
-            <i class="fas fa-chart-bar me-2"></i> Laporan
-        </a>
-        <a class="nav-link {{ request()->is('user*') ? 'active' : '' }}" href="/user">
-            <i class="fas fa-users me-2"></i> Kelola User
-        </a>
-    </nav>
+    @endif
+
+    <!-- REKAPITULASI -->
+    <div class="text-uppercase small fw-bold px-3 mt-2 text-muted" style="font-size: 0.65rem; opacity: 0.6;">
+        Rekapitulasi
+    </div>
+    <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }} py-2" href="/laporan">
+        <i class="fas fa-fw fa-file-pdf me-2"></i> Cetak Laporan
+    </a>
+</nav>
+
+
 
     <!-- Logout -->
     <div class="p-3">
