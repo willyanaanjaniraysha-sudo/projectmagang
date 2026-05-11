@@ -27,7 +27,7 @@
 
 <div class="d-flex">
     <!-- SIDEBAR -->
-    @if(Auth::user()->role == 'superadmin')
+    @if(Auth::user()->role == 'super admin')
     @include('layouts.component.sidebarsuperadmin')
 @elseif(Auth::user()->role == 'admin')
     @include('layouts.component.sidebaradmin')

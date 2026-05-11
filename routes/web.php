@@ -10,7 +10,7 @@ Route::get('/', function () {
 // Halaman Form Login
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login'); 
 
-// Proses Kirim Data Login (POST) - SESUAIKAN NAME DI SINI
+// Proses Kirim Data Login (POST)
 Route::post('/login', [AuthController::class, 'prosesLogin'])->name('proses.login'); 
 
 // Halaman Dashboard
