@@ -18,13 +18,13 @@
 <body>
 <div class="d-flex">
 
-    @if(Auth::user()->role == 'super admin')
-    @include('layouts.component.sidebarsuperadmin')
-@elseif(Auth::user()->role == 'admin')
-    @include('layouts.component.sidebaradmin')
-@else
-    @include('layouts.component.sidebaruser')
-@endif
+    <?php if(Auth::user()->role == 'super admin'): ?>
+    <?php echo $__env->make('layouts.component.sidebarsuperadmin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php elseif(Auth::user()->role == 'admin'): ?>
+    <?php echo $__env->make('layouts.component.sidebaradmin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php else: ?>
+    <?php echo $__env->make('layouts.component.sidebaruser', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php endif; ?>
 
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -32,17 +32,18 @@
                 <h4 class="fw-bold mb-1"><i class="fas fa-users-cog me-2 text-primary"></i>Kelola User</h4>
                 <p class="text-muted mb-0">Manajemen akun pengguna sistem</p>
             </div>
-            <a href="{{ route('user.create') }}" class="btn btn-primary rounded-3">
+            <a href="<?php echo e(route('user.create')); ?>" class="btn btn-primary rounded-3">
                 <i class="fas fa-plus me-1"></i> Tambah User
             </a>
         </div>
 
-        @if(session('success'))
+        <?php if(session('success')): ?>
             <div class="alert alert-success alert-dismissible fade show">
-                {{ session('success') }}
+                <?php echo e(session('success')); ?>
+
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
-        @endif
+        <?php endif; ?>
 
         <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body p-0">
@@ -57,49 +58,51 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($users as $index => $user)
+                        <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr>
-                            <td class="ps-4">{{ $index + 1 }}</td>
+                            <td class="ps-4"><?php echo e($index + 1); ?></td>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
                                          style="width:35px; height:35px; font-size:13px;">
-                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                        <?php echo e(strtoupper(substr($user->name, 0, 1))); ?>
+
                                     </div>
-                                    {{ $user->name }}
+                                    <?php echo e($user->name); ?>
+
                                 </div>
                             </td>
                             <td>
-                                @if($user->role == 'super admin')
+                                <?php if($user->role == 'super admin'): ?>
                                     <span class="badge badge-superadmin px-3 py-2 rounded-pill">Super Admin</span>
-                                @elseif($user->role == 'admin')
+                                <?php elseif($user->role == 'admin'): ?>
                                     <span class="badge badge-admin px-3 py-2 rounded-pill">Admin</span>
-                                @else
+                                <?php else: ?>
                                     <span class="badge badge-user px-3 py-2 rounded-pill">User</span>
-                                @endif
+                                <?php endif; ?>
                             </td>
-                            <td class="text-muted">{{ $user->created_at->format('d M Y') }}</td>
+                            <td class="text-muted"><?php echo e($user->created_at->format('d M Y')); ?></td>
                             <td>
-                                <a href="{{ route('user.edit', $user->id) }}" 
+                                <a href="<?php echo e(route('user.edit', $user->id)); ?>" 
                                    class="btn btn-sm btn-warning rounded-3 me-1">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('user.destroy', $user->id) }}" method="POST" 
+                                <form action="<?php echo e(route('user.destroy', $user->id)); ?>" method="POST" 
                                       class="d-inline"
                                       onsubmit="return confirm('Yakin hapus user ini?')">
-                                    @csrf
-                                    @method('DELETE')
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
                                     <button class="btn btn-sm btn-danger rounded-3">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
                             </td>
                         </tr>
-                        @empty
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <tr>
                             <td colspan="5" class="text-center py-4 text-muted">Belum ada user.</td>
                         </tr>
-                        @endforelse
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -108,4 +111,4 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/user/index.blade.php ENDPATH**/ ?>

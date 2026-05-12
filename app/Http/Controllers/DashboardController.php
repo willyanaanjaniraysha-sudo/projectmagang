@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User; // Tambahkan \User di sini
 
-//use Illuminate\Http\Request;
-use App\Http\Controllers\Controller; // Tambahkan ini jika merah di bagian 'extends Controller'
-use Illuminate\Support\Facades\Auth; // Opsional, tapi bagus untuk ada
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
-{
-    /** @var \App\Models\User $user */
-    $user = Auth::user();
+    {
+        $user = Auth::user();
+        return view('dashboard', compact('user'));
+    }
 
-    return view('dashboard', compact('user'));
-}
-
-
+    public function pengaturan()
+    {
+        return view('pengaturan');
+    }
+ 
+   
 }

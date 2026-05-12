@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('role', 'user')->latest()->get();
+        // Pakai paginate supaya tidak Memory Exhausted (Error 500)
+        $users = User::where('role', 'user')->latest()->paginate(10);
         return view('user.index', compact('users'));
     }
 
@@ -22,16 +23,16 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'     => 'required',
+            'name' => 'required|string|max:255',
             'password' => 'required|min:6',
-            'role'     => 'required|in:user,admin,super admin',
+            'role' => 'required|in:user,admin,super admin',
         ]);
 
         User::create([
-            'name'     => $request->name,
-            'email'    => strtolower(str_replace(' ', '', $request->name)) . '@aspirasi.com',
+            'name' => $request->name,
+            'email' => strtolower(str_replace(' ', '', $request->name)) . '@aspirasi.com',
             'password' => Hash::make($request->password),
-            'role'     => $request->role,
+            'role' => $request->role,
         ]);
 
         return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
@@ -45,7 +46,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'role' => 'required|in:user,admin,super admin',
         ]);
 
@@ -53,11 +54,11 @@ class UserController extends Controller
         $user->role = $request->role;
 
         if ($request->filled('password')) {
+            $request->validate(['password' => 'min:6']);
             $user->password = Hash::make($request->password);
         }
 
         $user->save();
-
         return redirect()->route('user.index')->with('success', 'User berhasil diperbarui!');
     }
 
@@ -66,4 +67,23 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('user.index')->with('success', 'User berhasil dihapus!');
     }
+
+    // Fungsi untuk menu Role Permission
+ public function roleIndex()
+{
+    // WAJIB pakai paginate agar fungsi ->links() di blade tidak error
+    $users = \App\Models\User::latest()->paginate(10);
+    
+    return view('role', compact('users'));
+}
+public function adminIndex()
+{
+    // Filter hanya yang rolenya 'admin'
+    $users = \App\Models\User::where('role', 'admin')->latest()->paginate(10);
+    
+    // Gunakan view yang sama dengan role tapi kirim data admin saja
+    return view('role', compact('users'));
+}
+    
+
 }

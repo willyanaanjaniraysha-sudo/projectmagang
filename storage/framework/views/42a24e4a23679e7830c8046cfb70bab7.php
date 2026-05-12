@@ -130,36 +130,36 @@
 
     <a href="/pengaduan/create" class="btn">+ Buat Pengaduan</a>
 
-    @if(session('success'))
-        <div class="alert-success">{{ session('success') }}</div>
-    @endif
+    <?php if(session('success')): ?>
+        <div class="alert-success"><?php echo e(session('success')); ?></div>
+    <?php endif; ?>
 
     <div class="list">
-        @forelse($pengaduan as $item)
+        <?php $__empty_1 = true; $__currentLoopData = $pengaduan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="card">
-                @if($item->gambar)
-                    <img src="{{ asset('upload/' . $item->gambar) }}" alt="Foto">
-                @endif
+                <?php if($item->gambar): ?>
+                    <img src="<?php echo e(asset('upload/' . $item->gambar)); ?>" alt="Foto">
+                <?php endif; ?>
                 <div class="card-body">
-                    <h3>{{ $item->judul }}</h3>
-                    <p>{{ $item->deskripsi }}</p>
+                    <h3><?php echo e($item->judul); ?></h3>
+                    <p><?php echo e($item->deskripsi); ?></p>
 
-                    @php
+                    <?php
                         $badgeClass = match($item->status) {
                             'Diproses' => 'badge-diproses',
                             'Selesai'  => 'badge-selesai',
                             default    => 'badge-pending',
                         };
-                    @endphp
+                    ?>
 
-                    <span class="badge {{ $badgeClass }}">{{ $item->status }}</span>
-                    <div class="tanggal">Dikirim: {{ $item->created_at->format('d M Y, H:i') }}</div>
+                    <span class="badge <?php echo e($badgeClass); ?>"><?php echo e($item->status); ?></span>
+                    <div class="tanggal">Dikirim: <?php echo e($item->created_at->format('d M Y, H:i')); ?></div>
                 </div>
             </div>
-        @empty
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <div class="empty">😴 Belum ada pengaduan. Silakan buat pengaduan baru.</div>
-        @endforelse
+        <?php endif; ?>
     </div>
 
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/pengaduan/index.blade.php ENDPATH**/ ?>

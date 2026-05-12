@@ -39,8 +39,8 @@
             <a href="/role" class="nav-link">Manajemen Role</a>
             <a href="/pengaturan" class="nav-link active">Pengaturan</a>
         </div>
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
+        <form action="<?php echo e(route('logout')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
             <button type="submit" class="btn btn-danger">Keluar</button>
         </form>
     </div>
@@ -48,7 +48,7 @@
     <div class="main-wrapper">
         <header class="top-navbar">
             <h4 style="margin: 0; color: #333;">PANEL SUPER ADMIN</h4>
-            <div>Halo, <strong>{{ Auth::user()->name }}</strong></div>
+            <div>Halo, <strong><?php echo e(Auth::user()->name); ?></strong></div>
         </header>
 
         <main class="p-4">
@@ -57,10 +57,11 @@
                 <p class="badge">SUPER ADMIN</p>
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
                 
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </main>
         </div>
     </div>
 
 </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/layouts/mainsuperadmin.blade.php ENDPATH**/ ?>
