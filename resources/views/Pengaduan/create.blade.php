@@ -16,6 +16,7 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 24px;
+            margin: 0 auto;
         }
 
         .btn-back {
@@ -43,6 +44,7 @@
             padding: 30px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.08);
             max-width: 600px;
+            margin: 0 auto;
         }
 
         .form-group {

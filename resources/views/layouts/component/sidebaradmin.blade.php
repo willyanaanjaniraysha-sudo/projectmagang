@@ -22,11 +22,6 @@
     <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }} py-2" href="/dashboard">
         <i class="fas fa-fw fa-tachometer-alt me-2"></i> Dashboard
     </a>
-
-    <!-- MANAJEMEN ASPIRASI -->
-    <div class="text-uppercase small fw-bold px-3 mt-2 text-muted" style="font-size: 0.65rem; opacity: 0.6;">
-        Manajemen Aspirasi
-    </div>
     <a class="nav-link {{ request()->is('aspirasi/masuk*') ? 'active' : '' }} py-2" href="/aspirasi/masuk">
         <i class="fas fa-fw fa-envelope-open-text me-2"></i> Laporan Masuk
     </a>
@@ -45,8 +40,8 @@
         <a class="nav-link {{ request()->is('user*') ? 'active' : '' }} py-2" href="/user">
             <i class="fas fa-fw fa-users-cog me-2"></i> Kelola User
         </a>
-        <a class="nav-link {{ request()->is('kategori*') ? 'active' : '' }} py-2" href="/kategori">
-            <i class="fas fa-fw fa-tags me-2"></i> Kategori Aspirasi
+        <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }} py-2" href="/laporan">
+            <i class="fas fa-fw fa-file-pdf me-2"></i> Cetak Laporan
         </a>
     @endif
 
@@ -54,9 +49,7 @@
     <div class="text-uppercase small fw-bold px-3 mt-2 text-muted" style="font-size: 0.65rem; opacity: 0.6;">
         Rekapitulasi
     </div>
-    <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }} py-2" href="/laporan">
-        <i class="fas fa-fw fa-file-pdf me-2"></i> Cetak Laporan
-    </a>
+    
 </nav>
 
 

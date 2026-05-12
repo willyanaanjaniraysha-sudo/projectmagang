@@ -40,7 +40,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h3 class="fw-bold mb-0">Selamat Datang, {{ Auth::user()->name }}!</h3>
-                <p class="text-muted">Pantau dan kelola aspirasi sekolah dalam satu pintu.</p>
+                <p class="text-muted">Pantau dan kelola aspirasi kelurahan dalam satu pintu.</p>
             </div>
             <div class="text-end">
                 <span class="badge bg-soft-primary text-primary px-3 py-2" style="background: #e0e7ff;">
@@ -59,7 +59,7 @@
                         </div>
                         <div>
                             <h6 class="text-muted mb-0">Total Laporan</h6>
-                            <h4 class="fw-bold mb-0">12</h4>
+                            <h4 class="fw-bold mb-0">{{ $total }}</h4>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                         </div>
                         <div>
                             <h6 class="text-muted mb-0">Pending</h6>
-                            <h4 class="fw-bold mb-0">5</h4>
+                            <h4 class="fw-bold mb-0">{{ $pending }}</h4>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
             </div>
             <div>
                 <h6 class="text-muted mb-0">Selesai</h6>
-                <h4 class="fw-bold mb-0">7</h4>
+                <h4 class="fw-bold mb-0">{{ $selesai }}</h4>
             </div>
         </div>
     </div>
