@@ -29,11 +29,11 @@
     <!-- SIDEBAR -->
     @if(Auth::user()->role == 'super admin')
     @include('layouts.component.sidebarsuperadmin')
-@elseif(Auth::user()->role == 'admin')
+    @elseif(Auth::user()->role == 'admin')
     @include('layouts.component.sidebaradmin')
-@else
+    @else
     @include('layouts.component.sidebaruser')
-@endif
+    @endif
 
     <!-- MAIN -->
     <div class="main-content">
