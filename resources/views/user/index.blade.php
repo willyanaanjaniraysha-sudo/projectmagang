@@ -1,63 +1,97 @@
-@extends('layouts.components,sidebaradmin') {{-- Pastikan ini sesuai dengan nama file layout utama kamu --}}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Kelola User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f4f7f6; }
+        .nav-link { color: #a2a2c2; padding: 12px 20px; transition: 0.3s; }
+        .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255,255,255,0.1); border-left: 4px solid #818cf8; }
+        .main-content { flex: 1; padding: 30px; }
+        .badge-admin { background: #dbeafe; color: #1e40af; }
+        .badge-superadmin { background: #ede9fe; color: #5b21b6; }
+        .badge-user { background: #d1fae5; color: #065f46; }
+    </style>
+</head>
+<body>
+<div class="d-flex">
 
-@section('content')
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h3 class="fw-bold mb-0">Kelola Pengguna</h3>
-            <p class="text-muted small">Manajemen akun admin, petugas, dan siswa.</p>
+    @include('layouts.component.sidebaradmin')
+
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h4 class="fw-bold mb-1"><i class="fas fa-users-cog me-2 text-primary"></i>Kelola User</h4>
+                <p class="text-muted mb-0">Manajemen akun pengguna sistem</p>
+            </div>
+            <a href="{{ route('user.create') }}" class="btn btn-primary rounded-3">
+                <i class="fas fa-plus me-1"></i> Tambah User
+            </a>
         </div>
-        <button class="btn btn-primary btn-sm px-3 rounded-3">
-            <i class="fas fa-plus me-1"></i> Tambah User
-        </button>
-    </div>
 
-    <div class="card border-0 shadow-sm rounded-4">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
                         <tr>
-                            <th class="px-4 py-3 border-0">Nama Lengkap</th>
-                            <th class="py-3 border-0">Email / Username</th>
-                            <th class="py-3 border-0 text-center">Role</th>
-                            <th class="py-3 border-0">Terdaftar Pada</th>
-                            <th class="px-4 py-3 border-0 text-center">Aksi</th>
+                            <th class="ps-4">#</th>
+                            <th>Nama</th>
+                            <th>Role</th>
+                            <th>Dibuat</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($users as $user)
+                        @forelse($users as $index => $user)
                         <tr>
-                            <td class="px-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-soft-primary text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; background: #eef2ff;">
+                            <td class="ps-4">{{ $index + 1 }}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+                                         style="width:35px; height:35px; font-size:13px;">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </div>
-                                    <span class="fw-semibold">{{ $user->name }}</span>
+                                    {{ $user->name }}
                                 </div>
                             </td>
-                            <td>{{ $user->email ?? $user->username }}</td>
-                            <td class="text-center">
+                            <td>
                                 @if($user->role == 'super admin')
-                                    <span class="badge bg-danger rounded-pill px-3">Super Admin</span>
+                                    <span class="badge badge-superadmin px-3 py-2 rounded-pill">Super Admin</span>
                                 @elseif($user->role == 'admin')
-                                    <span class="badge bg-primary rounded-pill px-3">Admin</span>
+                                    <span class="badge badge-admin px-3 py-2 rounded-pill">Admin</span>
                                 @else
-                                    <span class="badge bg-secondary rounded-pill px-3">User</span>
+                                    <span class="badge badge-user px-3 py-2 rounded-pill">User</span>
                                 @endif
                             </td>
-                            <td class="text-muted small">{{ $user->created_at->format('d M Y') }}</td>
-                            <td class="px-4 text-center">
-                                <button class="btn btn-sm btn-outline-info me-1"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                            <td class="text-muted">{{ $user->created_at->format('d M Y') }}</td>
+                            <td>
+                                <a href="{{ route('user.edit', $user->id) }}" 
+                                   class="btn btn-sm btn-warning rounded-3 me-1">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('user.destroy', $user->id) }}" method="POST" 
+                                      class="d-inline"
+                                      onsubmit="return confirm('Yakin hapus user ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger rounded-3">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center py-5 text-muted">
-                                <i class="fas fa-users fa-3x mb-3 opacity-25"></i>
-                                <p>Belum ada data pengguna lainnya.</p>
-                            </td>
+                            <td colspan="5" class="text-center py-4 text-muted">Belum ada user.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -66,4 +100,6 @@
         </div>
     </div>
 </div>
-@endsection
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

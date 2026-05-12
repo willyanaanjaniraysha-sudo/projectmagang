@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('deskripsi');
             $table->string('gambar');
             $table->string('status')->default('Pending');
-            $able->timestamps();
+            $table->timestamps();
 
         });
     }
