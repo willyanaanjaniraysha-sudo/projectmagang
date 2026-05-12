@@ -26,7 +26,7 @@
         <a class="nav-link {{ request()->is('pengaduan') ? 'active' : '' }}" 
            href="/pengaduan"
            style="color: #a2a2c2; padding: 12px 20px; transition: 0.3s; {{ request()->is('pengaduan') ? 'color:#fff; background:rgba(255,255,255,0.1); border-left:4px solid #818cf8;' : '' }}">
-            <i class="fas fa-bullhorn me-2"></i> Pengaduan
+            <i class="fas fa-bullhorn me-2"></i> Riwayat Pengaduan
         </a>
         <a class="nav-link {{ request()->is('pengaduan') ? 'active' : '' }}" 
            href="/pengaduan/create"

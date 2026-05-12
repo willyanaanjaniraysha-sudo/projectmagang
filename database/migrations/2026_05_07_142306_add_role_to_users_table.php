@@ -9,12 +9,14 @@ return new class extends Migration
     /**
      * Jalankan migrasi untuk menambah kolom role.
      */
-    public function up(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user')->after('password');
-        });
-    }
+   public function up(): void
+{
+    Schema::table('users', function (Blueprint $table) {
+        // Tambahkan kolom role dengan default user
+        $table->string('role')->default('user')->after('password');
+    });
+}
+
 
     /**
      * Batalkan migrasi (hapus kolom role).

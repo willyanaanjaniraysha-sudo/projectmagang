@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PengaduanController;
-//use App\Http\Controllers\DashboardController; 
+use App\Http\Controllers\DashboardController; 
 //use App\Http\Controllers\AspirasiController;
 //use App\Http\Controllers\UserController;
 //use App\Http\Controllers\LaporanController; 
@@ -28,5 +28,14 @@ Route::post('/pengaduan/store', [PengaduanController::class, 'store'])->middlewa
 Route::get('/pengaduan/saya', [PengaduanController::class, 'saya'])->middleware('auth')->name('pengaduan.saya');
 // Tambahkan route logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Rute untuk menu-menu sidebar yang tadi masih Not Found
+//Route::get('/user', [UserController::class, 'index'])->name('user.index');
+//Route::get('/admin', [UserController::class, 'adminIndex'])->name('admin.index');
+//Route::get('/role', [UserController::class, 'roleIndex'])->name('role.index');
+//Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/pengaturan', [DashboardController::class, 'pengaturan'])->name('pengaturan');
+Route::get('/profil', [DashboardController::class, 'profil'])->name('profil');
+
 
 

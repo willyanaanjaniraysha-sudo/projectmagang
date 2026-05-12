@@ -18,25 +18,32 @@
 
     <!-- Menu -->
     <nav class="nav flex-column mt-3 flex-grow-1">
-        <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">
-            <i class="fas fa-home me-2"></i> Dashboard
-        </a>
-        <a class="nav-link {{ request()->is('pengaduan*') ? 'active' : '' }}" href="/pengaduan">
-            <i class="fas fa-bullhorn me-2"></i> Pengaduan
-        </a>
-        <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}" href="/laporan">
-            <i class="fas fa-chart-bar me-2"></i> Laporan
-        </a>
-        <a class="nav-link {{ request()->is('user*') ? 'active' : '' }}" href="/user">
-            <i class="fas fa-users me-2"></i> Kelola User
-        </a>
-        <a class="nav-link {{ request()->is('admin*') ? 'active' : '' }}" href="/admin">
-            <i class="fas fa-user-shield me-2"></i> Kelola Admin
-        </a>
-        <a class="nav-link {{ request()->is('pengaturan*') ? 'active' : '' }}" href="/pengaturan">
-            <i class="fas fa-cog me-2"></i> Pengaturan
-        </a>
-    </nav>
+    <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">
+        <i class="fas fa-home me-2"></i> Dashboard
+    </a>
+    <a class="nav-link {{ request()->is('pengaduan*') ? 'active' : '' }}" href="/pengaduan">
+        <i class="fas fa-tasks me-2"></i> Kelola Pengaduan
+    </a>
+    <a class="nav-link {{ request()->is('user*') ? 'active' : '' }}" href="/user">
+        <i class="fas fa-users me-2"></i> Kelola User
+    </a>
+    <a class="nav-link {{ request()->is('admin*') ? 'active' : '' }}" href="/admin">
+        <i class="fas fa-user-shield me-2"></i> Kelola Admin
+    </a>
+    <a class="nav-link {{ request()->is('role*') ? 'active' : '' }}" href="/role">
+        <i class="fas fa-key me-2"></i> Role & Permission
+    </a>
+    <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}" href="/laporan">
+        <i class="fas fa-file-alt me-2"></i> Laporan
+    </a>
+    <a class="nav-link {{ request()->is('pengaturan*') ? 'active' : '' }}" href="/pengaturan">
+        <i class="fas fa-cogs me-2"></i> Pengaturan Sistem
+    </a>
+    <a class="nav-link {{ request()->is('profil*') ? 'active' : '' }}" href="/profil">
+        <i class="fas fa-user-circle me-2"></i> Profil
+    </a>
+</nav>
+    
 
     <!-- Logout -->
     <div class="p-3">
