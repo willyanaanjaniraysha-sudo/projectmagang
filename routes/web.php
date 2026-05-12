@@ -3,9 +3,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\DashboardController; 
-//use App\Http\Controllers\AspirasiController;
-//use App\Http\Controllers\UserController;
-//use App\Http\Controllers\LaporanController; 
+use App\Http\Controllers\AspirasiController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LaporanController; 
 
 Route::get('/', function () {
     return redirect('/login');
@@ -38,4 +38,15 @@ Route::get('/pengaturan', [DashboardController::class, 'pengaturan'])->name('pen
 Route::get('/profil', [DashboardController::class, 'profil'])->name('profil');
 
 
+//aspirasi
+Route::get('/aspirasi/masuk',   [AspirasiController::class, 'masuk'])->name('aspirasi.masuk');
+Route::get('/aspirasi/proses',  [AspirasiController::class, 'proses'])->name('aspirasi.proses');
+Route::get('/aspirasi/selesai', [AspirasiController::class, 'selesai'])->name('aspirasi.selesai');
+Route::patch('/aspirasi/{id}/status', [AspirasiController::class, 'updateStatus'])->name('aspirasi.updateStatus');
 
+//user
+Route::resource('user', UserController::class);
+
+//laporan
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');

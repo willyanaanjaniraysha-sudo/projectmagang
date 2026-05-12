@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // 1. TAMBAHKAN INI (Untuk atasi error tadi)
     public function showLogin()
     {
         return view('login'); 
@@ -15,26 +14,35 @@ class AuthController extends Controller
 
     // 2. Fungsi Dashboard
     public function index()
-    {
-        $user = Auth::user();
-        return view('dashboard', compact('user'));
+{
+    $user = Auth::user();
+
+    if ($user->role == 'admin' || $user->role == 'super admin') {
+        // Admin: lihat SEMUA pengaduan
+        $total   = \App\Models\Pengaduan::count();
+        $pending = \App\Models\Pengaduan::where('status', 'Pending')->count();
+        $selesai = \App\Models\Pengaduan::where('status', 'Selesai')->count();
+    } else {
+        // User biasa: hanya miliknya sendiri
+        $total   = \App\Models\Pengaduan::where('user_id', Auth::id())->count();
+        $pending = \App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Pending')->count();
+        $selesai = \App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Selesai')->count();
     }
 
-    // 3. Fungsi Proses Login
+    return view('dashboard', compact('user', 'total', 'pending', 'selesai'));
+}
+
     public function prosesLogin(Request $request)
 {
-    // 1. Validasi input (Pastikan 'name' bukan 'email')
     $request->validate([
         'name'     => 'required',
         'password' => 'required',
         'role'     => 'required'
     ]);
 
-    // 2. Ambil data yang dikirim dari form
     $credentials = $request->only('name', 'password');
     $selectedRole = $request->role;
 
-    // 3. Coba Login dengan Nama & Password
     if (Auth::attempt($credentials)) {
         
         // 4. CEK ROLE: Apakah role di database sama dengan yang dipilih di form?
@@ -43,12 +51,10 @@ class AuthController extends Controller
             return back()->with('error', 'Role yang Anda pilih tidak sesuai dengan akun ini!')->withInput();
         }
 
-        // Jika sukses
         $request->session()->regenerate();
         return redirect()->intended('/dashboard');
     }
 
-    // 5. Jika Nama atau Password salah
     return back()->with('error', 'Nama Lengkap atau Password salah!')->withInput();
 }
 
@@ -56,11 +62,9 @@ public function logout(Request $request)
 {
     Auth::logout();
 
-    // Hapus session agar benar-benar keluar
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    // Balikkan ke halaman login
     return redirect('/login');
 }
 
