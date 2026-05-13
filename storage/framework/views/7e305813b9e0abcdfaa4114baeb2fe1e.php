@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 <div style="padding: 20px;">
     <!-- Header & Tombol Tambah -->

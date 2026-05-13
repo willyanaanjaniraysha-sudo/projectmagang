@@ -19,5 +19,8 @@ class DashboardController extends Controller
         return view('pengaturan');
     }
  
-   
+    public function profil()
+{
+    return view('profil');
+}
 }

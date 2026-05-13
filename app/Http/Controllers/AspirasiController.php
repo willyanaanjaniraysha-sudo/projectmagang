@@ -45,4 +45,16 @@ class AspirasiController extends Controller
 
         return back()->with('success', 'Status berhasil diperbarui!');
     }
+
+    public function kelola(Request $request)
+    {
+    $query = Pengaduan::with('user')->latest();
+
+    if ($request->status) {
+        $query->where('status', $request->status);
+    }
+
+    $pengaduans = $query->get();
+    return view('aspirasi.kelola', compact('pengaduans'));
+    }
 }
