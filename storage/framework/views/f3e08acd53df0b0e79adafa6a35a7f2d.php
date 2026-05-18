@@ -15,7 +15,13 @@
 <body>
 <div class="d-flex">
 
+    <?php if(Auth::user()->role == 'super admin'): ?>
+    <?php echo $__env->make('layouts.component.sidebarsuperadmin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php elseif(Auth::user()->role == 'admin'): ?>
     <?php echo $__env->make('layouts.component.sidebaradmin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php else: ?>
+    <?php echo $__env->make('layouts.component.sidebaruser', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php endif; ?>
 
     <div class="main-content">
         <h4 class="fw-bold mb-1"><i class="fas fa-file-pdf me-2 text-danger"></i>Cetak Laporan</h4>

@@ -21,15 +21,25 @@
     <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">
         <i class="fas fa-home me-2"></i> Dashboard
     </a>
-    <a class="nav-link {{ request()->is('pengaduan*') ? 'active' : '' }}" href="/pengaduan">
+    <a class="nav-link {{ request()->is('aspirasi*') ? 'active' : '' }}" href="/aspirasi">
         <i class="fas fa-tasks me-2"></i> Kelola Pengaduan
     </a>
-    <a class="nav-link {{ request()->is('user*') ? 'active' : '' }}" href="/user">
-        <i class="fas fa-users me-2"></i> Kelola User
-    </a>
-    <a class="nav-link" href="{{ route('admin.index') }}">
-    <i class="fas fa-user-tie me-2"></i> Kelola Admin
-</a>
+    <a class="nav-link d-flex justify-content-between align-items-center {{ request()->is('user*') || request()->is('admin*') ? 'active' : '' }}"
+           href="#roleMenu" 
+           data-bs-toggle="collapse" 
+           role="button"
+           aria-expanded="{{ request()->is('user*') || request()->is('admin*') ? 'true' : 'false' }}">
+            <span><i class="fas fa-user-shield me-2"></i> Role</span>
+            <i class="fas fa-angle-left {{ request()->is('user*') || request()->is('admin*') ? 'rotate-down' : '' }}"></i>
+        </a>
+        <div class="collapse {{ request()->is('user*') || request()->is('admin*') ? 'show' : '' }}" id="roleMenu">
+            <a class="nav-link ps-4 {{ request()->routeIs('admin.*') ? 'active' : '' }}" href="{{ route('admin.index') }}">
+                <i class="fas fa-user-tie me-2"></i> Kelola Admin
+            </a>
+            <a class="nav-link ps-4 {{ request()->is('user*') ? 'active' : '' }}" href="/user">
+                <i class="fas fa-users me-2"></i> Kelola User
+            </a>
+        </div>
 
     <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}" href="/laporan">
         <i class="fas fa-file-alt me-2"></i> Laporan

@@ -21,15 +21,25 @@
     <a class="nav-link <?php echo e(request()->is('dashboard') ? 'active' : ''); ?>" href="/dashboard">
         <i class="fas fa-home me-2"></i> Dashboard
     </a>
-    <a class="nav-link <?php echo e(request()->is('pengaduan*') ? 'active' : ''); ?>" href="/pengaduan">
+    <a class="nav-link <?php echo e(request()->is('aspirasi*') ? 'active' : ''); ?>" href="/aspirasi">
         <i class="fas fa-tasks me-2"></i> Kelola Pengaduan
     </a>
-    <a class="nav-link <?php echo e(request()->is('user*') ? 'active' : ''); ?>" href="/user">
-        <i class="fas fa-users me-2"></i> Kelola User
-    </a>
-    <a class="nav-link" href="<?php echo e(route('admin.index')); ?>">
-    <i class="fas fa-user-tie me-2"></i> Kelola Admin
-</a>
+    <a class="nav-link d-flex justify-content-between align-items-center <?php echo e(request()->is('user*') || request()->is('admin*') ? 'active' : ''); ?>"
+           href="#roleMenu" 
+           data-bs-toggle="collapse" 
+           role="button"
+           aria-expanded="<?php echo e(request()->is('user*') || request()->is('admin*') ? 'true' : 'false'); ?>">
+            <span><i class="fas fa-user-shield me-2"></i> Role</span>
+            <i class="fas fa-angle-left <?php echo e(request()->is('user*') || request()->is('admin*') ? 'rotate-down' : ''); ?>"></i>
+        </a>
+        <div class="collapse <?php echo e(request()->is('user*') || request()->is('admin*') ? 'show' : ''); ?>" id="roleMenu">
+            <a class="nav-link ps-4 <?php echo e(request()->routeIs('admin.*') ? 'active' : ''); ?>" href="<?php echo e(route('admin.index')); ?>">
+                <i class="fas fa-user-tie me-2"></i> Kelola Admin
+            </a>
+            <a class="nav-link ps-4 <?php echo e(request()->is('user*') ? 'active' : ''); ?>" href="/user">
+                <i class="fas fa-users me-2"></i> Kelola User
+            </a>
+        </div>
 
     <a class="nav-link <?php echo e(request()->is('laporan*') ? 'active' : ''); ?>" href="/laporan">
         <i class="fas fa-file-alt me-2"></i> Laporan

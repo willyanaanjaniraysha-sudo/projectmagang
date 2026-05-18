@@ -15,7 +15,13 @@
 <body>
 <div class="d-flex">
 
+    @if(Auth::user()->role == 'super admin')
+    @include('layouts.component.sidebarsuperadmin')
+@elseif(Auth::user()->role == 'admin')
     @include('layouts.component.sidebaradmin')
+@else
+    @include('layouts.component.sidebaruser')
+@endif
 
     <div class="main-content">
         <h4 class="fw-bold mb-1"><i class="fas fa-file-pdf me-2 text-danger"></i>Cetak Laporan</h4>
