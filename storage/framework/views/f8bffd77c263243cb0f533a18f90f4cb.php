@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
+<?php $__env->startSection('content'); ?>
     <title>Profil Saya</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -8,7 +6,6 @@
         body {
             font-family: Arial;
             background: #f4f7fb;
-            padding: 30px;
         }
 
         .top-bar {
@@ -144,11 +141,9 @@
 
         .btn-logout:hover { background: #dc2626; }
     </style>
-</head>
-<body>
+
 
     <div class="top-bar">
-        <a href="/dashboard" class="btn-back">← Dashboard</a>
         <h1>👤 Profil Saya</h1>
     </div>
 
@@ -210,5 +205,5 @@
         <button type="submit" class="btn-logout">🚪 Logout</button>
     </form>
 
-</body>
-</html><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/pengaduan/saya.blade.php ENDPATH**/ ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.mainuser', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/pengaduan/saya.blade.php ENDPATH**/ ?>

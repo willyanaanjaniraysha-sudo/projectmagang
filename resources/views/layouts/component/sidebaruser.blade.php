@@ -1,3 +1,22 @@
+<style>
+.nav-link{
+    color:#a2a2c2;
+    padding:12px 20px;
+    transition:0.3s;
+}
+
+.nav-link:hover{
+    color:#fff;
+    background:rgba(255,255,255,0.05);
+}
+
+.menu-active{
+    color:#fff !important;
+    background:rgba(255,255,255,0.1);
+    border-left:4px solid #818cf8;
+}
+</style>
+
 <div class="sidebar d-flex flex-column" style="min-height: 100vh; background: #1a1a2e; color: #fff; width: 260px;">
     <!-- Brand -->
     <div class="p-4 text-center" style="background: rgba(0,0,0,0.1);">
@@ -18,24 +37,20 @@
 
     <!-- Menu -->
     <nav class="nav flex-column mt-3 flex-grow-1">
-        <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" 
-           href="/dashboard"
-           style="color: #a2a2c2; padding: 12px 20px; transition: 0.3s; {{ request()->is('dashboard') ? 'color:#fff; background:rgba(255,255,255,0.1); border-left:4px solid #818cf8;' : '' }}">
+        <a class="nav-link {{ request()->is('dashboard') ? 'menu-active' : '' }}" 
+           href="/dashboard">
             <i class="fas fa-home me-2"></i> Dashboard
         </a>
-        <a class="nav-link {{ request()->is('pengaduan') ? 'active' : '' }}" 
-           href="/pengaduan"
-           style="color: #a2a2c2; padding: 12px 20px; transition: 0.3s; {{ request()->is('pengaduan') ? 'color:#fff; background:rgba(255,255,255,0.1); border-left:4px solid #818cf8;' : '' }}">
+        <a class="nav-link {{ request()->is('pengaduan') ? 'menu-active' : '' }}" 
+           href="/pengaduan">
             <i class="fas fa-bullhorn me-2"></i> Riwayat Pengaduan
         </a>
-        <a class="nav-link {{ request()->is('pengaduan') ? 'active' : '' }}" 
-           href="/pengaduan/create"
-           style="color: #a2a2c2; padding: 12px 20px; transition: 0.3s; {{ request()->is('pengaduan') ? 'color:#fff; background:rgba(255,255,255,0.1); border-left:4px solid #818cf8;' : '' }}">
+        <a class="nav-link {{ request()->is('pengaduan/create') ? 'menu-active' : '' }}" 
+           href="/pengaduan/create">
             <i class="fas fa-bullhorn me-2"></i> Buat Pengaduan
         </a>
-        <a class="nav-link {{ request()->is('pengaduan/saya') ? 'active' : '' }}" 
-           href="/pengaduan/saya"
-           style="color: #a2a2c2; padding: 12px 20px; transition: 0.3s; {{ request()->is('pengaduan/saya') ? 'color:#fff; background:rgba(255,255,255,0.1); border-left:4px solid #818cf8;' : '' }}">
+        <a class="nav-link {{ request()->is('pengaduan/saya') ? 'menu-active' : '' }}" 
+           href="/pengaduan/saya">
             <i class="fas fa-user me-2"></i> Saya
         </a>
     </nav>

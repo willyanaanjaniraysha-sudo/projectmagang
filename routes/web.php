@@ -20,11 +20,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
 
     // Pengaduan (user)
-    Route::get('/pengaduan',        [PengaduanController::class, 'index'])->name('pengaduan.index');
-    Route::get('/pengaduan/create', [PengaduanController::class, 'create'])->name('pengaduan.create');
-    Route::post('/pengaduan/store', [PengaduanController::class, 'store'])->name('pengaduan.store');
     Route::get('/pengaduan/saya',   [PengaduanController::class, 'saya'])->name('pengaduan.saya');
-
+    Route::resource('pengaduan', PengaduanController::class);
+    
     // Aspirasi (admin)
     Route::get('/aspirasi',         [AspirasiController::class, 'kelola'])->name('aspirasi.kelola');
     Route::get('/aspirasi/masuk',   [AspirasiController::class, 'masuk'])->name('aspirasi.masuk');

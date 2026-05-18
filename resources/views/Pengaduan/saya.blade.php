@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
+@extends('layouts.mainuser')
+
+@section('content')
     <title>Profil Saya</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -8,7 +8,6 @@
         body {
             font-family: Arial;
             background: #f4f7fb;
-            padding: 30px;
         }
 
         .top-bar {
@@ -144,11 +143,9 @@
 
         .btn-logout:hover { background: #dc2626; }
     </style>
-</head>
-<body>
+
 
     <div class="top-bar">
-        <a href="/dashboard" class="btn-back">← Dashboard</a>
         <h1>👤 Profil Saya</h1>
     </div>
 
@@ -209,5 +206,4 @@
         <button type="submit" class="btn-logout">🚪 Logout</button>
     </form>
 
-</body>
-</html>
+@endsection

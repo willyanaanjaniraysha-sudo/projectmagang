@@ -41,17 +41,17 @@
 
 <div class="layout-wrapper">
 
-    {{-- SIDEBAR --}}
-    @include('layouts.component.sidebaruser')
+    
+    <?php echo $__env->make('layouts.component.sidebaruser', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
-    {{-- CONTENT --}}
+    
     <div class="main-content">
 
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
 
     </div>
 
 </div>
 
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/layouts/mainuser.blade.php ENDPATH**/ ?>

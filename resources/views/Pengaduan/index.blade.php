@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
+@extends('layouts.mainuser')
+
+@section('content')
     <title>Pengaduan</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -8,7 +8,6 @@
         body {
             font-family: Arial;
             background: #f4f7fb;
-            padding: 30px;
         }
 
         .top-bar {
@@ -18,87 +17,60 @@
             margin-bottom: 24px;
         }
 
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            background: #e2e8f0;
-            color: #1e293b;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 13px;
-        }
-
-        .btn-back:hover { background: #cbd5e1; }
-
         h1 {
             color: #1e293b;
             font-size: 22px;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 10px 18px;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        .btn:hover { background: #1d4ed8; }
-
-        .alert-success {
-            background: #d1fae5;
-            color: #065f46;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #6ee7b7;
-        }
-
-        .empty {
-            text-align: center;
-            color: #94a3b8;
-            padding: 40px;
-            font-size: 15px;
-        }
-
         .list { display: flex; flex-direction: column; gap: 16px; }
 
+        /* KARTU: Tetap memanjang ke bawah sebagai list, menggunakan flexbox */
         .card {
             background: white;
             border-radius: 12px;
             padding: 20px;
-            display: flex;
-            gap: 16px;
+            display: flex; /* Membuat gambar dan text-body berjejer ke samping */
+            flex-direction: row; /* Memastikan arahnya horizontal (Gambar kiri, Teks kanan) */
+            gap: 20px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-            align-items: flex-start;
+            align-items: center; /* Membuat isi konten tegak lurus di tengah secara vertikal */
         }
 
+        /* GAMBAR: Diatur ukurannya agar pas di sebelah kiri */
         .card img {
-            width: 100px;
-            height: 80px;
+            width: 140px;      /* Lebar gambar diperbesar sedikit agar proporsional */
+            height: 110px;     /* Tinggi gambar */
             object-fit: cover;
             border-radius: 8px;
-            flex-shrink: 0;
+            flex-shrink: 0;    /* Mencegah gambar gepeng atau mengecil */
         }
 
-        .card-body { flex: 1; }
+        /* KONTEN TEKS: Dibuat memenuhi sisa ruang di sebelah kanan gambar */
+        .card-body { 
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            gap: 4px; /* Memberi jarak konsisten antara judul, deskripsi, dan status */
+        }
 
         .card-body h3 {
-            font-size: 16px;
+            font-size: 18px;
             color: #1e293b;
-            margin-bottom: 6px;
+            margin: 0;
         }
 
         .card-body p {
-            font-size: 13px;
+            font-size: 14px;
             color: #64748b;
-            margin-bottom: 10px;
+            margin: 4px 0 8px 0;
             line-height: 1.5;
+        }
+
+        /* Pembungkus status dan tanggal agar sejajar horizontal di bawah deskripsi */
+        .meta-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .badge {
@@ -116,22 +88,25 @@
         .tanggal {
             font-size: 12px;
             color: #94a3b8;
-            margin-top: 6px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #94a3b8;
+            padding: 40px;
+            font-size: 15px;
         }
     </style>
-</head>
-<body>
     
 
     <div class="top-bar">
-        <a href="/dashboard" class="btn-back">← Dashboard</a>
         <h1>📋 Riwayat Pengaduan</h1>
     </div>
 
-    <a href="/pengaduan/create" class="btn">+ Buat Pengaduan</a>
+    <a href="/pengaduan/create" class="btn btn-primary mb-3">+ Buat Pengaduan</a>
 
     @if(session('success'))
-        <div class="alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success d-block mb-3">{{ session('success') }}</div>
     @endif
 
     <div class="list">
@@ -139,7 +114,12 @@
             <div class="card">
                 @if($item->gambar)
                     <img src="{{ asset('upload/' . $item->gambar) }}" alt="Foto">
+                @else
+                    <div style="width: 140px; height: 110px; background: #e2e8f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #94a3b8; flex-shrink: 0;">
+                        <i class="fas fa-image fa-2x"></i>
+                    </div>
                 @endif
+                
                 <div class="card-body">
                     <h3>{{ $item->judul }}</h3>
                     <p>{{ $item->deskripsi }}</p>
@@ -152,14 +132,14 @@
                         };
                     @endphp
 
-                    <span class="badge {{ $badgeClass }}">{{ $item->status }}</span>
-                    <div class="tanggal">Dikirim: {{ $item->created_at->format('d M Y, H:i') }}</div>
+                    <div class="meta-info">
+                        <span class="badge {{ $badgeClass }}">{{ $item->status }}</span>
+                        <div class="tanggal">Dikirim: {{ $item->created_at->format('d M Y, H:i') }}</div>
+                    </div>
                 </div>
             </div>
         @empty
             <div class="empty">😴 Belum ada pengaduan. Silakan buat pengaduan baru.</div>
         @endforelse
     </div>
-
-</body>
-</html>
+@endsection
