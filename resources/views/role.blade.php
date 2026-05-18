@@ -6,7 +6,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
         <div>
             <h2 style="margin: 0; color: #1a1a2e;">Manajemen Role</h2>
-            <p style="color: #666; font-size: 14px; margin-top: 5px;">Atur hak akses pengguna sekolah.</p>
+            <p style="color: #666; font-size: 14px; margin-top: 5px;">Atur hak akses pengguna Aspirasi Kelurahan.</p>
         </div>
         <!-- Tombol Tambah -->
         <a href="{{ route('user.create') }}" style="background: #4e73df; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 6px rgba(78,115,223,0.2);">

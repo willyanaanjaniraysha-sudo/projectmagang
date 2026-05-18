@@ -48,11 +48,15 @@
                             <td>{{ $item->judul }}</td>
                             <td>{{ Str::limit($item->deskripsi, 60) }}</td>
                             <td>
-                                <a href="{{ asset('storage/' . $item->gambar) }}" target="_blank">
-                                    <img src="{{ asset('storage/' . $item->gambar) }}" width="60" height="60"
-                                         style="object-fit:cover; border-radius:8px;">
-                                </a>
-                            </td>
+    @if($item->gambar)
+        <a href="{{ asset('upload/' . $item->gambar) }}" target="_blank">
+            <img src="{{ asset('upload/' . $item->gambar) }}" width="60" height="60" 
+                 style="object-fit:cover; border-radius:8px;">
+        </a>
+    @else
+        <span class="text-muted" style="font-size: 12px;">Tidak ada foto</span>
+    @endif
+</td>
                             <td>
                                 <span class="badge badge-proses px-3 py-2 rounded-pill">Proses</span>
                             </td>

@@ -51,4 +51,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaturan', [DashboardController::class, 'pengaturan'])->name('pengaturan');
     Route::get('/profil',     [DashboardController::class, 'profil'])->name('profil');
 
+    
 });

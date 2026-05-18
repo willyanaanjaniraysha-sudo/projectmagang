@@ -48,11 +48,15 @@
                             <td><?php echo e($item->judul); ?></td>
                             <td><?php echo e(Str::limit($item->deskripsi, 60)); ?></td>
                             <td>
-                                <a href="<?php echo e(asset('storage/' . $item->gambar)); ?>" target="_blank">
-                                    <img src="<?php echo e(asset('storage/' . $item->gambar)); ?>" width="60" height="60"
-                                         style="object-fit:cover; border-radius:8px;">
-                                </a>
-                            </td>
+    <?php if($item->gambar): ?>
+        <a href="<?php echo e(asset('upload/' . $item->gambar)); ?>" target="_blank">
+            <img src="<?php echo e(asset('upload/' . $item->gambar)); ?>" width="60" height="60" 
+                 style="object-fit:cover; border-radius:8px;">
+        </a>
+    <?php else: ?>
+        <span class="text-muted" style="font-size: 12px;">Tidak ada foto</span>
+    <?php endif; ?>
+</td>
                             <td>
                                 <span class="badge badge-proses px-3 py-2 rounded-pill">Proses</span>
                             </td>

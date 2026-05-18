@@ -7,7 +7,7 @@ use App\Models\Pengaduan;
 
 class AspirasiController extends Controller
 {
-    public function masuk()
+    public function masuk() 
     {
         $pengaduans = Pengaduan::with('user')
                         ->where('status', 'Pending')

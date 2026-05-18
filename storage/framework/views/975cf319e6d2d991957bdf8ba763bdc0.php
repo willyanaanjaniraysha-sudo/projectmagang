@@ -36,7 +36,6 @@
         </div>
         <div style="margin-top: 20px;">
             <a href="/dashboard" class="nav-link">Dashboard</a>
-            <a href="/role" class="nav-link">Manajemen Role</a>
             <a href="/pengaturan" class="nav-link active">Pengaturan</a>
         </div>
         <form action="<?php echo e(route('logout')); ?>" method="POST">

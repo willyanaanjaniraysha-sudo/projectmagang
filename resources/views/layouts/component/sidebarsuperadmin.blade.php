@@ -15,13 +15,13 @@
             <small style="color: #a2a2c2;">Super Admin</small>
         </div>
     </div>
- 
+
     <!-- Menu -->
     <nav class="nav flex-column mt-3 flex-grow-1">
     <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">
         <i class="fas fa-home me-2"></i> Dashboard
     </a>
-    <a class="nav-link {{ request()->is('aspirasi*') ? 'active' : '' }}" href="/aspirasi">
+    <a class="nav-link {{ request()->is('pengaduan*') ? 'active' : '' }}" href="/pengaduan">
         <i class="fas fa-tasks me-2"></i> Kelola Pengaduan
     </a>
     <a class="nav-link {{ request()->is('user*') ? 'active' : '' }}" href="/user">
