@@ -82,7 +82,8 @@
                                     @csrf
                                     @method('PATCH')
                                     <select name="status" class="form-select form-select-sm d-inline w-auto"
-                                            onchange="this.form.submit()">
+                                            onchange="this.form.submit()"
+                                            {{ $item->status == 'Selesai' ? 'disabled' : '' }}>
                                         <option value="Pending"  {{ $item->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                                         <option value="Proses"   {{ $item->status == 'Proses'  ? 'selected' : '' }}>Proses</option>
                                         <option value="Selesai"  {{ $item->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>

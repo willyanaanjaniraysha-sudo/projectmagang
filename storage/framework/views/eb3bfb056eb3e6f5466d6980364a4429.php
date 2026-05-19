@@ -24,22 +24,34 @@
     <a class="nav-link <?php echo e(request()->is('aspirasi*') ? 'active' : ''); ?>" href="/aspirasi">
         <i class="fas fa-tasks me-2"></i> Kelola Pengaduan
     </a>
-    <a class="nav-link d-flex justify-content-between align-items-center <?php echo e(request()->is('user*') || request()->is('admin*') ? 'active' : ''); ?>"
-           href="#roleMenu" 
-           data-bs-toggle="collapse" 
-           role="button"
-           aria-expanded="<?php echo e(request()->is('user*') || request()->is('admin*') ? 'true' : 'false'); ?>">
-            <span><i class="fas fa-user-shield me-2"></i> Role</span>
-            <i class="fas fa-angle-left <?php echo e(request()->is('user*') || request()->is('admin*') ? 'rotate-down' : ''); ?>"></i>
-        </a>
-        <div class="collapse <?php echo e(request()->is('user*') || request()->is('admin*') ? 'show' : ''); ?>" id="roleMenu">
-            <a class="nav-link ps-4 <?php echo e(request()->routeIs('admin.*') ? 'active' : ''); ?>" href="<?php echo e(route('admin.index')); ?>">
-                <i class="fas fa-user-tie me-2"></i> Kelola Admin
-            </a>
-            <a class="nav-link ps-4 <?php echo e(request()->is('user*') ? 'active' : ''); ?>" href="/user">
-                <i class="fas fa-users me-2"></i> Kelola User
-            </a>
-        </div>
+    <button onclick="toggleRole()" 
+    style="background: none; border: none; width: 100%; text-align: left; cursor: pointer;"
+    class="nav-link d-flex justify-content-between align-items-center <?php echo e(request()->is('user*') || request()->is('admin*') ? 'active' : ''); ?>">
+    <span><i class="fas fa-user-shield me-2"></i> Role</span>
+    <i class="fas fa-angle-left" id="roleArrow" style="<?php echo e(request()->is('user*') || request()->is('admin*') ? 'transform: rotate(-90deg);' : ''); ?>"></i>
+</button>
+<div id="roleMenu" style="<?php echo e(request()->is('user*') || request()->is('admin*') ? '' : 'display:none;'); ?>">
+    <a class="nav-link ps-4 <?php echo e(request()->routeIs('admin.*') ? 'active' : ''); ?>" href="<?php echo e(route('admin.index')); ?>">
+        <i class="fas fa-user-tie me-2"></i> Kelola Admin
+    </a>
+    <a class="nav-link ps-4 <?php echo e(request()->is('user*') ? 'active' : ''); ?>" href="/user">
+        <i class="fas fa-users me-2"></i> Kelola User
+    </a>
+</div>
+
+<script>
+    function toggleRole() {
+        const menu = document.getElementById('roleMenu');
+        const arrow = document.getElementById('roleArrow');
+        if (menu.style.display === 'none') {
+            menu.style.display = 'block';
+            arrow.style.transform = 'rotate(-90deg)';
+        } else {
+            menu.style.display = 'none';
+            arrow.style.transform = '';
+        }
+    }
+</script>
 
     <a class="nav-link <?php echo e(request()->is('laporan*') ? 'active' : ''); ?>" href="/laporan">
         <i class="fas fa-file-alt me-2"></i> Laporan

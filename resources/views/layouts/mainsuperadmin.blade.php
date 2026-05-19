@@ -29,21 +29,10 @@
     </style>
 </head>
 <body>
-
-    <div class="sidebar">
-        <div style="padding: 25px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            <h3 style="margin: 0;">E-Aspirasi</h3>
-        </div>
-        <div style="margin-top: 20px;">
-            <a href="/dashboard" class="nav-link">Dashboard</a>
-            <a href="/pengaturan" class="nav-link active">Pengaturan</a>
-        </div>
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-danger">Keluar</button>
-        </form>
-    </div>
-
+<div class="d-flex">
+    @if(Auth::user()->role == 'super admin')
+        @include('layouts.component.sidebarsuperadmin')
+    @endif
     <div class="main-wrapper">
         <header class="top-navbar">
             <h4 style="margin: 0; color: #333;">PANEL SUPER ADMIN</h4>

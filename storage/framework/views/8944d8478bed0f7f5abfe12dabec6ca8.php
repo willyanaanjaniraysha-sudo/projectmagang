@@ -83,7 +83,8 @@
                                     <?php echo csrf_field(); ?>
                                     <?php echo method_field('PATCH'); ?>
                                     <select name="status" class="form-select form-select-sm d-inline w-auto"
-                                            onchange="this.form.submit()">
+                                            onchange="this.form.submit()"
+                                            <?php echo e($item->status == 'Selesai' ? 'disabled' : ''); ?>>
                                         <option value="Pending"  <?php echo e($item->status == 'Pending' ? 'selected' : ''); ?>>Pending</option>
                                         <option value="Proses"   <?php echo e($item->status == 'Proses'  ? 'selected' : ''); ?>>Proses</option>
                                         <option value="Selesai"  <?php echo e($item->status == 'Selesai' ? 'selected' : ''); ?>>Selesai</option>
