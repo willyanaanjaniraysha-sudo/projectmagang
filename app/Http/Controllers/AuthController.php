@@ -22,14 +22,16 @@ class AuthController extends Controller
         $total   = \App\Models\Pengaduan::count();
         $pending = \App\Models\Pengaduan::where('status', 'Pending')->count();
         $selesai = \App\Models\Pengaduan::where('status', 'Selesai')->count();
+        $proses  = \App\Models\Pengaduan::where('status', 'Proses')->count();
     } else {
         // User biasa: hanya miliknya sendiri
         $total   = \App\Models\Pengaduan::where('user_id', Auth::id())->count();
         $pending = \App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Pending')->count();
         $selesai = \App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Selesai')->count();
+        $proses  = \App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Proses')->count();
     }
 
-    return view('dashboard', compact('user', 'total', 'pending', 'selesai'));
+    return view('dashboard', compact('user', 'total', 'pending', 'selesai','proses'));
 }
 
     public function prosesLogin(Request $request)

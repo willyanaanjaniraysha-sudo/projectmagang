@@ -50,8 +50,8 @@
         </div>
 
         <!-- STATS BOXES -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-4">
+        <div class="row g-4 mb-2">
+            <div class="col-md-3">
                 <div class="card stat-card shadow-sm p-3">
                     <div class="d-flex align-items-center">
                         <div class="bg-primary text-white rounded-circle p-3 me-3">
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card stat-card shadow-sm p-3">
                     <div class="d-flex align-items-center text-warning">
                         <div class="bg-warning text-white rounded-circle p-3 me-3">
@@ -77,7 +77,20 @@
                     </div>
                 </div>
             </div>
-        <div class="col-md-4">
+            <div class="col-md-3">
+                <div class="card stat-card shadow-sm p-3">
+                    <div class="d-flex align-items-center text-info">
+                        <div class="bg-info text-white rounded-circle p-3 me-3">
+                            <i class="fas fa-spinner fa-lg"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-0">Proses</h6>
+                            <h4 class="fw-bold mb-0">{{ $proses }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
     <div class="card stat-card shadow-sm p-3">
         <div class="d-flex align-items-center">
             <div class="bg-success text-white rounded-circle p-3 me-3">
