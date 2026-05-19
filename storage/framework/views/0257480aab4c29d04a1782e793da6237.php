@@ -52,6 +52,7 @@
                         <tr>
                             <th class="ps-4">#</th>
                             <th>Nama</th>
+                            <th>Email</th>
                             <th>Role</th>
                             <th>Dibuat</th>
                             <th>Aksi</th>
@@ -71,6 +72,7 @@
                                     <?php echo e($user->name); ?>
 
                                 </div>
+                                <td class="text-muted"><?php echo e($user->email); ?></td>
                             </td>
                             <td>
                                 <?php if($user->role == 'super admin'): ?>

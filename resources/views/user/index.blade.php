@@ -51,6 +51,7 @@
                         <tr>
                             <th class="ps-4">#</th>
                             <th>Nama</th>
+                            <th>Email</th>
                             <th>Role</th>
                             <th>Dibuat</th>
                             <th>Aksi</th>
@@ -68,6 +69,7 @@
                                     </div>
                                     {{ $user->name }}
                                 </div>
+                                <td class="text-muted">{{ $user->email }}</td>
                             </td>
                             <td>
                                 @if($user->role == 'super admin')
