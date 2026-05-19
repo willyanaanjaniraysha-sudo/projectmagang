@@ -43,6 +43,7 @@
                             <th class="ps-4">#</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Dibuat</th>
                             <th>Aksi</th>
                         </tr>
@@ -51,6 +52,7 @@
                         @forelse($admins as $index => $admin)
                         <tr>
                             <td class="ps-4">{{ $index + 1 }}</td>
+
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
@@ -61,6 +63,11 @@
                                 </div>
                             </td>
                             <td class="text-muted">{{ $admin->email }}</td>
+                            <td>
+                            <span class="badge" style="background-color: #e2e8f0; color: #1e293b; background: #d1fae5; color: #065f46; padding: 8px 14px; border-radius: 14px; font-size: 12px;">
+                             {{ $admin->role }} 
+                            </span>
+                            </td>
                             <td class="text-muted">{{ $admin->created_at->format('d M Y') }}</td>
                             <td>
                                 <a href="{{ route('admin.edit', $admin->id) }}"

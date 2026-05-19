@@ -44,6 +44,7 @@
                             <th class="ps-4">#</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Dibuat</th>
                             <th>Aksi</th>
                         </tr>
@@ -52,6 +53,7 @@
                         <?php $__empty_1 = true; $__currentLoopData = $admins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $admin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr>
                             <td class="ps-4"><?php echo e($index + 1); ?></td>
+
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
@@ -64,6 +66,11 @@
                                 </div>
                             </td>
                             <td class="text-muted"><?php echo e($admin->email); ?></td>
+                            <td>
+                            <span class="badge" style="background-color: #e2e8f0; color: #1e293b; background: #d1fae5; color: #065f46; padding: 8px 14px; border-radius: 14px; font-size: 12px;">
+                             <?php echo e($admin->role); ?> 
+                            </span>
+                            </td>
                             <td class="text-muted"><?php echo e($admin->created_at->format('d M Y')); ?></td>
                             <td>
                                 <a href="<?php echo e(route('admin.edit', $admin->id)); ?>"
