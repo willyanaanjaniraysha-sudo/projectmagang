@@ -34,28 +34,25 @@ class AuthController extends Controller
 
     public function prosesLogin(Request $request)
 {
+    // 1. Validasi input: wajib diisi dan harus berformat email
     $request->validate([
-        'name'     => 'required',
+        'email'    => 'required|email',
         'password' => 'required',
-        'role'     => 'required'
     ]);
 
-    $credentials = $request->only('name', 'password');
-    $selectedRole = $request->role;
+    // 2. Ambil data kredensial untuk dicocokkan ke database
+    $credentials = $request->only('email', 'password');
 
+    // 3. Proses autentikasi (Pengecekan role sudah dihapus)
     if (Auth::attempt($credentials)) {
-        
-        // 4. CEK ROLE: Apakah role di database sama dengan yang dipilih di form?
-        if (Auth::user()->role !== $selectedRole) {
-            Auth::logout(); // Keluar lagi kalau rolenya beda
-            return back()->with('error', 'Role yang Anda pilih tidak sesuai dengan akun ini!')->withInput();
-        }
-
         $request->session()->regenerate();
         return redirect()->intended('/dashboard');
     }
 
-    return back()->with('error', 'Nama Lengkap atau Password salah!')->withInput();
+    // 4. Kembalikan ke halaman login jika email atau password salah
+    return back()
+        ->with('error', 'Email atau Password salah!')
+        ->withInput($request->except('password')); // Input email tetap terisi, password dikosongkan demi keamanan
 }
 
 public function logout(Request $request)
@@ -67,5 +64,4 @@ public function logout(Request $request)
 
     return redirect('/login');
 }
-
-}
+};

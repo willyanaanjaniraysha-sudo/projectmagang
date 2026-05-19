@@ -62,18 +62,10 @@
                             <td>{{ $item->judul }}</td>
                             <td>{{ Str::limit($item->deskripsi, 50) }}</td>
                             <td>
-                                @if($item->gambar)
-                                    <a href="{{ asset('upload/' . $item->gambar) }}" target="_blank">
-                                        <img src="{{ asset('upload/' . $item->gambar) }}" width="55" height="55"
-                                             style="object-fit:cover; border-radius:8px;"
-                                             onerror="this.onerror=null; 
-                                                      this.src='{{ asset('storage/' . $item->gambar) }}'; 
-                                                      this.parentElement.href='{{ asset('storage/' . $item->gambar) }}';
-                                                      this.setAttribute('onerror', 'this.src=\'{{ asset('storage/pengaduan/' . $item->gambar) }}\'; this.parentElement.href=\'{{ asset('storage/pengaduan/' . $item->gambar) }}\';');">
-                                    </a>
-                                @else
-                                    <span class="text-muted" style="font-size: 11px;">Tidak ada foto</span>
-                                @endif
+                                <a href="{{ asset('storage/' . $item->gambar) }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $item->gambar) }}" width="55" height="55"
+                                         style="object-fit:cover; border-radius:8px;">
+                                </a>
                             </td>
                             <td>
                                 @if($item->status == 'Pending')

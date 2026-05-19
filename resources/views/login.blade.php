@@ -41,7 +41,7 @@
 
       <!-- Username -->
       <div class="form-group">
-        <label>Username</label>
+        <label>Username (G-mail)</label>
         <div class="input-field">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -50,9 +50,9 @@
 
           <input 
             type="text" 
-            name="name"
-            placeholder="Masukkan username / NISN"
-            value="{{ old('name') }}"
+            name="email"
+            placeholder="Masukkan email"
+            value="{{ old('email') }}"
             required
           >
         </div>
@@ -77,23 +77,7 @@
       </div>
 
       <!-- Role -->
-      <div class="form-group">
-        <label>Role</label>
-        <div class="input-field">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-          </svg>
-
-          <select name="role" required>
-            <option value="">-- Pilih Role --</option>
-            <option value="admin">Admin</option>
-            <option value="super admin">Super Admin</option>
-            <option value="user">User</option>
-          </select>
-        </div>
-      </div>
+      
 
       <button type="submit" class="btn-login">
         Masuk

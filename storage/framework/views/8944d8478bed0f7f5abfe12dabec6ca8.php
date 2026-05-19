@@ -63,18 +63,10 @@
                             <td><?php echo e($item->judul); ?></td>
                             <td><?php echo e(Str::limit($item->deskripsi, 50)); ?></td>
                             <td>
-                                <?php if($item->gambar): ?>
-                                    <a href="<?php echo e(asset('upload/' . $item->gambar)); ?>" target="_blank">
-                                        <img src="<?php echo e(asset('upload/' . $item->gambar)); ?>" width="55" height="55"
-                                             style="object-fit:cover; border-radius:8px;"
-                                             onerror="this.onerror=null; 
-                                                      this.src='<?php echo e(asset('storage/' . $item->gambar)); ?>'; 
-                                                      this.parentElement.href='<?php echo e(asset('storage/' . $item->gambar)); ?>';
-                                                      this.setAttribute('onerror', 'this.src=\'<?php echo e(asset('storage/pengaduan/' . $item->gambar)); ?>\'; this.parentElement.href=\'<?php echo e(asset('storage/pengaduan/' . $item->gambar)); ?>\';');">
-                                    </a>
-                                <?php else: ?>
-                                    <span class="text-muted" style="font-size: 11px;">Tidak ada foto</span>
-                                <?php endif; ?>
+                                <a href="<?php echo e(asset('storage/' . $item->gambar)); ?>" target="_blank">
+                                    <img src="<?php echo e(asset('storage/' . $item->gambar)); ?>" width="55" height="55"
+                                         style="object-fit:cover; border-radius:8px;">
+                                </a>
                             </td>
                             <td>
                                 <?php if($item->status == 'Pending'): ?>
@@ -112,5 +104,4 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
-<?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/aspirasi/kelola.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/aspirasi/kelola.blade.php ENDPATH**/ ?>
