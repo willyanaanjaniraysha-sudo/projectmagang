@@ -149,9 +149,10 @@
 
     
     <?php
-        $total   = App\Models\Pengaduan::where('user_id', Auth::id())->count();
-        $pending = App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Pending')->count();
-        $selesai = App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Selesai')->count();
+        $total        = App\Models\Pengaduan::where('user_id', Auth::id())->count();
+        $pending      = App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Pending')->count();
+        $selesai      = App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Selesai')->count();
+        $totalDihapus = $history->count();
     ?>
 
     <div class="stats">
@@ -166,6 +167,10 @@
         <div class="stat-card hijau">
             <div class="angka"><?php echo e($selesai); ?></div>
             <div class="keterangan">Selesai</div>
+        </div>
+        <div class="stat-card merah">
+            <div class="angka"><?php echo e($totalDihapus); ?></div>
+            <div class="keterangan">Dihapus</div>
         </div>
     </div>
 
@@ -198,12 +203,49 @@
             </div>
         </div>
     </div>
+    <div class="history-section" style="margin-top: 32px; margin-bottom: 20px;">
+    <!-- Header Area yang Elegan -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 22px;">📋</span>
+            <h2 style="font-size: 18px; font-weight: 700; color: #1e293b; margin: 0; letter-spacing: -0.3px;">
+                Riwayat Pengaduan yang Dihapus
+            </h2>
+        </div>
+        <a href="/dashboard" class="btn-back" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #ffffff; color: #64748b; text-decoration: none; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s ease;">
+            <i class="fas fa-arrow-left" style="font-size: 12px;"></i> Kembali ke Dashboard
+        </a>
+    </div>
+        
+               <div class="history-list">
+            <?php $__empty_1 = true; $__currentLoopData = $history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <div class="info-item" style="display: flex; flex-direction: column; align-items: flex-start; background: #fff5f5; border: 1px solid #fee2e2; padding: 16px; margin-bottom: 12px; gap: 6px; width: 100%;">
+                    
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <span class="value" style="font-size: 15px; color: #991b1b; font-weight: bold;">
+                            <?php echo e($log->properties['old']['judul'] ?? 'Tanpa Judul'); ?>
 
-    
-    <form action="<?php echo e(route('logout')); ?>" method="POST">
-        <?php echo csrf_field(); ?>
-        <button type="submit" class="btn-logout">🚪 Logout</button>
-    </form>
+                        </span>
+                        <span class="tanggal" style="font-size: 12px; color: #f87171;">
+                            <?php echo e($log->created_at->format('d M Y, H:i')); ?> WIB
+                        </span>
+                    </div>
+                    <div style="font-size: 13px; color: #7f1d1d; background: rgba(254, 226, 226, 0.4); padding: 10px; border-radius: 6px; width: 100%; border-left: 3px solid #f87171; line-height: 1.5; text-align: left;">
+                        <?php echo e($log->properties['old']['deskripsi'] ?? 'Tidak ada deskripsi.'); ?>
+
+                    </div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">
+                        Status terakhir sebelum dihapus: <span style="background: #e2e8f0; color: #475569; padding: 2px 6px; border-radius: 4px; font-weight: bold;"><?php echo e($log->properties['old']['status'] ?? 'Pending'); ?></span>
+                    </div>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <div class="info-item" style="justify-content: center; color: #94a3b8; padding: 20px; font-size: 14px; text-align: center; display: block;">
+                    Bersih! Anda belum pernah menghapus pengaduan apa pun.
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.mainuser', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/pengaduan/saya.blade.php ENDPATH**/ ?>

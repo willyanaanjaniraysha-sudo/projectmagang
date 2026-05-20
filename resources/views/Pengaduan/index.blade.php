@@ -129,14 +129,25 @@
                             'Diproses' => 'badge-diproses',
                             'Selesai'  => 'badge-selesai',
                             default    => 'badge-pending',
+
                         };
                     @endphp
 
-                    <div class="meta-info">
-                        <span class="badge {{ $badgeClass }}">{{ $item->status }}</span>
+                <div class="meta-info" style="justify-content: space-between; width: 100%;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="badge {{ $badgeClass }}">{{ $item->status }}</span>
                         <div class="tanggal">Dikirim: {{ $item->created_at->format('d M Y, H:i') }}</div>
                     </div>
+            <form action="{{ route('pengaduan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengaduan ini?')">
+        @csrf
+        @method('DELETE')
+                <button type="submit" class="btn btn-sm btn-danger" style="padding: 4px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; background-color: #ef4444; color: white; border: none;">
+                     🗑️ Hapus
+                </button>
+            </form>
                 </div>
+
+            </div>
             </div>
         @empty
             <div class="empty">😴 Belum ada pengaduan. Silakan buat pengaduan baru.</div>

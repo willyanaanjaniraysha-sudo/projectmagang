@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pengaduan;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
 
 class PengaduanController extends Controller
 {
@@ -17,15 +18,11 @@ class PengaduanController extends Controller
 
         return view('pengaduan.index', compact('pengaduan'));
     }
-
-
     public function create()
     {
         return view('pengaduan.create');
     }
-
-
-        public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'judul'     => 'required|max:255',
@@ -62,12 +59,39 @@ class PengaduanController extends Controller
         return redirect()->route('pengaduan.index')
             ->with('success', 'Pengaduan berhasil dikirim');
     }
-    
-
     public function saya()
     {
         $user = Auth::user();
+        $history = Activity::where('causer_id', Auth::id())
+                            ->where('causer_type', 'App\Models\User')
+                            ->where('subject_type', 'App\Models\Pengaduan')
+                            ->orWhere(function($query) {
+                                $query->where('causer_id', Auth::id())
+                                      ->where('subject_type', 'App\Models\Pengaduan')
+                                      ->Where('description', 'Pengaduan telah deleted');
+                            })
+                            ->latest()
+                            ->get();
+        return view('pengaduan.saya', compact('user', 'history'));
+    }
+    public function history()
+    {
+        $history = Activity::where('causer_id', Auth::id())
+            ->where('causer_type', 'App\Models\User')
+            ->where('subject_type', 'App\Models\Pengaduan')
+            ->where('description', 'Pengaduan telah deleted')
+            ->latest()
+            ->paginate(10);
 
-        return view('pengaduan.saya', compact('user'));
+        return view('pengaduan.history', compact('history')); // Kita arahkan ke folder pengaduan.history
+    }
+    public function destroy($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+            if($pengaduan->user_id ==! Auth::id()) {
+                abort(403, 'Aksi tidak diizinkan');
+            }
+        $pengaduan->delete();
+        return back()->with('success', 'Pengaduan berhasil dihapus!');
     }
 }

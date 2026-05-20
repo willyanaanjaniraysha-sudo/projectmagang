@@ -49,5 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaturan', [DashboardController::class, 'pengaturan'])->name('pengaturan');
     Route::get('/profil',     [DashboardController::class, 'profil'])->name('profil');
 
-    
+    //Activity Log
+    Route::middleware(['auth'])->group(function () {
+    Route::delete('/aspirasi/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
+    Route::get('/aspirasi/history', [AspirasiController::class, 'history'])->name('aspirasi.history');
+    });
 });
