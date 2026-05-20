@@ -52,10 +52,7 @@
             flex:1;
             padding:30px;
             margin-left: 260px; 
-<<<<<<< HEAD
             width: calc(100% - 260px);
-=======
->>>>>>> 3c9120eb99980ab41bbe0249ea6e16079fd4c96a
         }
 
         .chart-card{
