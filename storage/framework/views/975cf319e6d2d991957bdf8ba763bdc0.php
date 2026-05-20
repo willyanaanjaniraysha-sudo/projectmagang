@@ -4,53 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Super Admin | E-Aspirasi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS INTERNAL - TIDAK BUTUH INTERNET */
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; display: flex; }
-        .sidebar { width: 260px; background: #1a1a2e; color: #fff; min-height: 100vh; position: fixed; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
-        .main-wrapper { margin-left: 260px; flex-grow: 1; min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; background-color: #f4f7f6; margin: 0; }
+        .main-wrapper { margin-left: 260px; flex-grow: 1; min-height: 100vh; width: calc(100% - 260px); }
         .top-navbar { background: #fff; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        .p-4 { padding: 25px; }
-        
-        /* Sidebar Menu */
-        .nav-link { color: #a2a2c2; padding: 12px 20px; display: block; text-decoration: none; margin: 5px 15px; border-radius: 8px; }
-        .nav-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
-        .nav-link.active { background: #4e73df; color: #fff; }
-        
-        /* Form & Card Style */
+        .content-area { padding: 25px; }
         .card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eee; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; font-size: 14px; }
-        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
         .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
         .btn-primary { background: #4e73df; color: #fff; }
-        .btn-danger { background: #e74a3b; color: #fff; width: 80%; margin: 20px; }
-        .badge { background: #e7f0ff; color: #4e73df; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .btn-danger { background: #e74a3b; color: #fff; }
+
+        /* Tambahan ini untuk fix warna sidebar */
+        .sidebar a, .sidebar button { color: #a2a2c2 !important; text-decoration: none !important; }
+        .sidebar a:hover, .sidebar button:hover { color: #fff !important; }
     </style>
 </head>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <body>
-<div class="d-flex">
+<div style="display:flex; width:100%;">
     <?php if(Auth::user()->role == 'super admin'): ?>
         <?php echo $__env->make('layouts.component.sidebarsuperadmin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     <?php endif; ?>
     <div class="main-wrapper">
         <header class="top-navbar">
-            <h4 style="margin: 0; color: #333;">PANEL SUPER ADMIN</h4>
+            <h4 style="margin:0; color:#333;">PANEL SUPER ADMIN</h4>
             <div>Halo, <strong><?php echo e(Auth::user()->name); ?></strong></div>
         </header>
-
-        <main class="p-4">
-            <div class="card">
-                <h3 style="margin-top: 0;">Konfigurasi Sistem</h3>
-                <p class="badge">SUPER ADMIN</p>
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-                
-                <?php echo $__env->yieldContent('content'); ?>
-            </main>
-        </div>
+        <main class="content-area">
+            <?php echo $__env->yieldContent('content'); ?>
+        </main>
     </div>
-
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
-<?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/layouts/mainsuperadmin.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/layouts/mainsuperadmin.blade.php ENDPATH**/ ?>

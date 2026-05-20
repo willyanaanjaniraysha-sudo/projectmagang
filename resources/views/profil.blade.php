@@ -4,7 +4,7 @@
 <div style="max-width: 600px;">
     <h2 style="margin-bottom: 20px;">Profil Saya</h2>
     
-    <div class="card" style="padding: 30px; text-align: center;">
+    <div style="padding: 30px; text-align: center;">
         <div style="background: #4e73df; color: #fff; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: bold; margin: 0 auto 20px;">
             {{ strtoupper(substr($user->name, 0, 1)) }}
         </div>

@@ -51,6 +51,8 @@
         .main-content{
             flex:1;
             padding:30px;
+            margin-left: 260px; 
+            width: calc(100% - 260px);
         }
 
         .chart-card{
@@ -178,8 +180,6 @@
                 </div>
             </div>
             
-    
-
             <!-- PROSES -->
             <div class="col-md-3">
                 <div class="card stat-card shadow-sm p-3">
