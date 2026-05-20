@@ -59,38 +59,7 @@
             border-radius:20px;
         }
 
-        .dark-mode {
-    background-color: #121212 !important;
-    color: white !important;
-}
-
-.dark-mode .card,
-.dark-mode .bg-white,
-.dark-mode .alert,
-.dark-mode .main-content {
-    background-color: #1e1e1e !important;
-    color: white !important;
-}
-
-.dark-mode .text-muted {
-    color: #cfcfcf !important;
-}
-
-.dark-mode h1,
-.dark-mode h2,
-.dark-mode h3,
-.dark-mode h4,
-.dark-mode h5,
-.dark-mode h6,
-.dark-mode p,
-.dark-mode span {
-    color: white !important;
-}
-
-.dark-mode canvas {
-    background-color: #1e1e1e;
-    border-radius: 10px;
-}
+       
     </style>
 </head>
 
@@ -123,9 +92,7 @@
             </div>
            <div class="text-end d-flex align-items-center gap-2">
 
-    <button onclick="toggleDarkMode()" class="btn btn-dark btn-sm">
-        <i class="fas fa-moon"></i>
-    </button>
+    
 
     <span class="badge bg-soft-primary text-primary px-3 py-2" style="background: #e0e7ff;">
         <i class="fas fa-user-shield me-1"></i> <?php echo e(strtoupper(Auth::user()->role)); ?>
@@ -360,21 +327,7 @@ else{
 document.getElementById('greeting').innerHTML = greeting;
 </script>
 
-<script>
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
 
-    if(document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('darkMode', 'enabled');
-    } else {
-        localStorage.setItem('darkMode', 'disabled');
-    }
-}
-
-if(localStorage.getItem('darkMode') === 'enabled') {
-    document.body.classList.add('dark-mode');
-}
-</script>
 
 </body>
 </html><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/dashboard.blade.php ENDPATH**/ ?>
