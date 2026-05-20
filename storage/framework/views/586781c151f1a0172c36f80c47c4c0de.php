@@ -97,13 +97,13 @@
 <div class="d-flex">
 
     <!-- SIDEBAR -->
-    @if(Auth::user()->role == 'super admin')
-        @include('layouts.component.sidebarsuperadmin')
-    @elseif(Auth::user()->role == 'admin')
-        @include('layouts.component.sidebaradmin')
-    @else
-        @include('layouts.component.sidebaruser')
-    @endif
+    <?php if(Auth::user()->role == 'super admin'): ?>
+        <?php echo $__env->make('layouts.component.sidebarsuperadmin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php elseif(Auth::user()->role == 'admin'): ?>
+        <?php echo $__env->make('layouts.component.sidebaradmin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php else: ?>
+        <?php echo $__env->make('layouts.component.sidebaruser', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php endif; ?>
 
     <!-- MAIN CONTENT -->
     <div class="main-content">
@@ -113,7 +113,7 @@
 
             <div>
                 <h3 class="fw-bold mb-0">
-                     <span id="greeting"></span>, {{ Auth::user()->name }}!
+                     <span id="greeting"></span>, <?php echo e(Auth::user()->name); ?>!
                 </h3>
                 <p class="text-muted">
                     Pantau dan kelola aspirasi kelurahan dalam satu pintu.
@@ -126,7 +126,8 @@
     </button>
 
     <span class="badge bg-soft-primary text-primary px-3 py-2" style="background: #e0e7ff;">
-        <i class="fas fa-user-shield me-1"></i> {{ strtoupper(Auth::user()->role) }}
+        <i class="fas fa-user-shield me-1"></i> <?php echo e(strtoupper(Auth::user()->role)); ?>
+
     </span>
 </div>
         </div>
@@ -149,7 +150,8 @@
                                 Total Laporan
                             </h6>
                             <h4 class="fw-bold mb-0">
-                                {{ $total }}
+                                <?php echo e($total); ?>
+
                             </h4>
                         </div>
                     </div>
@@ -168,7 +170,8 @@
                                 Pending
                             </h6>
                             <h4 class="fw-bold mb-0 text-warning">
-                                {{ $pending }}
+                                <?php echo e($pending); ?>
+
                             </h4>
                         </div>
                     </div>
@@ -189,7 +192,8 @@
                                 Proses
                             </h6>
                             <h4 class="fw-bold mb-0 text-info">
-                                {{ $proses }}
+                                <?php echo e($proses); ?>
+
                             </h4>
                         </div>
                     </div>
@@ -208,7 +212,8 @@
                                 Selesai
                             </h6>
                             <h4 class="fw-bold mb-0 text-success">
-                                {{ $selesai }}
+                                <?php echo e($selesai); ?>
+
                             </h4>
                         </div>
                     </div>
@@ -372,4 +377,4 @@ if(localStorage.getItem('darkMode') === 'enabled') {
 </script>
 
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\projectmagang\resources\views/dashboard.blade.php ENDPATH**/ ?>

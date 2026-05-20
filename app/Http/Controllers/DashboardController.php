@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User; // Tambahkan \User di sini
+namespace App\Http\Controllers; // Tambahkan \User di sini
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
