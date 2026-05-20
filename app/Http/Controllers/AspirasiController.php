@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Spatie\Activitylog\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\Pengaduan;
+use Illuminate\Support\Facades\Auth;
 
 class AspirasiController extends Controller
 {
@@ -56,5 +57,17 @@ class AspirasiController extends Controller
 
     $pengaduans = $query->get();
     return view('aspirasi.kelola', compact('pengaduans'));
+    }
+
+    public function history()
+    {
+        $history = Activity::where('causer_id', Auth::id())
+                            ->where('causer_type', 'App\Models\User')
+                            ->where('subject_type', 'App\Models\Pengaduan')
+                            ->where('description', 'Pengaduan telah deleted')
+                            ->latest()
+                            ->paginate(10);
+
+        return view('aspirasi.history', compact('history'));
     }
 }

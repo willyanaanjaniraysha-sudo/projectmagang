@@ -135,6 +135,8 @@
         <div class="row g-4 mb-4">
 
             <!-- TOTAL -->
+        <!-- STATS BOXES -->
+        <div class="row g-4 mb-2">
             <div class="col-md-3">
                 <div class="card stat-card shadow-sm p-3">
                     <div class="d-flex align-items-center">
@@ -172,6 +174,21 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="col-md-3">
+    <div class="card stat-card shadow-sm p-3">
+        <div class="d-flex align-items-center">
+            <div class="bg-success text-white rounded-circle p-3 me-3">
+                <i class="fas fa-check-circle fa-lg"></i>
+            </div>
+            <div>
+                <h6 class="text-muted mb-0">Selesai</h6>
+                <h4 class="fw-bold mb-0">{{ $selesai }}</h4>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
 
             <!-- PROSES -->
             <div class="col-md-3">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Pengaduan;
 
 class AuthController extends Controller
 {
@@ -31,7 +32,7 @@ class AuthController extends Controller
         $proses  = \App\Models\Pengaduan::where('user_id', Auth::id())->where('status', 'Proses')->count();
     }
 
-    return view('dashboard', compact('user', 'total', 'pending', 'selesai','proses'));
+    return view('dashboard', compact('user', 'total', 'pending', 'selesai', 'proses'));
 }
 
     public function prosesLogin(Request $request)
