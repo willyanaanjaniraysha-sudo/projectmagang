@@ -51,6 +51,7 @@
         .main-content{
             flex:1;
             padding:30px;
+            margin-left: 260px; 
         }
 
         .chart-card{
