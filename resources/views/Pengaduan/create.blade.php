@@ -30,6 +30,7 @@
         color: #1e293b;
         font-size: 24px;
         font-weight: bold;
+        margin-left: 720px;
     }
 
     .card-form {
@@ -38,6 +39,7 @@
         padding: 30px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         max-width: 700px;
+        margin-left: 520px;
     }
 
     .form-group {
