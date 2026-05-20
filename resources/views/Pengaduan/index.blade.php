@@ -8,6 +8,7 @@
         body {
             font-family: Arial;
             background: #f4f7fb;
+            margin-left: 260px;
         }
 
         .top-bar {

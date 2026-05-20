@@ -13,14 +13,76 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f4f7f6; }
-        .nav-link { color: #a2a2c2; padding: 12px 20px; transition: 0.3s; }
-        .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255,255,255,0.1); border-left: 4px solid #818cf8; }
-        .stat-card { border: none; border-radius: 15px; transition: transform 0.3s; }
-        .stat-card:hover { transform: translateY(-5px); }
-        .top-nav { background: #fff; padding: 15px 30px; border-bottom: 1px solid #e3e6f0; }
-        .logout-btn { border-radius: 10px; font-weight: 600; }
-        .main-content { flex: 1; padding: 30px; }
+        body{
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        .nav-link{
+            color:#a2a2c2;
+            padding:12px 20px;
+            transition:0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active{
+            color:#fff;
+            background:rgba(255,255,255,0.1);
+            border-left:4px solid #818cf8;
+        }
+
+        .stat-card{
+            border:none;
+            border-radius:15px;
+            transition:0.3s;
+        }
+
+        .stat-card:hover{
+            transform:translateY(-5px);
+        }
+
+        .main-content{
+            flex:1;
+            padding:30px;
+            margin-left: 260px; 
+        }
+
+        .chart-card{
+            border-radius:20px;
+        }
+
+        .dark-mode {
+    background-color: #121212 !important;
+    color: white !important;
+}
+
+.dark-mode .card,
+.dark-mode .bg-white,
+.dark-mode .alert,
+.dark-mode .main-content {
+    background-color: #1e1e1e !important;
+    color: white !important;
+}
+
+.dark-mode .text-muted {
+    color: #cfcfcf !important;
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6,
+.dark-mode p,
+.dark-mode span {
+    color: white !important;
+}
+
+.dark-mode canvas {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+}
     </style>
 </head>
 <body>
