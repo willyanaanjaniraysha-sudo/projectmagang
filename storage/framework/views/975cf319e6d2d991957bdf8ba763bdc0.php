@@ -28,6 +28,7 @@
         .badge { background: #e7f0ff; color: #4e73df; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
     </style>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <body>
 <div class="d-flex">
     <?php if(Auth::user()->role == 'super admin'): ?>
