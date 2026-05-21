@@ -64,12 +64,10 @@
     </nav>
 <div style="margin-top: auto; padding: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
         
-        <!-- Form POST Tersembunyi untuk Proses Logout Laravel -->
         <form id="logout-form-sidebar" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
             <?php echo csrf_field(); ?>
         </form>
 
-        <!-- Tombol Logout yang Memicu Popup Modal -->
         <a class="btn btn-sm btn-block btn-soft btn-error" 
            onclick="document.getElementById('account_modal').showModal(); event.preventDefault();" 
            style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 14px; background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; text-decoration: none; transition: all 0.2s ease-in-out;"
@@ -87,9 +85,6 @@
     </div>
 </div>
 
-<!-- ========================================================= -->
-<!-- STRUKTUR POPUP CONFIRMATION MODAL DI DALAM HTML5 DIALOG -->
-<!-- ========================================================= -->
 <dialog id="account_modal" class="logout-modal">
     <div style="font-size: 40px; margin-bottom: 12px;">🚪</div>
     <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Konfirmasi Keluar</h3>
