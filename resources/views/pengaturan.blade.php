@@ -3,10 +3,12 @@
 @section('content')
 <div style="max-width: 800px;">
     <!-- Judul & Deskripsi -->
+    <div class="card">
     <div style="margin-bottom: 25px;">
         <h2 style="margin: 0; color: #1a1a2e;">Konfigurasi Sistem</h2>
         <p style="color: #666; font-size: 14px; margin-top: 5px;">Kelola pengaturan dasar aplikasi E-Aspirasi sekolah Anda.</p>
     </div>
+    
 
     <!-- Form Pengaturan -->
     <form action="#" method="POST">
@@ -31,6 +33,7 @@
                 Simpan Perubahan
             </button>
         </div>
-    </form>
+     </form>
+    </div>
 </div>
 @endsection

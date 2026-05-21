@@ -2,6 +2,7 @@
 
 @section('content')
 <div style="max-width: 600px;">
+    <div class="card">
     <h2 style="margin-bottom: 20px;">Profil Saya</h2>
     
     <div style="padding: 30px; text-align: center;">
@@ -19,6 +20,7 @@
             <label style="font-weight: bold; display: block; font-size: 13px; color: #888;">TANGGAL BERGABUNG</label>
             <p style="margin: 5px 0 0; font-weight: 500;">{{ $user->created_at->format('d M Y') }}</p>
         </div>
+    </div>
     </div>
 </div>
 @endsection
