@@ -57,4 +57,13 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+     public function show()
+    {
+        // Ambil data user yang sedang login saat ini
+        $user = Auth::user(); 
+
+        // Kembalikan ke halaman view profil (ganti 'profile' dengan nama file blade profil Anda)
+        return view('profil', compact('user')); 
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () { return redirect('/login'); });
 
@@ -48,6 +49,12 @@ Route::middleware('auth')->group(function () {
     // Pengaturan & Profil
     Route::get('/pengaturan', [DashboardController::class, 'pengaturan'])->name('pengaturan');
     Route::get('/profil',     [DashboardController::class, 'profil'])->name('profil');
+    // Pastikan user sudah login (opsional, tergantung sistem Anda)
+    Route::middleware(['auth'])->group(function () {
+    // Tautkan URL /profile ke ProfileController fungsi 'show' atau 'index'
+    Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
+
+    });
 
     //Activity Log
     Route::middleware(['auth'])->group(function () {

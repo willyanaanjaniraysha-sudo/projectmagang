@@ -62,8 +62,8 @@
                             <td>{{ $item->judul }}</td>
                             <td>{{ Str::limit($item->deskripsi, 50) }}</td>
                             <td>
-                                <a href="{{ asset('storage/' . $item->gambar) }}" target="_blank">
-                                    <img src="{{ asset('storage/' . $item->gambar) }}" width="55" height="55"
+                                <a href="{{ asset('public/uploads/' . $item->gambar) }}" target="_blank">
+                                    <img src="{{ asset('public/uploads/' . $item->gambar) }}" width="55" height="55"
                                          style="object-fit:cover; border-radius:8px;">
                                 </a>
                             </td>
