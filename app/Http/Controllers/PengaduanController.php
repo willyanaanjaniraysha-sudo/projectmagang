@@ -35,16 +35,12 @@ class PengaduanController extends Controller
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
             
-            // 1. Mengambil nama asli file Anda (misal: "foto_rumah_rusak.jpg")
             $namaAsli = pathinfo($gambar->getClientOriginalName(), PATHINFO_FILENAME);
             
-            // 2. Mengambil ekstensi file asli (misal: "jpg")
             $ekstensi = $gambar->getClientOriginalExtension();
-            
-            // 3. Menggabungkan Waktu + Nama Asli agar nama file unik dan tidak menimpa file lain di server [1]
+        
             $namaGambar = time() . '_' . $namaAsli . '.' . $ekstensi;
             
-            // 4. Memindahkan file ke folder 'public/upload' agar aman dan mudah diakses langsung [1]
             $gambar->move(public_path('upload'), $namaGambar);
         }
 
