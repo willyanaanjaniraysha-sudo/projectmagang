@@ -7,7 +7,8 @@
     </div>
 
     <!-- User Panel -->
-    <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <a href="{{ route('profil') }}" class="text-decoration-none">
+    <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
         <img src="{{ asset('templates/dist/img/sunghoongwehj.jpg') }}" 
              class="rounded-circle me-2" width="40" height="40" alt="User">
         <div>
@@ -15,6 +16,7 @@
             <small style="color: #a2a2c2;">Super Admin</small>
         </div>
     </div>
+    </a>
 
     <!-- Menu -->
     <nav class="nav flex-column mt-3 flex-grow-1">
@@ -30,7 +32,7 @@
 
         <button onclick="toggleRole()"
             style="background: {{ request()->is('user*') || request()->is('admin*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border: none; border-left: 4px solid {{ request()->is('user*') || request()->is('admin*') ? '#818cf8' : 'transparent' }}; width: calc(100% - 24px); text-align: left; cursor: pointer; color: {{ request()->is('user*') || request()->is('admin*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin: 3px 12px; border-radius: 8px;">
-            <span><i class="fas fa-user-shield me-2"></i> Role</span>
+            <span><i class="fas fa-user-shield me-2"></i> Data Master</span>
             <i class="fas fa-angle-left" id="roleArrow" style="{{ request()->is('user*') || request()->is('admin*') ? 'transform: rotate(-90deg);' : '' }}"></i>
         </button>
 
@@ -55,10 +57,7 @@
             <i class="fas fa-cogs me-2"></i> Pengaturan Sistem
         </a>
 
-        <a class="nav-link {{ request()->is('profil*') ? 'active' : '' }}" href="/profil"
-           style="color: {{ request()->is('profil*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; margin: 3px 12px; border-radius: 8px; background: {{ request()->is('profil*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('profil*') ? '#818cf8' : 'transparent' }};">
-            <i class="fas fa-user-circle me-2"></i> Profil
-        </a>
+       
     </nav>
 
     <!-- Logout -->

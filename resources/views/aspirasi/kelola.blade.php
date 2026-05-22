@@ -62,11 +62,21 @@
                             <td>{{ $item->judul }}</td>
                             <td>{{ Str::limit($item->deskripsi, 50) }}</td>
                             <td>
-                                <a href="{{ asset('storage/' . $item->gambar) }}" target="_blank">
-                                    <img src="{{ asset('storage/' . $item->gambar) }}" width="55" height="55"
+<<<<<<< Updated upstream
+                                <a href="{{ asset('public/uploads/' . $item->gambar) }}" target="_blank">
+                                    <img src="{{ asset('public/uploads/' . $item->gambar) }}" width="55" height="55"
                                          style="object-fit:cover; border-radius:8px;">
                                 </a>
                             </td>
+=======
+        <a href="{{ asset('upload/' . $item->gambar) }}" target="_blank">
+        <img src="{{ asset('upload/' . $item->gambar) }}"
+             width="55"
+             height="55"
+             style="object-fit:cover; border-radius:8px;">
+         </a>
+                    </td>
+>>>>>>> Stashed changes
                             <td>
                                 @if($item->status == 'Pending')
                                     <span class="badge rounded-pill px-3 py-2" style="background:#fef3c7; color:#92400e;">Pending</span>
