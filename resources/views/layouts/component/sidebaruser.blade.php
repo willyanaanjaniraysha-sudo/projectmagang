@@ -23,6 +23,57 @@
     height: 100vh;
     z-index: 1000;
 }
+
+/* KODE TAMBAHAN: Untuk memaksa Dialog berada di tengah layar laptop */
+.logout-modal {
+    border: none;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+}
+
+/* Memberikan efek gelap transparan pada latar belakang saat modal aktif */
+.logout-modal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+/* Mengatur desain tombol di dalam modal */
+.modal-btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-batal {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.btn-batal:hover {
+    background: #e2e8f0;
+}
+
+.btn-keluar-modal {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.btn-keluar-modal:hover {
+    background: #dc2626;
+}
 </style>
 
 <div class="sidebar sidebar-fixed d-flex flex-column" style="min-height: 100vh; background: #1a1a2e; color: #fff; width: 260px;">
@@ -67,8 +118,9 @@
             <i class="fas fa-bullhorn me-2"></i> Buat Pengaduan
         </a>
     </nav>
-<div style="margin-top: auto; padding: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
-        
+
+    <!-- Logout -->
+    <div style="margin-top: auto; padding: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
         <form id="logout-form-sidebar" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
@@ -90,6 +142,7 @@
     </div>
 </div>
 
+<!-- Modal Dialog Box -->
 <dialog id="account_modal" class="logout-modal">
     <div style="font-size: 40px; margin-bottom: 12px;">🚪</div>
     <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Konfirmasi Keluar</h3>
@@ -97,11 +150,9 @@
         Apakah Anda yakin ingin keluar dari sistem E-Aspirasi? Sesi Anda saat ini akan diakhiri.
     </p>
     <div style="display: flex; gap: 12px; justify-content: center;">
-        <!-- Tombol Batal -->
         <button class="modal-btn btn-batal" style="flex: 1;" onclick="document.getElementById('account_modal').close()">
             Batal
         </button>
-        <!-- Tombol Ya, Keluar (Mengeksekusi Form POST Laravel) -->
         <button class="modal-btn btn-keluar-modal" style="flex: 1;" onclick="document.getElementById('logout-form-sidebar').submit();">
             Ya, Keluar
         </button>

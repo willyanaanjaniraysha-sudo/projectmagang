@@ -1,3 +1,61 @@
+<style>
+/* CSS Tambahan untuk Merapikan Kotak Dialog Konfirmasi Keluar (Modal Logout) */
+/* Ganti class .logout-modal di dalam tag <style> Anda dengan ini */
+.logout-modal {
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    max-width: 400px !important;
+    width: 90% !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    text-align: center !important;
+    position: fixed !important;
+    
+    /* PERBAIKAN: Menggeser posisi tengah layar setelah dipotong lebar sidebar */
+    top: 50% !important;
+    left: calc(50% + 130px) !important; /* 130px adalah setengah dari lebar sidebar 260px */
+    transform: translate(-50%, -50%) !important;
+    
+    background: #ffffff !important;
+}
+
+
+/* Membuat latar belakang di luar kotak dialog menjadi gelap transparan */
+.logout-modal::backdrop {
+    background: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(2px) !important;
+}
+
+/* Mengatur style tombol di dalam kotak dialog */
+.modal-btn {
+    padding: 10px 16px !important;
+    border-radius: 6px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+}
+
+.btn-batal {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+}
+
+.btn-batal:hover {
+    background: #e2e8f0 !important;
+}
+
+.btn-keluar-modal {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+.btn-keluar-modal:hover {
+    background: #dc2626 !important;
+}
+</style>
+
 <div class="sidebar d-flex flex-column" style="min-height: 100vh; background: #1a1a2e; color: #fff; width: 260px; position: fixed; top: 0; left: 0; z-index: 999;">
     <!-- Brand -->
     <div class="p-4 text-center" style="background: rgba(0,0,0,0.1);">
@@ -6,11 +64,9 @@
         </h5>
     </div>
 
-    <!-- User Panel -->
+    <!-- User Panel (Sudah Diperbaiki agar Foto Dinamis Terbaca) -->
     <a href="{{ route('profil') }}" class="text-decoration-none">
     <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
-        
-        <!-- BAGIAN YANG DIPERBAIKI: Sinkronisasi Foto Profil -->
         @if(Auth::user()->photo)
             <img src="{{ asset('storage/' . Auth::user()->photo) }}" 
                  class="rounded-circle me-2" width="40" height="40" style="object-fit: cover;" alt="User">
@@ -18,7 +74,6 @@
             <img src="{{ asset('templates/dist/img/sunghoongwehj.jpg') }}" 
                  class="rounded-circle me-2" width="40" height="40" alt="User">
         @endif
-
         <div>
             <small class="text-white fw-bold">{{ Auth::user()->name }}</small><br>
             <small style="color: #a2a2c2;">Super Admin</small>
@@ -89,6 +144,7 @@
     </div>
 </div>
 
+<!-- Modal Dialog Box -->
 <dialog id="account_modal" class="logout-modal">
     <div style="font-size: 40px; margin-bottom: 12px;">🚪</div>
     <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Konfirmasi Keluar</h3>
