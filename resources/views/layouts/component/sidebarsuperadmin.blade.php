@@ -9,8 +9,16 @@
     <!-- User Panel -->
     <a href="{{ route('profil') }}" class="text-decoration-none">
     <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
-        <img src="{{ asset('templates/dist/img/sunghoongwehj.jpg') }}" 
-             class="rounded-circle me-2" width="40" height="40" alt="User">
+        
+        <!-- BAGIAN YANG DIPERBAIKI: Sinkronisasi Foto Profil -->
+        @if(Auth::user()->photo)
+            <img src="{{ asset('storage/' . Auth::user()->photo) }}" 
+                 class="rounded-circle me-2" width="40" height="40" style="object-fit: cover;" alt="User">
+        @else
+            <img src="{{ asset('templates/dist/img/sunghoongwehj.jpg') }}" 
+                 class="rounded-circle me-2" width="40" height="40" alt="User">
+        @endif
+
         <div>
             <small class="text-white fw-bold">{{ Auth::user()->name }}</small><br>
             <small style="color: #a2a2c2;">Super Admin</small>
@@ -56,13 +64,10 @@
            style="color: {{ request()->is('pengaturan*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; margin: 3px 12px; border-radius: 8px; background: {{ request()->is('pengaturan*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('pengaturan*') ? '#818cf8' : 'transparent' }};">
             <i class="fas fa-cogs me-2"></i> Pengaturan Sistem
         </a>
-
-       
     </nav>
 
     <!-- Logout -->
     <div style="margin-top: auto; padding: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
-        
         <form id="logout-form-sidebar" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
@@ -91,11 +96,9 @@
         Apakah Anda yakin ingin keluar dari sistem E-Aspirasi? Sesi Anda saat ini akan diakhiri.
     </p>
     <div style="display: flex; gap: 12px; justify-content: center;">
-        <!-- Tombol Batal -->
         <button class="modal-btn btn-batal" style="flex: 1;" onclick="document.getElementById('account_modal').close()">
             Batal
         </button>
-        <!-- Tombol Ya, Keluar (Mengeksekusi Form POST Laravel) -->
         <button class="modal-btn btn-keluar-modal" style="flex: 1;" onclick="document.getElementById('logout-form-sidebar').submit();">
             Ya, Keluar
         </button>

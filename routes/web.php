@@ -50,9 +50,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaturan', [DashboardController::class, 'pengaturan'])->name('pengaturan');
     Route::get('/profil',     [DashboardController::class, 'profil'])->name('profil');
     // Pastikan user sudah login (opsional, tergantung sistem Anda)
-    Route::middleware(['auth'])->group(function () {
-    // Tautkan URL /profile ke ProfileController fungsi 'show' atau 'index'
+    Route::middleware(['auth'])->group(function () {    // Tautkan URL /profile ke ProfileController fungsi 'show' atau 'index'
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/profil', [ProfileController::class, 'show'])->name('profil');   
+    Route::put('/profil/update-photo', [ProfileController::class, 'updatePhoto'])->name('profil.update-photo');
+    });
+
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
+    Route::put('/profil/update-photo', [ProfileController::class, 'updatePhoto'])->name('profil.update-photo');
+    
+    // Tambahkan baris rute baru ini:
+    Route::delete('/profil/delete-photo', [ProfileController::class, 'deletePhoto'])->name('profil.delete-photo');
+});
+
+
 
     });
 
