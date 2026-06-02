@@ -1,9 +1,4 @@
-@if(Auth::user()->role == 'superadmin')
-    @extends('layouts.mainsuperadmin')
-@else
-    @extends('layouts.mainuser') {{-- Sesuaikan dengan nama file layout untuk user biasa Anda --}}
-@endif
-
+@extends('layouts.mainsuperadmin')
 
 @section('content')
 <div class="container-fluid py-4">
