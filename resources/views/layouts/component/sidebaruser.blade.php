@@ -91,18 +91,9 @@
     </div>
 
     <!-- User Panel -->
-    <a href="{{ route('pengaduan.saya') }}" class="text-decoration-none">
-    <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
-        
-        <!-- BAGIAN YANG DIPERBAIKI: Sinkronisasi Foto Profil -->
-        @if(Auth::user()->photo)
-            <img src="{{ asset('storage/' . Auth::user()->photo) }}" 
-                 class="rounded-circle me-2" width="40" height="40" style="object-fit: cover;" alt="User">
-        @else
-            <img src="{{ asset('templates/dist/img/sunghoongwehj.jpg') }}" 
-                 class="rounded-circle me-2" width="40" height="40" alt="User">
-        @endif
-
+    <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <img src="{{ asset('templates/dist/img/sunghoongwehj.jpg') }}" 
+             class="rounded-circle me-2" width="40" height="40" alt="User">
         <div>
             <small class="text-white fw-bold">{{ Auth::user()->name }}</small><br>
             <small style="color: #a2a2c2;">{{ Auth::user()->role }}</small>
@@ -122,6 +113,10 @@
         <a class="nav-link {{ request()->is('pengaduan/create') ? 'menu-active' : '' }}" 
            href="/pengaduan/create">
             <i class="fas fa-bullhorn me-2"></i> Buat Pengaduan
+        </a>
+        <a class="nav-link {{ request()->is('pengaduan/saya') ? 'menu-active' : '' }}" 
+           href="/pengaduan/saya">
+            <i class="fas fa-user me-2"></i> Saya
         </a>
     </nav>
 
