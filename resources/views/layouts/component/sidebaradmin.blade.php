@@ -6,6 +6,7 @@
     .main-content {
         flex: 1;
         padding: 30px;
+        position: relative;
     }
     .sidebar-fixed {
     position: fixed;
@@ -25,7 +26,31 @@
     .badge-user {    
         background: #d1fae5;
         color: #065f46;
-     }
+    }
+    .logout-modal {
+    border: none !important;
+    border-radius: 12px !important;
+    background: white !important;
+    padding: 24px !important;
+    max-width: 400px !important;
+    width: 90% !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    text-align: center !important;
+    position: fixed !important;
+    margin: auto !important;
+    top: 0% !important;
+    left: 0 !important; /* 130px adalah setengah dari lebar sidebar 260px */
+    right: 0 !important;
+    bottom: 0 !important;   
+    transform: none !important;
+    background: #ffffff !important;
+    }
+    .logout-modal::backdrop {
+    background: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(2px) !important;
+    position: fixed !important; 
+    inset: 0 !important;    
+    }
 </style>
 
 <div class="sidebar sidebar-fixed d-flex flex-column" style="min-height: 100vh; background: #1a1a2e; color: #fff; width: 260px;">
@@ -109,18 +134,16 @@
 </div>
 
 <dialog id="account_modal" class="logout-modal">
-    <div style="font-size: 40px; margin-bottom: 12px;">🚪</div>
+    <div style="font-size: 40px; margin-bottom: 12px;">📄</div>
     <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Konfirmasi Keluar</h3>
     <p style="font-size: 14px; color: #64748b; margin-bottom: 24px; line-height: 1.5;">
         Apakah Anda yakin ingin keluar dari sistem E-Aspirasi? Sesi Anda saat ini akan diakhiri.
     </p>
     <div style="display: flex; gap: 12px; justify-content: center;">
-        <!-- Tombol Batal -->
-        <button class="modal-btn btn-batal" style="flex: 1;" onclick="document.getElementById('account_modal').close()">
+        <button class="modal-btn btn-batal" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: white; cursor: pointer; font-weight: 600;" onclick="document.getElementById('account_modal').close()">
             Batal
         </button>
-        <!-- Tombol Ya, Keluar (Mengeksekusi Form POST Laravel) -->
-        <button class="modal-btn btn-keluar-modal" style="flex: 1;" onclick="document.getElementById('logout-form-sidebar').submit();">
+        <button class="modal-btn btn-keluar-modal" style="flex: 1; padding: 10px; border-radius: 6px; border: none; background: #ef4444; color: white; cursor: pointer; font-weight: 600;" onclick="document.getElementById('logout-form-sidebar').submit();">
             Ya, Keluar
         </button>
     </div>
