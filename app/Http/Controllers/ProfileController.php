@@ -2,67 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Menampilkan halaman profil terpadu.
      */
-    public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
-    }
-
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
-
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
-
-    /**
-     * Display the user's profile page.
-     */
-    public function show()
+    public function show(): View
     {
         // Ambil data user yang sedang login saat ini
         $user = Auth::user(); 
@@ -72,57 +23,87 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile photo.
+     * Memperbarui informasi profil (Nama & Foto) secara bersamaan.
      */
-    public function updatePhoto(Request $request)
+    public function update(Request $request): RedirectResponse
     {
-        // 1. Validasi file yang diunggah
-        $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Maksimal 2MB
-        ]);
-
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // 2. Cek apakah user mengunggah file
+        // 1. Validasi input nama dan file foto profil
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maksimal 2MB
+        ]);
+
+        // 2. Perbarui nama user
+        $user->name = $request->name;
+
+        // 3. Cek apakah user juga mengunggah file foto baru
         if ($request->hasFile('photo')) {
             
-            // Hapus foto lama di storage jika ada
+            // Hapus foto lama di storage jika ada berkasnya
             if ($user->photo && Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);
             }
 
-            // Simpan foto baru ke folder 'storage/app/public/avatars'
+            // Simpan foto baru ke folder 'storage/app/public/uploads'
             $path = $request->file('photo')->store('uploads', 'public');
 
-            // Update nama file foto di database menggunakan properti objek
-           /** @var \App\Models\User $user */ // <-- TAMBAHKAN BARIS INI
+            // Set properti kolom foto ke path yang baru
             $user->photo = $path;
-            $user->save();
         }
 
-        return redirect()->back()->with('success', 'Foto profil berhasil diperbarui!');
+        // 4. Simpan seluruh perubahan ke database
+        $user->save();
+
+        return redirect()->route('profil')->with('success', 'Profil dan foto berhasil diperbarui!');
     }
 
-        public function deletePhoto()
+    /**
+     * Menghapus akun user beserta file fotonya secara permanen.
+     */
+    public function destroy(Request $request): RedirectResponse
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Cek jika user memiliki catatan nama file foto di database
+        // Hapus file fisik gambar dari folder storage jika ada agar tidak jadi sampah berkas
+        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        // Proses logout pengamanan sesi Laravel
+        Auth::logout();
+
+        // Hapus data user dari database secara permanen
+        $user->delete();
+
+        // Hancurkan session yang tersisa
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login')->with('success', 'Akun Anda telah berhasil dihapus permanen.');
+    }
+
+    /**
+     * Fungsi opsional jika Anda masih membutuhkan tombol khusus 
+     * untuk menghapus fotonya saja tanpa menghapus akun.
+     */
+    public function deletePhoto(): RedirectResponse
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
         if ($user->photo) {
-            
-            // Hapus file fisik gambar dari folder storage agar tidak menumpuk sampah berkas
             if (Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);
             }
 
-            // Kosongkan kembali kolom photo di database menjadi null
             $user->photo = null;
-            /** @var \App\Models\User $user */
             $user->save();
         }
 
         return redirect()->back()->with('success', 'Foto profil berhasil dihapus!');
     }
-
-    
 }
