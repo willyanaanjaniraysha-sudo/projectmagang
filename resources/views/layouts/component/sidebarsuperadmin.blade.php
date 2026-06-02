@@ -4,18 +4,19 @@
 .logout-modal {
     border: none !important;
     border-radius: 12px !important;
+    background: white !important;
     padding: 24px !important;
     max-width: 400px !important;
     width: 90% !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
     text-align: center !important;
     position: fixed !important;
-    
-    /* PERBAIKAN: Menggeser posisi tengah layar setelah dipotong lebar sidebar */
-    top: 50% !important;
-    left: calc(50% + 130px) !important; /* 130px adalah setengah dari lebar sidebar 260px */
-    transform: translate(-50%, -50%) !important;
-    
+    margin: auto !important;
+    top: 0% !important;
+    left: 0 !important; /* 130px adalah setengah dari lebar sidebar 260px */
+    right: 0 !important;
+    bottom: 0 !important;   
+    transform: none !important;
     background: #ffffff !important;
 }
 
@@ -24,6 +25,8 @@
 .logout-modal::backdrop {
     background: rgba(0, 0, 0, 0.5) !important;
     backdrop-filter: blur(2px) !important;
+    position: fixed !important; 
+    inset: 0 !important;    
 }
 
 /* Mengatur style tombol di dalam kotak dialog */
@@ -45,7 +48,11 @@
 .btn-batal:hover {
     background: #e2e8f0 !important;
 }
-
+.main-content {
+        flex: 1;
+        padding: 30px;
+        position: relative;
+    }
 .btn-keluar-modal {
     background: #ef4444 !important;
     color: #ffffff !important;
@@ -146,16 +153,16 @@
 
 <!-- Modal Dialog Box -->
 <dialog id="account_modal" class="logout-modal">
-    <div style="font-size: 40px; margin-bottom: 12px;">🚪</div>
+    <div style="font-size: 40px; margin-bottom: 12px;">📄</div>
     <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Konfirmasi Keluar</h3>
     <p style="font-size: 14px; color: #64748b; margin-bottom: 24px; line-height: 1.5;">
         Apakah Anda yakin ingin keluar dari sistem E-Aspirasi? Sesi Anda saat ini akan diakhiri.
     </p>
     <div style="display: flex; gap: 12px; justify-content: center;">
-        <button class="modal-btn btn-batal" style="flex: 1;" onclick="document.getElementById('account_modal').close()">
+        <button class="modal-btn btn-batal" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: white; cursor: pointer; font-weight: 600;" onclick="document.getElementById('account_modal').close()">
             Batal
         </button>
-        <button class="modal-btn btn-keluar-modal" style="flex: 1;" onclick="document.getElementById('logout-form-sidebar').submit();">
+        <button class="modal-btn btn-keluar-modal" style="flex: 1; padding: 10px; border-radius: 6px; border: none; background: #ef4444; color: white; cursor: pointer; font-weight: 600;" onclick="document.getElementById('logout-form-sidebar').submit();">
             Ya, Keluar
         </button>
     </div>
