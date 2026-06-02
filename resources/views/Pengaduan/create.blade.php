@@ -39,7 +39,7 @@
         padding: 30px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         max-width: 700px;
-        margin-left: 520px;
+        margin-left: 440px;
     }
 
     .form-group {
@@ -64,7 +64,7 @@
     }
 
     input[type="text"]:focus,
-    textarea:focus {
+    textarea:focus { 
         outline: none;
         border-color: #2563eb;
         background: white;

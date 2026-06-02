@@ -55,6 +55,11 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['auth'])->group(function () {
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');   
     Route::put('/profil/update-photo', [ProfileController::class, 'updatePhoto'])->name('profil.update-photo');
+    // Pastikan baris ini ada di dalam Route::middleware('auth')->group(function () { ... })
+    Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
+    Route::put('/profil/update', [ProfileController::class, 'update'])->name('profil.update');
+    Route::delete('/profil/delete', [ProfileController::class, 'destroy'])->name('profil.delete');
+
     });
 
     Route::middleware(['auth'])->group(function () {
