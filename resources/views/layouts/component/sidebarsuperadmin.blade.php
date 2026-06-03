@@ -51,7 +51,8 @@
 .main-content {
         flex: 1;
         padding: 30px;
-        position: relative;
+        min-width: 0;
+        margin-left: 260px;
     }
 .btn-keluar-modal {
     background: #ef4444 !important;
