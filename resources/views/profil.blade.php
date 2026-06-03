@@ -1,4 +1,10 @@
-@extends('layouts.mainsuperadmin')
+@php
+    $layout = Auth::user()->role === 'super admin'
+        ? 'layouts.mainsuperadmin'
+        : 'layouts.mainadmin';
+@endphp
+
+@extends($layout)
 
 @section('content')
 <div class="container-fluid py-4">
