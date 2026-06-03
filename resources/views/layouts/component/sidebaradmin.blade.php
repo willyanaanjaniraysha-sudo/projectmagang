@@ -62,14 +62,21 @@
     </div>
 
     <!-- User Panel -->
-    <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <img src="{{ asset('templates/dist/img/sunghoongwehj.jpg') }}" 
-             class="rounded-circle me-2" width="40" height="40" alt="User">
+    <a href="{{ route('profil') }}" class="text-decoration-none">
+    <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
+        @if(Auth::user()->photo)
+            <img src="{{ asset('storage/' . Auth::user()->photo) }}" 
+                 class="rounded-circle me-2" width="40" height="40" style="object-fit: cover;" alt="User">
+        @else
+            <img src="{{ asset('templates/dist/img/sunghoongwehj.jpg') }}" 
+                 class="rounded-circle me-2" width="40" height="40" alt="User">
+        @endif
         <div>
             <small class="text-white fw-bold">{{ Auth::user()->name }}</small><br>
             <small style="color: #a2a2c2;">Admin</small>
         </div>
     </div>
+    </a>
 
     <!-- Menu -->
    <nav class="nav flex-column mt-2 flex-grow-1">
@@ -148,3 +155,17 @@
         </button>
     </div>
 </dialog>
+
+<script>
+function toggleRole() {
+    const menu = document.getElementById('roleMenu');
+    const arrow = document.getElementById('roleArrow');
+    if (menu.style.display === 'none') {
+        menu.style.display = 'block';
+        arrow.style.transform = 'rotate(-90deg)';
+    } else {
+        menu.style.display = 'none';
+        arrow.style.transform = '';
+    }
+}
+</script>

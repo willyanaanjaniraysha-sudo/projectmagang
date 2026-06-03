@@ -25,7 +25,7 @@
 </head>
 <body>
 <div style="display:flex; width:100%;">
-    @if(Auth::user()->role == 'super admin')
+    @if(Auth::user()->role === 'super admin')
         @include('layouts.component.sidebarsuperadmin')
     @endif
     <div class="main-wrapper">
