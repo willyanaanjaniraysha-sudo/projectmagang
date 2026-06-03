@@ -39,14 +39,22 @@ class AspirasiController extends Controller
     }
 
     public function updateStatus(Request $request, $id)
-    {
-        $pengaduan = Pengaduan::findOrFail($id);
-        $pengaduan->status = $request->status;
-        $pengaduan->save();
+{
+    $pengaduan = Pengaduan::findOrFail($id);
+    $pengaduan->status = $request->status;
 
-        return back()->with('success', 'Status berhasil diperbarui!');
+    // Tambahkan ini
+    if ($request->status == 'Proses') {
+        $pengaduan->tanggal_proses = now();
+    }
+    if ($request->status == 'Selesai') {
+        $pengaduan->tanggal_selesai = now();
     }
 
+    $pengaduan->save();
+
+    return back()->with('success', 'Status berhasil diperbarui!');
+}
     public function kelola(Request $request)
     {
     $query = Pengaduan::with('user')->latest();

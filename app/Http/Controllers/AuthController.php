@@ -52,9 +52,9 @@ class AuthController extends Controller
             $days[] = now()->subDays($i)->format('d M'); // Label Tanggal (Contoh: 27 Mei)
 
             // Meng kloning query agar kondisi filter role di atas tidak saling tabrakan
-            $chartPending[] = (clone $queryGrafik)->whereDate('created_at', $date)->where('status', 'Pending')->count();
-            $chartProses[]  = (clone $queryGrafik)->whereDate('created_at', $date)->where('status', 'Proses')->count();
-            $chartSelesai[] = (clone $queryGrafik)->whereDate('created_at', $date)->where('status', 'Selesai')->count();
+           $chartPending[]  = (clone $queryGrafik)->whereDate('created_at', $date)->where('status', 'Pending')->count();
+           $chartProses[]   = (clone $queryGrafik)->whereDate('tanggal_proses', $date)->where('status', 'Proses')->count();
+           $chartSelesai[]  = (clone $queryGrafik)->whereDate('tanggal_selesai', $date)->where('status', 'Selesai')->count();
         }
 
         return view('dashboard', compact(

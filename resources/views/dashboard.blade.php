@@ -91,9 +91,6 @@
                 </p>
             </div>
            <div class="text-end d-flex align-items-center gap-2">
-
-    
-
     <span class="badge bg-soft-primary text-primary px-3 py-2" style="background: #e0e7ff;">
         <i class="fas fa-user-shield me-1"></i> {{ strtoupper(Auth::user()->role) }}
     </span>
@@ -216,16 +213,6 @@
 
 <!-- SCRIPT CHART -->
 <script>
-    const dates = [];
-
-for(let i = 6; i >= 0; i--) {
-    let d = new Date();
-    d.setDate(d.getDate() - i);
-    let day = d.getDate();
-    let month = d.toLocaleString('id-ID', { month: 'short' });
-    dates.push(day + ' ' + month);
-}
-
 const ctx = document.getElementById('pengaduanChart');
 
 new Chart(ctx, {
@@ -234,14 +221,14 @@ new Chart(ctx, {
 
     data: {
 
-        labels: dates,
+        labels: {!! json_encode($days) !!},
 
         datasets: [
 
         // PENDING
         {
             label: 'Pending',
-            data: [5, 4, 4, 3, 2, 2, 1],
+            data: {!! json_encode($chartPending) !!},
             borderColor: '#facc15',
             backgroundColor: 'rgba(250,204,21,0.2)',
             tension: 0.4,
@@ -254,7 +241,7 @@ new Chart(ctx, {
         // PROSES
         {
             label: 'Proses',
-            data: [1,2,3,4,5,4,3],
+            data: {!! json_encode($chartProses) !!},
             borderColor: '#38bdf8',
             backgroundColor: 'rgba(56,189,248,0.2)',
             tension: 0.4,
@@ -267,7 +254,7 @@ new Chart(ctx, {
         // SELESAI
         {
             label: 'Selesai',
-            data: [0, 1, 1, 2, 2, 3, 5],
+            data: {!! json_encode($chartSelesai) !!},
             borderColor: '#22c55e',
             backgroundColor: 'rgba(34,197,94,0.2)',
             tension: 0.4,
