@@ -27,15 +27,33 @@
 @endif
 
     <div class="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h4 class="fw-bold mb-1"><i class="fas fa-users-cog me-2 text-primary"></i>Kelola User</h4>
-                <p class="text-muted mb-0">Manajemen akun pengguna sistem</p>
-            </div>
-            <a href="{{ route('user.create') }}" class="btn btn-primary rounded-3">
-                <i class="fas fa-plus me-1"></i> Tambah User
-            </a>
-        </div>
+        <<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">
+            <i class="fas fa-users-cog me-2 text-primary"></i>Kelola User
+        </h4>
+        <p class="text-muted mb-0">Manajemen akun pengguna sistem</p>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+
+        <form action="{{ route('user.index') }}" method="GET">
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Cari nama, email, role..."
+                class="form-control"
+                style="width:250px;"
+            >
+        </form>
+
+        <a href="{{ route('user.create') }}" class="btn btn-primary rounded-3">
+            <i class="fas fa-plus me-1"></i> Tambah User
+        </a>
+
+    </div>
+</div>
 
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show">

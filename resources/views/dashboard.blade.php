@@ -91,6 +91,19 @@
                 </p>
             </div>
            <div class="text-end d-flex align-items-center gap-2">
+</div>
+<div class="text-end d-flex align-items-center gap-2">
+    <!-- Indikator Deteksi Perangkat Agent (Tampilan Kecil & Rapi) -->
+    @if(Agent::isMobile())
+        <span class="badge bg-warning text-dark px-3 py-2">
+            <i class="fas fa-mobile-alt me-1"></i> Mobile
+        </span>
+    @else
+        <span class="badge bg-secondary text-white px-3 py-2" style="background-color: #64748b;">
+            <i class="fas fa-desktop me-1"></i> Desktop
+        </span>
+    @endif
+
     <span class="badge bg-soft-primary text-primary px-3 py-2" style="background: #e0e7ff;">
         <i class="fas fa-user-shield me-1"></i> {{ strtoupper(Auth::user()->role) }}
     </span>
