@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
+use Jenssegers\Agent\Facades\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pengaduan;
@@ -63,9 +65,9 @@ class AuthController extends Controller
         ));
     }
 
-
+    
     public function prosesLogin(Request $request)
-{
+    {
     // 1. Validasi input: wajib diisi dan harus berformat email
     $request->validate([
         'email'    => 'required|email',
@@ -75,9 +77,19 @@ class AuthController extends Controller
     // 2. Ambil data kredensial untuk dicocokkan ke database
     $credentials = $request->only('email', 'password');
 
-    // 3. Proses autentikasi (Pengecekan role sudah dihapus)
+    // 3. Proses autentikasi 
     if (Auth::attempt($credentials)) {
         $request->session()->regenerate();
+
+        // --- TAMBAHAN BARU: MENANGKAP DATA PERANGKAT & BROWSER USER ---
+        $browser  = \Jenssegers\Agent\Facades\Agent::browser();  // Contoh hasil: Chrome, Safari, Edge
+        $platform = \Jenssegers\Agent\Facades\Agent::platform(); // Contoh hasil: Windows, OS X, Android
+
+        // Logika Penggunaan: Anda bisa menyimpan info ini ke tabel log jika ada.
+        // Sebagai contoh awal, kita simpan info ini ke file Log bawaan Laravel untuk pembuktian:
+        Log::info("User dengan email " . $request->email . " berhasil login menggunakan browser {$browser} pada OS {$platform}");
+        // -------------------------------------------------------------
+
         return redirect()->intended('/dashboard');
     }
 
@@ -85,7 +97,7 @@ class AuthController extends Controller
     return back()
         ->with('error', 'Email atau Password salah!')
         ->withInput($request->except('password')); // Input email tetap terisi, password dikosongkan demi keamanan
-}
+    }
 
 public function logout(Request $request)
 {
