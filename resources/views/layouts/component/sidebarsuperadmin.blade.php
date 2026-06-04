@@ -116,6 +116,10 @@
                style="color: {{ request()->is('user*') ? '#fff' : '#a2a2c2' }} !important; padding: 10px 20px 10px 44px; margin: 2px 12px; border-radius: 8px; background: {{ request()->is('user*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('user*') ? '#818cf8' : 'transparent' }};">
                 <i class="fas fa-users me-2"></i> Kelola User
             </a>
+            <a class="nav-link {{ request()->is('pengaturan*') ? 'active' : '' }}" href="/pengaturan"
+            style="color: {{ request()->is('pengaturan*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; margin: 3px 12px; border-radius: 8px; background: {{ request()->is('pengaturan*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('pengaturan*') ? '#818cf8' : 'transparent' }};">
+            <i class="fas fa-cogs me-2"></i> Pengaturan Sistem
+        </a>
         </div>
 
         <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}" href="/laporan"
@@ -123,10 +127,6 @@
             <i class="fas fa-file-alt me-2"></i> Laporan
         </a>
 
-        <a class="nav-link {{ request()->is('pengaturan*') ? 'active' : '' }}" href="/pengaturan"
-           style="color: {{ request()->is('pengaturan*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; margin: 3px 12px; border-radius: 8px; background: {{ request()->is('pengaturan*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('pengaturan*') ? '#818cf8' : 'transparent' }};">
-            <i class="fas fa-cogs me-2"></i> Pengaturan Sistem
-        </a>
     </nav>
 
     <!-- Logout -->
