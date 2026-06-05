@@ -8,12 +8,18 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        // Pakai paginate supaya tidak Memory Exhausted (Error 500)
-        $users = User::where('role', 'user')->latest()->paginate(10);
-        return view('user.index', compact('users'));
-    }
+   public function index(Request $request)
+{
+    $search = $request->search;
+
+    $users = User::when($search, function ($query) use ($search) {
+        $query->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('role', 'like', "%{$search}%");
+    })->paginate(10);
+
+    return view('user.index', compact('users'));
+}
 
     public function create()
     {
