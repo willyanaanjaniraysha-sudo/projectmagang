@@ -59,7 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
     Route::put('/profil/update', [ProfileController::class, 'update'])->name('profil.update');
     Route::delete('/profil/delete', [ProfileController::class, 'destroy'])->name('profil.delete');
-
+    Route::put('saya/update', [ProfileController::class, 'updateSaya'])->name('saya.update');   
+    Route::delete('/saya/delete-photo', [ProfileController::class, 'deletePhoto'])->name('saya.delete-photo');
     });
 
     Route::middleware(['auth'])->group(function () {

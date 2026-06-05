@@ -27,7 +27,7 @@
 @endif
 
     <div class="main-content">
-        <<div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1">
             <i class="fas fa-users-cog me-2 text-primary"></i>Kelola User
@@ -47,6 +47,16 @@
                 style="width:250px;"
             >
         </form>
+    <div class="d-flex gap-2">
+                <a href="/user" class="btn btn-sm {{ !request('search') ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">Semua</a>
+                <a href="/user?search=admin" class="btn btn-sm {{ request('search') == 'admin' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">Admin</a>
+                <a href="/user?search=user" class="btn btn-sm {{ request('search') == 'user' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">User</a>
+            </div>
+        @if(Auth::user()->role == 'admin')
+    <a href="#" class="btn btn-sm btn-outline-secondary rounded-3 disabled" aria-disabled="true">Super Admin</a>
+        @else
+    <a href="/user?search=super admin" class="btn btn-sm {{ request('search') == 'super admin' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">Super Admin</a>
+        @endif
 
         <a href="{{ route('user.create') }}" class="btn btn-primary rounded-3">
             <i class="fas fa-plus me-1"></i> Tambah User
@@ -87,8 +97,8 @@
                                     </div>
                                     {{ $user->name }}
                                 </div>
-                                <td class="text-muted">{{ $user->email }}</td>
                             </td>
+                            <td class="text-muted">{{ $user->email }}</td>
                             <td>
                                 @if($user->role == 'super admin')
                                     <span class="badge badge-superadmin px-3 py-2 rounded-pill">Super Admin</span>
@@ -117,13 +127,32 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center py-4 text-muted">Belum ada user.</td>
+                            <td colspan="6" class="text-center py-4 text-muted">Belum ada user.</td>
                         </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
+        <div class="mt-3 px-2">
+    <form action="{{ route('user.index') }}" method="GET" class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-2">
+            <label for="per_page" class="small text-muted text-nowrap">Tampilkan:</label>
+            <select name="per_page" id="per_page" class="form-select form-select-sm" style="width: 80px;" onchange="this.form.submit()">
+                @foreach([10, 25, 50, 100, 150, 200] as $value)
+                    <option value="{{ $value }}" {{ request('per_page', 10) == $value ? 'selected' : '' }}>
+                        {{ $value }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        
+        @if(request('search'))
+            <input type="hidden" name="search" value="{{ request('search') }}">
+        @endif
+    </form>
+</div>
+
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

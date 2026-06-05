@@ -9,18 +9,26 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
    public function index(Request $request)
-{
-    $search = $request->search;
+{       
+    $search = $request->input('search');
+    $perPage = $request->input('per_page', 10);
+    
+    $users = User::when($search, function ($query, $search) {
+            return $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
 
-    $users = User::when($search, function ($query) use ($search) {
-        $query->where('name', 'like', "%{$search}%")
-              ->orWhere('email', 'like', "%{$search}%")
-              ->orWhere('role', 'like', "%{$search}%");
-    })->paginate(10);
+                  if (in_array(strtolower($search), ['user', 'admin', 'super admin'])) {
+                      $q->orWhere('role', '=', $search);
+                  }
+            });
+        })
+        ->latest()
+        ->paginate($perPage) 
+        ->withQueryString(); // Tambahkan ini agar filter halaman tidak hilang
 
     return view('user.index', compact('users'));
 }
-
     public function create()
     {
         return view('user.create');
