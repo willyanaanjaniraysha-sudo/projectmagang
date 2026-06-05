@@ -31,7 +31,7 @@
                 <table class="table table-hover mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th class="ps-4">#</th>
+                            <th class="ps-4">No</th>
                             <th>Pelapor</th>
                             <th>Judul</th>
                             <th>Deskripsi</th>

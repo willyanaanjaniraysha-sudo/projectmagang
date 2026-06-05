@@ -35,7 +35,7 @@
     <table>
         <thead>
             <tr>
-                <th>#</th>
+                <th>No</th>
                 <th>Pelapor</th>
                 <th>Judul</th>
                 <th>Deskripsi</th>
