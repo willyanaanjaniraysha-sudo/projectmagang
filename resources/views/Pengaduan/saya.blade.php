@@ -201,10 +201,39 @@
             </div>
             <div class="info-item">
                 <span class="label">✅ Status</span>
-                <span class="value">Aktif</span>
+                 <div class="d-flex align-items-center gap-2">
+                    <span class="value text-success fw-bold me-1">Aktif</span>
+                    
+                   </div>
             </div>
         </div>
-    </div>
+
+        <!-- Tombol Simpan Otomatis Muncul jika Anda Mengubah Teks Nama -->
+        @if($errors->has('name') || $errors->has('photo'))
+            <div class="text-danger small mt-2 px-3 text-center">
+                {{ $errors->first('name') ?: $errors->first('photo') }}
+            </div>
+        @endif
+    </form>
+
+    @if($user->photo)
+    <div class="d-flex align-items-center gap-3">
+                    <label for="photo" class="btn btn-sm btn-outline-secondary py-1 px-2 m-0 border-0 shadow-none text-muted" style="cursor: pointer; font-size: 13px;" title="Ubah Foto Profil">
+                        <i class="fas fa-camera me-1"></i> Ganti Foto
+                    </label>
+                    <input type="file" id="photo" name="photo" class="d-none" onchange="this.form.submit()">
+                
+        <div class="text-center mt-2">
+            <form action="{{ route('saya.delete-photo') }}" method="POST" onsubmit="return confirm('Hapus foto profil?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-link btn-sm text-danger text-decoration-none p-0" style="font-size: 11px;">
+                    <i class="fas fa-trash-alt me-1"></i> Hapus Foto
+                </button>
+            </form>
+        </div>
+    @endif
+</div>
     <div class="history-section" style="margin-top: 32px; margin-bottom: 20px;">
     <!-- Header Area yang Elegan -->
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 20px;">

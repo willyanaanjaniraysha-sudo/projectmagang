@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -66,7 +67,7 @@ class ProfileController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         /** @var \App\Models\User $user */
-        $user = Auth::user();
+        $user = User::findOrFail(Auth::id());
 
         // Hapus file fisik gambar dari folder storage jika ada agar tidak jadi sampah berkas
         if ($user->photo && Storage::disk('public')->exists($user->photo)) {
@@ -93,7 +94,7 @@ class ProfileController extends Controller
     public function deletePhoto(): RedirectResponse
     {
         /** @var \App\Models\User $user */
-        $user = Auth::user();
+        $user = User::findOrFail(Auth::id());
 
         if ($user->photo) {
             if (Storage::disk('public')->exists($user->photo)) {
@@ -106,4 +107,34 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('success', 'Foto profil berhasil dihapus!');
     }
+    public function updateSaya(Request $request)
+{
+    $user = User::findOrFail(Auth::id());
+
+    // Validasi data input
+    $request->validate([
+        'name'  => 'required|string|max:255',
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    // Update nama
+    $user->name = $request->name;
+
+    // Proses unggah foto jika ada file baru
+    if ($request->hasFile('photo')) {
+        // Hapus foto lama jika ada
+        if ($user->photo) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        // Simpan foto baru ke folder 'photos' di dalam disk public
+        $path = $request->file('photo')->store('photos', 'public');
+        $user->photo = $path;
+    }
+
+    $user->save();
+
+    // KUNCI SOLUSI: Redirect kembali ke halaman 'saya' dengan pesan sukses
+    return redirect()->route('saya.index')->with('success', 'Profil berhasil diperbarui!');
+}
 }
