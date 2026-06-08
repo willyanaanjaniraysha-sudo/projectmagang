@@ -8,18 +8,29 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-   public function index(Request $request)
-{
-    $search = $request->search;
+    public function index(Request $request)
+    {       
+        $search = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+        
+        // WAJIB ditambahkan withTrashed() agar user terhapus sementara bisa tampil di tabel
+        $users = User::withTrashed()
+            ->when($search, function ($query, $search) {
+                return $query->where(function($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
 
-    $users = User::when($search, function ($query) use ($search) {
-        $query->where('name', 'like', "%{$search}%")
-              ->orWhere('email', 'like', "%{$search}%")
-              ->orWhere('role', 'like', "%{$search}%");
-    })->paginate(10);
+                    if (in_array(strtolower($search), ['user', 'admin', 'super admin'])) {
+                        $q->orWhere('role', '=', $search);
+                    }
+                });
+            })
+            ->latest()
+            ->paginate($perPage) 
+            ->withQueryString();
 
-    return view('user.index', compact('users'));
-}
+        return view('user.index', compact('users'));
+    }
 
     public function create()
     {
@@ -44,18 +55,21 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
     }
 
-    public function edit(User $user)
+    // Menggunakan ID manual atau mengizinkan pencarian data soft delete agar tidak 404
+    public function edit($id)
     {
+        $user = User::withTrashed()->findOrFail($id);
         return view('user.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'role' => 'required|in:user,admin,super admin',
         ]);
 
+        $user = User::withTrashed()->findOrFail($id);
         $user->name = $request->name;
         $user->role = $request->role;
 
@@ -68,28 +82,39 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'User berhasil diperbarui!');
     }
 
-    public function destroy(User $user)
-    {
-        $user->delete();
-        return redirect()->route('user.index')->with('success', 'User berhasil dihapus!');
-    }
+    public function destroy($id)
+{
+    $user = User::withTrashed()->findOrFail($id);
+    $user->delete();
+    
+    // Diubah menjadi nama route index user yang benar
+    return redirect()->route('user.index')->with('success', 'User berhasil dihapus!');
+}
 
     // Fungsi untuk menu Role Permission
- public function roleIndex()
-{
-    // WAJIB pakai paginate agar fungsi ->links() di blade tidak error
-    $users = \App\Models\User::latest()->paginate(10);
-    
-    return view('role', compact('users'));
-}
-public function adminIndex()
-{
-    // Filter hanya yang rolenya 'admin'
-    $users = \App\Models\User::where('role', 'admin')->latest()->paginate(10);
-    
-    // Gunakan view yang sama dengan role tapi kirim data admin saja
-    return view('role', compact('users'));
-}
-    
+    public function roleIndex()
+    {
+        $users = User::latest()->paginate(10);
+        return view('role', compact('users'));
+    }
 
+    public function adminIndex()
+    {
+        $users = User::where('role', 'admin')->latest()->paginate(10);
+        return view('role', compact('users'));
+    }
+
+    // FUNGSI RESTORE DIUBAH MENJADI MODEL USER
+    public function restore($id)
+    {
+        // Mencari data user yang terhapus berdasarkan ID
+        $user = User::withTrashed()->findOrFail($id); 
+        
+        // Mengembalikan data user
+        $user->restore(); 
+
+        return redirect()->back()->with('success', 'Akun user berhasil dikembalikan!');
+    }
+
+    
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\ActivityLogController;
 
 Route::get('/', function () { return redirect('/login'); });
 
@@ -59,7 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
     Route::put('/profil/update', [ProfileController::class, 'update'])->name('profil.update');
     Route::delete('/profil/delete', [ProfileController::class, 'destroy'])->name('profil.delete');
-
+    Route::put('saya/update', [ProfileController::class, 'updateSaya'])->name('saya.update');   
+    Route::delete('/saya/delete-photo', [ProfileController::class, 'deletePhoto'])->name('saya.delete-photo');
     });
 
     Route::middleware(['auth'])->group(function () {
@@ -79,4 +81,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/aspirasi/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
     Route::get('/aspirasi/history', [AspirasiController::class, 'history'])->name('aspirasi.history');
     });
+
+    //soft delete user
+    Route::patch('/user/{id}/restore', [UserController::class, 'restore'])->name('user.restore')->withTrashed();
 });
+// ==========================================
+    // RUTE BARU: LOG AKTIVITAS (ADMIN & SUPER ADMIN)
+    // ==========================================
+    Route::get('/admin/activity-logs', [ActivityLogController::class, 'index'])->name('admin.activity-logs.index');
+

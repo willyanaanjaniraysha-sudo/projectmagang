@@ -107,20 +107,16 @@
             <i class="fas fa-angle-left" id="roleArrow" style="{{ request()->is('user*') || request()->is('admin*') ? 'transform: rotate(-90deg);' : '' }}"></i>
         </button>
 
-        <div id="roleMenu" style="{{ request()->is('user*') || request()->is('admin*') ? '' : 'display:none;' }}">
-            <a class="nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}" href="{{ route('admin.index') }}"
-               style="color: {{ request()->routeIs('admin.*') ? '#fff' : '#a2a2c2' }} !important; padding: 10px 20px 10px 44px; margin: 2px 12px; border-radius: 8px; background: {{ request()->routeIs('admin.*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->routeIs('admin.*') ? '#818cf8' : 'transparent' }};">
-                <i class="fas fa-user-tie me-2"></i> Kelola Admin
-            </a>
+        <div id="roleMenu" style="{{ request()->is('user*') || request()->is('admin*') || request()->is('pengaturan*') ? '' : 'display:none;' }}">
             <a class="nav-link {{ request()->is('user*') ? 'active' : '' }}" href="/user"
-               style="color: {{ request()->is('user*') ? '#fff' : '#a2a2c2' }} !important; padding: 10px 20px 10px 44px; margin: 2px 12px; border-radius: 8px; background: {{ request()->is('user*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('user*') ? '#818cf8' : 'transparent' }};">
-                <i class="fas fa-users me-2"></i> Kelola User
+        style="color: {{ request()->is('user*') ? '#fff' : '#a2a2c2' }} !important; padding: 10px 20px 10px 44px; margin: 2px 12px; border-radius: 8px; background: {{ request()->is('user*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('user*') ? '#818cf8' : 'transparent' }};">
+        <i class="fas fa-users me-2"></i> Kelola User
             </a>
             <a class="nav-link {{ request()->is('pengaturan*') ? 'active' : '' }}" href="/pengaturan"
-            style="color: {{ request()->is('pengaturan*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; margin: 3px 12px; border-radius: 8px; background: {{ request()->is('pengaturan*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('pengaturan*') ? '#818cf8' : 'transparent' }};">
-            <i class="fas fa-cogs me-2"></i> Pengaturan Sistem
-        </a>
-        </div>
+        style="color: {{ request()->is('pengaturan*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; margin: 3px 12px; border-radius: 8px; background: {{ request()->is('pengaturan*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('pengaturan*') ? '#818cf8' : 'transparent' }};">
+        <i class="fas fa-cogs me-2"></i> Pengaturan Sistem
+            </a>
+            </div>
 
         <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}" href="/laporan"
            style="color: {{ request()->is('laporan*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; margin: 3px 12px; border-radius: 8px; background: {{ request()->is('laporan*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('laporan*') ? '#818cf8' : 'transparent' }};">

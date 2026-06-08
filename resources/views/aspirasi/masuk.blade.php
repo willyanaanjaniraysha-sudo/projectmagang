@@ -33,13 +33,14 @@
                 <table class="table table-hover mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th class="ps-4">#</th>
+                            <th class="ps-4">No</th>
                             <th>Pelapor</th>
                             <th>Judul</th>
                             <th>Deskripsi</th>
                             <th>Foto</th>
                             <th>Status</th>
                             <th>Aksi</th>
+                            <th>Tanggal Masuk</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -75,11 +76,15 @@
                                     </select>
                                 </form>
                             </td>
-                        </tr>
+                        <td>
+                                {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d F Y, H:i') }} WIB
+                            </td>
+                            </tr>
                         @empty
                         <tr>
-                            <td colspan="7" class="text-center py-4 text-muted">Tidak ada laporan masuk.</td>
+                            <td colspan="8" class="text-center py-4 text-muted">Tidak ada laporan masuk.</td>
                         </tr>
+                        
                         @endforelse
                     </tbody>
                 </table>

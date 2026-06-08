@@ -9,7 +9,7 @@
         body { font-family: 'Inter', sans-serif; background: #f4f7f6; }
         .nav-link { color: #a2a2c2; padding: 12px 20px; transition: 0.3s; }
         .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255,255,255,0.1); border-left: 4px solid #818cf8; }
-        .main-content { flex: 1; padding: 30px; }
+        .main-content { flex: 1; padding: 30px; position: fixed; margin: auto; top: 0; left: 0; right: 0; bottom: 0; max-width: 600px; }
     </style>
 </head>
 <body>

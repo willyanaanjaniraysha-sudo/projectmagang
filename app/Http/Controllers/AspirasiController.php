@@ -78,4 +78,6 @@ class AspirasiController extends Controller
 
         return view('aspirasi.history', compact('history'));
     }
+
+    
 }
