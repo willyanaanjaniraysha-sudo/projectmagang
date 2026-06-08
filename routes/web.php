@@ -80,4 +80,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/aspirasi/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
     Route::get('/aspirasi/history', [AspirasiController::class, 'history'])->name('aspirasi.history');
     });
+
+    //soft delete user
+    Route::patch('/user/{id}/restore', [UserController::class, 'restore'])->name('user.restore')->withTrashed();
+
+
 });

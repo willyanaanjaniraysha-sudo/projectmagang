@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Jenssegers\Agent\Facades\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Pengaduan;
+//use App\Models\Pengaduan;
 
 class AuthController extends Controller
 {
