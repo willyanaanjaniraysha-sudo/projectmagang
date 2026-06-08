@@ -9,6 +9,7 @@ use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\ActivityLogController;
 
 Route::get('/', function () { return redirect('/login'); });
 
@@ -83,6 +84,9 @@ Route::middleware('auth')->group(function () {
 
     //soft delete user
     Route::patch('/user/{id}/restore', [UserController::class, 'restore'])->name('user.restore')->withTrashed();
-
-
 });
+// ==========================================
+    // RUTE BARU: LOG AKTIVITAS (ADMIN & SUPER ADMIN)
+    // ==========================================
+    Route::get('/admin/activity-logs', [ActivityLogController::class, 'index'])->name('admin.activity-logs.index');
+

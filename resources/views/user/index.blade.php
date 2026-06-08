@@ -28,11 +28,37 @@
 
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center mb-4">
+<<<<<<< Updated upstream
             <div>
                 <h4 class="fw-bold mb-1">
                     <i class="fas fa-users-cog me-2 text-primary"></i>Kelola User
                 </h4>
                 <p class="text-muted mb-0">Manajemen akun pengguna sistem</p>
+=======
+    <div>
+        <h4 class="fw-bold mb-1">
+            <i class="fas fa-users-cog me-2 text-primary"></i>Kelola User
+        </h4>
+        <p class="text-muted mb-0">Manajemen akun pengguna sistem</p>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+
+        <form action="{{ route('user.index') }}" method="GET">
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Cari nama dan email..."
+                class="form-control"
+                style="width:250px;"
+            >
+        </form>
+    <div class="d-flex gap-2">
+                <a href="/user" class="btn btn-sm {{ !request('search') ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">Semua</a>
+                <a href="/user?search=admin" class="btn btn-sm {{ request('search') == 'admin' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">Admin</a>
+                <a href="/user?search=user" class="btn btn-sm {{ request('search') == 'user' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">User</a>
+>>>>>>> Stashed changes
             </div>
 
             <div class="d-flex align-items-center gap-2">

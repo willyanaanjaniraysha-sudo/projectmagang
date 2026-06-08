@@ -80,38 +80,41 @@
 
     <!-- Menu -->
    <nav class="nav flex-column mt-2 flex-grow-1">
-    <!-- DASHBOARD -->
     <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }} py-2" href="/dashboard">
         <i class="fas fa-fw fa-tachometer-alt me-2"></i> Dashboard
     </a>
-    <a class="nav-link {{ request()->is('aspirasi/masuk*') ? 'active' : '' }} py-2" href="/aspirasi/masuk">
-        <i class="fas fa-fw fa-envelope-open-text me-2"></i> Laporan Masuk
+
+    <button onclick="toggleRole()" class="nav-link d-flex justify-content-between align-items-center py-2" 
+    style="color: {{ (request()->is('aspirasi*') || request()->is('laporan*')) ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; border-radius: 8px; background: {{ (request()->is('aspirasi*') || request()->is('laporan*')) ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ (request()->is('aspirasi*') || request()->is('laporan*')) ? '#818cf8' : 'transparent' }};">
+    <span><i class="fas fa-fw fa-envelope-open-text me-2"></i> Laporan Pengaduan</span>
+    <i id="roleArrow" class="fas fa-chevron-down" style="font-size: 12px; transform: {{ (request()->is('aspirasi*') || request()->is('laporan*')) ? 'rotate(-90deg)' : '' }};"></i>
+</button>
+        <div id="roleMenu" style="{{ (request()->is('aspirasi*') || request()->is('laporan*')) ? '' : 'display:none;' }}">
+    <a class="nav-link {{ request()->is('aspirasi/masuk*') ? 'active' : '' }} py-2" href="/aspirasi/masuk" style="padding: 0% 20px 0% 44px; color: {{ request()->is('aspirasi/masuk*') ? '#fff' : '#a2a2c2' }} !important; background: {{ request()->is('aspirasi/masuk*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('aspirasi/masuk*') ? '#818cf8' : 'transparent' }};">
+        <i class="fas fa-fw fa-inbox me-2"></i> Laporan Masuk
     </a>
-    <a class="nav-link {{ request()->is('aspirasi/proses*') ? 'active' : '' }} py-2" href="/aspirasi/proses">
+    <a class="nav-link {{ request()->is('aspirasi/proses*') ? 'active' : '' }} py-2" href="/aspirasi/proses" style="padding: 0% 20px 0% 44px; color: {{ request()->is('aspirasi/proses*') ? '#fff' : '#a2a2c2' }} !important; background: {{ request()->is('aspirasi/proses*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('aspirasi/proses*') ? '#818cf8' : 'transparent' }};">
         <i class="fas fa-fw fa-spinner me-2"></i> Dalam Proses
     </a>
-    <a class="nav-link {{ request()->is('aspirasi/selesai*') ? 'active' : '' }} py-2" href="/aspirasi/selesai">
+    <a class="nav-link {{ request()->is('aspirasi/selesai*') ? 'active' : '' }} py-2" href="/aspirasi/selesai" style="padding: 0% 20px 0% 44px; color: {{ request()->is('aspirasi/selesai*') ? '#fff' : '#a2a2c2' }} !important; background: {{ request()->is('aspirasi/selesai*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('aspirasi/selesai*') ? '#818cf8' : 'transparent' }};">
         <i class="fas fa-fw fa-check-double me-2"></i> Riwayat Selesai
     </a>
+    <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }} py-2" href="/laporan" style="padding: 12px 20px 12px 44px; color: {{ request()->is('laporan*') ? '#fff' : '#a2a2c2' }} !important; background: {{ request()->is('laporan*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('laporan*') ? '#818cf8' : 'transparent' }};">
+        <i class="fas fa-fw fa-file-pdf me-2"></i> Cetak Laporan
+    </a>
+    </div>
 
     <!-- DATA MASTER -->
     @if(auth()->user()->role == 'admin' || auth()->user()->role == 'super admin')
-        <div class="text-uppercase small fw-bold px-3 mt-2 text-muted" style="font-size: 0.65rem; opacity: 0.6;">
-            Data Master
-        </div>
-        <a class="nav-link {{ request()->is('user*') ? 'active' : '' }} py-2" href="/user">
-            <i class="fas fa-fw fa-users-cog me-2"></i> Kelola User
-        </a>
-        <a class="nav-link {{ request()->is('laporan*') ? 'active' : '' }} py-2" href="/laporan">
-            <i class="fas fa-fw fa-file-pdf me-2"></i> Cetak Laporan
-        </a>
-    @endif
-
-    <!-- REKAPITULASI -->
-    <div class="text-uppercase small fw-bold px-3 mt-2 text-muted" style="font-size: 0.65rem; opacity: 0.6;">
-        Rekapitulasi
-    </div>
-    
+            <a class="nav-link {{ request()->is('user*') ? 'active' : '' }} py-2" href="/user">
+                <i class="fas fa-fw fa-users-cog me-2"></i> Kelola User
+            </a>
+            
+            <!-- TAMBAHKAN MENU LOG AKTIVITAS DI SINI -->
+            <a class="nav-link {{ request()->is('admin/activity-logs*') ? 'active' : '' }} py-2" href="{{ route('admin.activity-logs.index') }}">
+                <i class="fas fa-fw fa-history me-2"></i> Log Aktivitas
+            </a>
+        @endif
 </nav>
 
 
