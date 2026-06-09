@@ -24,10 +24,10 @@
                                 <th class="px-4 py-3" style="width: 180px;">Waktu</th>
                                 <th class="py-3">Pengguna</th>
                                 <th class="py-3" style="width: 130px;">Role</th>
-                                <th class="py-3" style="width: 120px;">Aksi</th>
                                 <th class="py-3">Modul / Data</th>
                                 <th class="py-3">Alamat IP</th>
                                 <th class="px-4 py-3">Perangkat / Browser</th>
+                                <th class="py-3" style="width: 120px;">Deskripsi</th>
                             </tr>
                         </thead>
                         <tbody>
