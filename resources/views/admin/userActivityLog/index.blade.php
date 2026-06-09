@@ -1,8 +1,9 @@
 @extends($layout)
 
 @section('content')
-<div class="main-content" style="background: #f8fafc; min-height: 100vh; padding: 30px;">
-    <div class="container-fluid">
+<!-- Container Utama Tanpa Batasan Ukuran -->
+<div class="w-100" style="background: #f8fafc; min-height: 100vh;">
+    <div class="container-fluid px-0">
         
         <!-- Header Halaman -->
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -14,71 +15,86 @@
             </div>
         </div>
 
-        <!-- Tabel Log Card -->
-        <div class="card shadow-sm border-0" style="border-radius: 12px; overflow: hidden; background: #fff;">
+        <!-- Tabel Log Card - Dipaksa Melebar Penuh 100% -->
+        <div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden; background: #fff; width: 100% !important; padding: 20px !important;">
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0" style="min-width: 900px;">
+                    <table class="table table-hover align-middle mb-0 w-100">
                         <thead class="table-light" style="background: #f1f5f9; color: #475569;">
                             <tr>
-                                <th class="px-4 py-3" style="width: 180px;">Waktu</th>
-                                <th class="py-3">Pengguna</th>
-                                <th class="py-3" style="width: 130px;">Role</th>
-                                <th class="py-3">Modul / Data</th>
-                                <th class="py-3">Alamat IP</th>
-                                <th class="px-4 py-3">Perangkat / Browser</th>
-                                <th class="py-3" style="width: 120px;">Deskripsi</th>
+                                <th class="px-3 py-3 text-nowrap" style="width: 15%;">Waktu</th>
+                                <th class="py-3 text-nowrap" style="width: 15%;">Pengguna</th>
+                                <th class="py-3 text-nowrap" style="width: 10%;">Role</th>
+                                <th class="py-3 text-nowrap" style="width: 10%;">Aksi</th>
+                                <th class="py-3 text-nowrap" style="width: 25%;">Modul / Deskripsi Data</th>
+                                <th class="py-3 text-nowrap" style="width: 10%;">Alamat IP</th>
+                                <th class="px-3 py-3 text-nowrap" style="width: 15%;">Perangkat / Browser</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($activities as $log)
                                 <tr style="border-bottom: 1px solid #f1f5f9;">
-                                    <td class="px-4 text-secondary small">
+                                    <!-- 1. Waktu -->
+                                    <td class="px-3 text-secondary small text-nowrap">
                                         {{ $log->created_at->translatedFormat('d M Y, H:i') }} WIB
                                     </td>
+
+                                    <!-- 2. Pengguna -->
                                     <td>
-                                        <div class="fw-bold text-dark small">{{ $log->user->name ?? 'User Terhapus' }}</div>
+                                        <div class="fw-bold text-dark small text-nowrap">{{ $log->user->name ?? 'User Terhapus' }}</div>
                                         <small class="text-muted" style="font-size: 11px;">{{ $log->user->email ?? '-' }}</small>
                                     </td>
-                                    <td>
-                                        <!-- Penyesuaian warna badge sesuai css sidebar Anda -->
+
+                                    <!-- 3. Role -->
+                                    <!-- 3. Role (Ukuran Kotak Disamakan) -->
+                                    <td class="text-nowrap">
                                         @php
-                                            $roleClass = 'badge-user';
-                                            if(str_contains(strtolower($log->role), 'super')) { $roleClass = 'badge-superadmin'; }
-                                            elseif(strtolower($log->role) == 'admin') { $roleClass = 'badge-admin'; }
+                                            $roleClass = 'bg-secondary';
+                                            if(str_contains(strtolower($log->role ?? ''), 'super')) { $roleClass = 'bg-danger'; }
+                                            elseif(strtolower($log->role ?? '') == 'admin') { $roleClass = 'bg-primary'; }
                                         @endphp
-                                        <span class="badge {{ $roleClass }} px-2.5 py-1.5 fw-semibold" style="font-size: 11px; border-radius: 6px;">
-                                            {{ $log->role }}
+                                        <!-- Ditambahkan d-inline-block text-center dan style width agar lebar kotak sama rata -->
+                                        <span class="badge {{ $roleClass }} d-inline-block text-center px-2 py-1.5 fw-semibold" style="font-size: 11px; border-radius: 6px; width: 95px;">
+                                            {{ $log->role ?? 'User' }}
                                         </span>
                                     </td>
-                                    <td>
+
+                                    <!-- 4. Aksi (Ukuran Kotak LOGIN/LOGOUT Disamakan) -->
+                                    <td class="text-nowrap">
                                         @php
                                             $actionColors = [
                                                 'LOGIN' => 'bg-success',
                                                 'LOGOUT' => 'bg-secondary',
-                                                'CREATE' => 'bg-primary',
+                                                'CREATE' => 'bg-info',
                                                 'UPDATE' => 'bg-warning text-dark',
                                                 'DELETE' => 'bg-danger'
                                             ];
-                                            $badgeColor = $actionColors[$log->action] ?? 'bg-info';
+                                            $badgeColor = $actionColors[strtoupper($log->action ?? 'LOGIN')] ?? 'bg-dark';
                                         @endphp
-                                        <span class="badge {{ $badgeColor }} px-2 py-1 text-uppercase" style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px;">
-                                            {{ $log->action }}
+                                        <!-- Ditambahkan d-inline-block text-center dan style width agar tombol LOGIN dan LOGOUT sama besarnya -->
+                                        <span class="badge {{ $badgeColor }} d-inline-block text-center px-2 py-1.5 text-uppercase" style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px; width: 65px;">
+                                            {{ $log->action ?? 'LOGIN' }}
                                         </span>
                                     </td>
+
+                                    <!-- 5. Modul & Deskripsi (Disatukan di kolom luas agar teks panjang leluasa ke kanan) -->
                                     <td>
-                                        <span class="text-dark fw-medium small">{{ $log->resource }}</span>
-                                        @if($log->description)
-                                            <br><small class="text-muted" style="font-size: 11px;">{{ $log->description }}</small>
-                                        @endif
+                                        <strong class="text-secondary small d-block mb-1">[{{ $log->resource ?? 'auth' }}]</strong>
+                                        <span class="text-dark small d-block" style="white-space: normal; word-break: break-word;">
+                                            {{ $log->description ?? '-' }}
+                                        </span>
                                     </td>
-                                    <td>
-                                        <code class="text-primary bg-light px-2 py-0.5 rounded small" style="font-size: 11px;">
+
+                                    <!-- 6. Alamat IP -->
+                                    <td class="text-nowrap">
+                                        <code class="text-primary bg-light px-2 py-0.5 rounded" style="font-size: 12px; font-weight: bold;">
                                             {{ $log->ip_address ?? '127.0.0.1' }}
                                         </code>
                                     </td>
-                                    <td class="px-4 text-muted small" style="font-size: 12px; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $log->device_info }}">
-                                        {{ $log->device_info ?? '-' }}
+
+                                    <!-- 7. Perangkat / Browser -->
+                                    <td class="px-3 text-muted small" style="font-size: 12px; white-space: normal; word-break: break-word;">
+                                        {{ $log->device_info ?? $log->user_agent ?? 'Desktop - Edge' }}
                                     </td>
                                 </tr>
                             @empty
