@@ -1,4 +1,4 @@
-@extends('layouts.mainadmin') {{-- Otomatis menggunakan layout utama admin Anda --}}
+@extends($layout)
 
 @section('content')
 <div class="main-content" style="background: #f8fafc; min-height: 100vh; padding: 30px;">

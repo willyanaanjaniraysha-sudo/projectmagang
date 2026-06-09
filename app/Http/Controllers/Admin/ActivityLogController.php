@@ -22,7 +22,13 @@ class ActivityLogController extends Controller
                         ->latest()
                         ->paginate(25);
 
+        if(Auth::user()->role === 'super admin') {
+            $layout = 'layouts.mainsuperadmin'; // Layout untuk super admin
+        } else {
+            $layout = 'layouts.mainadmin'; // Layout untuk admin biasa
+        }
+
         // Lempar data ke halaman view di resources/views/admin/activity-log/index.blade.php
-        return view('admin.userActivityLog.index', compact('activities'));
+        return view('admin.userActivityLog.index', compact('activities', 'layout'));
     }
 }

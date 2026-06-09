@@ -105,7 +105,7 @@
     </div>
 
     <!-- DATA MASTER -->
-    @if(auth()->user()->role == 'admin' || auth()->user()->role == 'super admin')
+    @if(auth()->user()->role == 'admin' || auth()->user()->role == 'admin')
             <a class="nav-link {{ request()->is('user*') ? 'active' : '' }} py-2" href="/user">
                 <i class="fas fa-fw fa-users-cog me-2"></i> Kelola User
             </a>

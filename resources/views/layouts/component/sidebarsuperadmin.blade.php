@@ -102,12 +102,12 @@
         </a>
 
         <button onclick="toggleRole()"
-            style="background: {{ request()->is('user*') || request()->is('admin*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border: none; border-left: 4px solid {{ request()->is('user*') || request()->is('admin*') ? '#818cf8' : 'transparent' }}; width: calc(100% - 24px); text-align: left; cursor: pointer; color: {{ request()->is('user*') || request()->is('admin*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin: 3px 12px; border-radius: 8px;">
+            style="background: {{ request()->is('user*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border: none; border-left: 4px solid {{ request()->is('user*') || request()->is('admin*') ? '#818cf8' : 'transparent' }}; width: calc(100% - 24px); text-align: left; cursor: pointer; color: {{ request()->is('user*') || request()->is('admin*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin: 3px 12px; border-radius: 8px;">
             <span><i class="fas fa-user-shield me-2"></i> Data Master</span>
-            <i class="fas fa-angle-left" id="roleArrow" style="{{ request()->is('user*') || request()->is('admin*') ? 'transform: rotate(-90deg);' : '' }}"></i>
+            <i class="fas fa-angle-left" id="roleArrow" style="{{ request()->is('user*') ? 'transform: rotate(-90deg);' : '' }}"></i>
         </button>
 
-        <div id="roleMenu" style="{{ request()->is('user*') || request()->is('admin*') || request()->is('pengaturan*') ? '' : 'display:none;' }}">
+        <div id="roleMenu" style="{{ request()->is('user*') || request()->is('pengaturan*') ? '' : 'display:none;' }}">
             <a class="nav-link {{ request()->is('user*') ? 'active' : '' }}" href="/user"
         style="color: {{ request()->is('user*') ? '#fff' : '#a2a2c2' }} !important; padding: 10px 20px 10px 44px; margin: 2px 12px; border-radius: 8px; background: {{ request()->is('user*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('user*') ? '#818cf8' : 'transparent' }};">
         <i class="fas fa-users me-2"></i> Kelola User
@@ -122,7 +122,10 @@
            style="color: {{ request()->is('laporan*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; margin: 3px 12px; border-radius: 8px; background: {{ request()->is('laporan*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('laporan*') ? '#818cf8' : 'transparent' }};">
             <i class="fas fa-file-alt me-2"></i> Laporan
         </a>
-
+        <a class="nav-link {{ request()->is('admin/activity-logs*') ? 'active' : '' }} py-2" href="{{ route('admin.activity-logs.index') }}"
+           style="color: {{ request()->is('admin/activity-logs*') ? '#fff' : '#a2a2c2' }} !important; padding: 12px 20px; margin: 3px 12px; border-radius: 8px; background: {{ request()->is('admin/activity-logs*') ? 'rgba(255,255,255,0.1)' : 'transparent' }}; border-left: 4px solid {{ request()->is('admin/activity-logs*') ? '#818cf8' : 'transparent' }};">
+            <i class="fas fa-history me-2"></i> Log Aktivitas
+        </a>
     </nav>
 
     <!-- Logout -->
