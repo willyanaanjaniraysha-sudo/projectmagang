@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\UserActivity;
+use Illuminate\Support\Facades\Auth; 
 
 class UserController extends Controller
 {
@@ -51,6 +53,15 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
+        UserActivity::create([
+            'user_id' => Auth::id(),
+            'role' => Auth::user()->role,
+            'action' => 'CREATE',
+            'resource' => 'users',
+            'ip_address' => $request->ip(),
+            'device_info' => $request->userAgent(),
+            'description' => 'Menambahkan user baru: '.$request->name,
+        ]);
 
         return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
     }
@@ -79,6 +90,15 @@ class UserController extends Controller
         }
 
         $user->save();
+        UserActivity::create([
+            'user_id' => Auth::id(),
+            'role' => Auth::user()->role,
+            'action' => 'UPDATE',
+            'resource' => 'users',
+            'ip_address' => $request->ip(),
+            'device_info' => $request->userAgent(),
+            'description' => 'Memperbarui user: '.$request->name,
+        ]);
         return redirect()->route('user.index')->with('success', 'User berhasil diperbarui!');
     }
 
@@ -86,6 +106,15 @@ class UserController extends Controller
 {
     $user = User::withTrashed()->findOrFail($id);
     $user->delete();
+    UserActivity::create([
+        'user_id' => Auth::id(),
+        'role' => Auth::user()->role,
+        'action' => 'DELETE',
+        'resource' => 'users',
+        'ip_address' => request()->ip(),
+        'device_info' => request()->userAgent(),
+        'description' => 'Menghapus user: '.$user->name,
+    ]);
     
     // Diubah menjadi nama route index user yang benar
     return redirect()->route('user.index')->with('success', 'User berhasil dihapus!');
@@ -112,6 +141,15 @@ class UserController extends Controller
         
         // Mengembalikan data user
         $user->restore(); 
+        UserActivity::create([
+            'user_id' => Auth::id(),
+            'role' => Auth::user()->role,
+            'action' => 'RESTORE',
+            'resource' => 'users',
+            'ip_address' => request()->ip(),
+            'device_info' => request()->userAgent(),
+            'description' => 'Mengembalikan user: '.$user->name,
+        ]);
 
         return redirect()->back()->with('success', 'Akun user berhasil dikembalikan!');
     }
