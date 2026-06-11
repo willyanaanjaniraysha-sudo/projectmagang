@@ -29,7 +29,7 @@ class UserFactory extends Factory
         'name' => $name,
         'email' => $email,
         'email_verified_at' => now(),
-        'password' => static::$password ??= hash::make('password'),
+        'password' => static::$password ??= Hash::make('password'),
         'remember_token' => Str::random(10),
         
         // 🛠️ KUNCI PERBAIKAN: Mengacak otomatis 3 pilihan role untuk setiap data
