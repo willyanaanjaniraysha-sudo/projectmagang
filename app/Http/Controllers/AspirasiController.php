@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\Pengaduan;
+use App\Models\UserActivity;
 use Illuminate\Support\Facades\Auth;
 
 class AspirasiController extends Controller
@@ -41,19 +42,30 @@ class AspirasiController extends Controller
     public function updateStatus(Request $request, $id)
 {
     $pengaduan = Pengaduan::findOrFail($id);
+
     $pengaduan->status = $request->status;
 
-    // Tambahkan ini
     if ($request->status == 'Proses') {
         $pengaduan->tanggal_proses = now();
     }
+
     if ($request->status == 'Selesai') {
         $pengaduan->tanggal_selesai = now();
     }
 
     $pengaduan->save();
 
-    return back()->with('success', 'Status berhasil diperbarui!');
+    $log = UserActivity::create([
+        'user_id' => Auth::id(),
+        'role' => Auth::user()->role,
+        'action' => 'UPDATE',
+        'resource' => 'pengaduan',
+        'ip_address' => $request->ip(),
+        'device_info' => $request->userAgent(),
+        'description' => "Status pengaduan ID {$pengaduan->id} diubah menjadi {$request->status}"
+    ]);
+
+    return back();
 }
     public function kelola(Request $request)
     {
