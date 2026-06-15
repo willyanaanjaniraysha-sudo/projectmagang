@@ -107,34 +107,23 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('success', 'Foto profil berhasil dihapus!');
     }
-    public function updateSaya(Request $request)
+   public function updatePhoto(Request $request): RedirectResponse
 {
-    $user = User::findOrFail(Auth::id());
-
-    // Validasi data input
     $request->validate([
-        'name'  => 'required|string|max:255',
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
-    // Update nama
-    $user->name = $request->name;
+    $user = User::findOrFail(Auth::id());
 
-    // Proses unggah foto jika ada file baru
-    if ($request->hasFile('photo')) {
-        // Hapus foto lama jika ada
-        if ($user->photo) {
-            Storage::disk('public')->delete($user->photo);
-        }
-
-        // Simpan foto baru ke folder 'photos' di dalam disk public
-        $path = $request->file('photo')->store('photos', 'public');
-        $user->photo = $path;
+    if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+        Storage::disk('public')->delete($user->photo);
     }
 
+    $path = $request->file('photo')->store('uploads', 'public');
+
+    $user->photo = $path;
     $user->save();
 
-    // KUNCI SOLUSI: Redirect kembali ke halaman 'saya' dengan pesan sukses
-    return redirect()->route('saya.index')->with('success', 'Profil berhasil diperbarui!');
+    return back()->with('success', 'Foto profil berhasil diperbarui.');
 }
 }
