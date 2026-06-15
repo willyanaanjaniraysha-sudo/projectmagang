@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pengaduan;
+use App\Models\UserActivity;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Models\Activity;
 
@@ -55,7 +56,15 @@ class PengaduanController extends Controller
             'gambar'    => $namaGambar, // Menyimpan nama file asli ke database [1]
             'status'    => 'Pending'
         ]);
-
+            UserActivity::create([
+                'user_id' => Auth::id(),
+                'role' => Auth::user()->role,
+                'action' => 'CREATE',
+                'resource' => 'pengaduan',
+                'ip_address' => $request->ip(),
+                'device_info' => $request->userAgent(),
+                'description' => 'Membuat pengaduan baru: '.$request->judul,
+            ]);
         return redirect()->route('pengaduan.index')
             ->with('success', 'Pengaduan berhasil dikirim');
     }
@@ -88,10 +97,19 @@ class PengaduanController extends Controller
     public function destroy($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
-            if($pengaduan->user_id ==! Auth::id()) {
+            if($pengaduan->user_id !== Auth::id()) {
                 abort(403, 'Aksi tidak diizinkan');
             }
         $pengaduan->delete();
+        UserActivity::create([
+            'user_id' => Auth::id(),
+            'role' => Auth::user()->role,
+            'action' => 'DELETE',
+            'resource' => 'pengaduan',
+            'ip_address' => request()->ip(),
+            'device_info' => request()->userAgent(),
+            'description' => 'Menghapus pengaduan: '.$pengaduan->judul,
+        ]);
         return back()->with('success', 'Pengaduan berhasil dihapus!');
     }
 }

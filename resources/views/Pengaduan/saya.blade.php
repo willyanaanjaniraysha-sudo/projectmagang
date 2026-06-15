@@ -11,13 +11,53 @@
             margin-left: 260px;
         }
 
-        .top-bar {
+        .top-bar {  
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 24px;
+        
         }
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:25px;
+}
 
+.avatar-section{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+}
+
+.profile-photo{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #2563eb;
+}
+
+.btn-foto{
+    background:#2563eb;
+    color:white;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.btn-hapus{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:12px;
+}
         .btn-back {
             display: inline-flex;
             align-items: center;
@@ -179,13 +219,58 @@
 
     {{-- Profil --}}
     <div class="card">
-        <div class="avatar">
-            {{ strtoupper(substr($user->name, 0, 1)) }}
-        </div>
+       <div class="profile-header">
 
+    <div class="avatar-section">
+
+        @if($user->photo)
+            <img src="{{ asset('storage/' . $user->photo) }}"
+                 class="profile-photo">
+                 
+        @else
+            <div class="avatar">
+                {{ strtoupper(substr($user->name, 0, 1)) }}
+            </div>
+        @endif
+
+        <form action="{{ route('profil.update-photo') }}"
+              method="POST"
+              enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+
+            <label for="photo" class="btn-foto">
+                Ganti Foto
+            </label>
+
+            <input type="file"
+                   id="photo"
+                   name="photo"
+                   hidden
+                   onchange="this.form.submit()">
+        </form>
+
+        @if($user->photo)
+        <form action="{{ route('profil.delete-photo') }}"
+              method="POST"
+              onsubmit="return confirm('Hapus foto profil?')">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit" class="btn-hapus">
+                Hapus Foto
+            </button>
+        </form>
+        @endif
+
+    </div>
+
+    <div>
         <div class="nama">{{ $user->name }}</div>
         <div class="email">{{ $user->email }}</div>
+    </div>
 
+</div>
         <div class="info-row">
             <div class="info-item">
                 <span class="label">📛 Nama</span>
@@ -214,26 +299,6 @@
                 {{ $errors->first('name') ?: $errors->first('photo') }}
             </div>
         @endif
-    </form>
-
-    @if($user->photo)
-    <div class="d-flex align-items-center gap-3">
-                    <label for="photo" class="btn btn-sm btn-outline-secondary py-1 px-2 m-0 border-0 shadow-none text-muted" style="cursor: pointer; font-size: 13px;" title="Ubah Foto Profil">
-                        <i class="fas fa-camera me-1"></i> Ganti Foto
-                    </label>
-                    <input type="file" id="photo" name="photo" class="d-none" onchange="this.form.submit()">
-                
-        <div class="text-center mt-2">
-            <form action="{{ route('saya.delete-photo') }}" method="POST" onsubmit="return confirm('Hapus foto profil?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-link btn-sm text-danger text-decoration-none p-0" style="font-size: 11px;">
-                    <i class="fas fa-trash-alt me-1"></i> Hapus Foto
-                </button>
-            </form>
-        </div>
-    @endif
-</div>
     <div class="history-section" style="margin-top: 32px; margin-bottom: 20px;">
     <!-- Header Area yang Elegan -->
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 20px;">
