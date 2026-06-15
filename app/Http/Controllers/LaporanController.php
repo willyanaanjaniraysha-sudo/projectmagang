@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pengaduan;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\UserActivity; // Pastikan Model Log Aktivitas dipanggil di bagian atas
+use App\Models\UserActivity; 
 use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
@@ -29,30 +29,22 @@ class LaporanController extends Controller
                             ->get();
         }
 
+        // 🛠️ KUNCI UTAMA: Masukkan log aktivitas di sini sebelum file PDF di-download browser
+        UserActivity::create([
+            'user_id'     => Auth::id(),
+            'role'        => Auth::user()->role ?? 'user', 
+            'action'      => 'DOWNLOAD',               
+            'resource'    => 'laporan',                
+            'description' => 'Mendownload file laporan pengaduan dengan status: ' . $status, 
+            'ip_address'  => $request->ip(),          
+            'device_info' => $request->userAgent(),   
+        ]);
+
+        // Proses pembuatan PDF bawaan aplikasi Anda
         $pdf = Pdf::loadView('laporan.pdf', compact('pengaduans', 'status'))
                   ->setPaper('a4', 'landscape');
 
+        // Mengirimkan file cetak unduhan ke browser
         return $pdf->download('laporan-pengaduan-' . strtolower($status) . '.pdf');
     }
-
-    
-
-public function downloadLaporan($id)
-{
-    // 1. Proses ambil data laporannya terlebih dahulu
-    // Contoh: $laporan = Laporan::findOrFail($id);
-
-    // 2. KUNCI UTAMA: Masukkan catatan ke tabel log aktivitas sebelum file diunduh
-    UserActivity::create([
-        'user_id' => Auth::id(), // ID user yang sedang login dan mendownload
-        'activity' => 'Mendownload Laporan Rekapitulasi Aspirasi', // Deskripsi aktivitas
-        // Jika tabel log Anda punya kolom tambahan, silakan sesuaikan di bawah ini:
-        // 'description' => 'User mendownload file laporan ID: ' . $id,
-    ]);
-
-    // 3. Kembalikan file unduhan ke browser pengguna
-    // Contoh jika file disimpan di storage:
-    return response()->download(storage_path('app/public/laporan/rekap-aspirasi.pdf'));
-}
-
 }
