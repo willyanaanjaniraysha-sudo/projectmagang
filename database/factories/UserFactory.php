@@ -18,17 +18,25 @@ class UserFactory extends Factory
      * Define the model's default state.
      */
     public function definition(): array
-    {
-        return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
-            // Memilih role secara acak: user, admin, atau super admin
-            'role' => fake()->randomElement(['user', 'admin', 'super admin']),
-        ];
-    }
+{
+    // 1. Buat nama Indonesia acak secara otomatis
+    $name = fake()->name();
+    
+    // 2. Buat email otomatis yang sinkron dengan nama di atas
+    $email = strtolower(str_replace([' ', '.', ','], '', $name)) . '@gmail.com';
+
+    return [
+        'name' => $name,
+        'email' => $email,
+        'email_verified_at' => now(),
+        'password' => static::$password ??= Hash::make('password'),
+        'remember_token' => Str::random(10),
+        
+        // 🛠️ KUNCI PERBAIKAN: Mengacak otomatis 3 pilihan role untuk setiap data
+        'role' => fake()->randomElement(['super admin', 'admin', 'user']),
+    ];
+}
+
 
     /**
      * State khusus jika kamu ingin membuat user dengan role 'admin' secara pasti.

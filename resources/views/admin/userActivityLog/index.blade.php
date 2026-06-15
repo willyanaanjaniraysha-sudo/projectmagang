@@ -61,18 +61,20 @@
 
                                     <!-- 4. Aksi (Ukuran Kotak LOGIN/LOGOUT Disamakan) -->
                                     <td class="text-nowrap">
-                                        @php
-                                            $actionColors = [
-                                                'LOGIN' => 'bg-success',
-                                                'LOGOUT' => 'bg-secondary',
-                                                'CREATE' => 'bg-info',
-                                                'UPDATE' => 'bg-warning text-dark',
-                                                'DELETE' => 'bg-danger'
-                                            ];
-                                            $badgeColor = $actionColors[strtoupper($log->action ?? 'LOGIN')] ?? 'bg-dark';
-                                        @endphp
+                                    @php
+                                        $actionColors = [
+                                            'LOGIN' => 'bg-success',
+                                            'LOGOUT' => 'bg-secondary',
+                                            'CREATE' => 'bg-info',
+                                            'UPDATE' => 'bg-warning text-dark',
+                                            'DELETE' => 'bg-danger', 
+                                            'DOWNLOAD' => 'bg-primary'
+                                        ];
+                                        $badgeColor = $actionColors[strtoupper($log->action ?? 'LOGIN')] ?? 'bg-dark';
+                                    @endphp
+
                                         <!-- Ditambahkan d-inline-block text-center dan style width agar tombol LOGIN dan LOGOUT sama besarnya -->
-                                        <span class="badge {{ $badgeColor }} d-inline-block text-center px-2 py-1.5 text-uppercase" style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px; width: 65px;">
+                                        <span class="badge {{ $badgeColor }} d-inline-block text-center px-2 py-1.5 text-uppercase" style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px; width: 90px;">
                                             {{ $log->action ?? 'LOGIN' }}
                                         </span>
                                     </td>
