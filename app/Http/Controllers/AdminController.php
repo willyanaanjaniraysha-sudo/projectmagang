@@ -8,11 +8,30 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        $admins = User::where('role', 'admin')->latest()->get();
-        return view('admin.index', compact('admins'));
+   public function index()
+{
+    // 1. Ambil hitungan kotak ringkasan di atas grafik
+    $total = \App\Models\Pengaduan::count();
+    $pending = \App\Models\Pengaduan::where('status', 'pending')->count();
+    $proses = \App\Models\Pengaduan::where('status', 'proses')->count();
+    $selesai = \App\Models\Pengaduan::where('status', 'selesai')->count();
+
+    // 2. KUNCI GRAFIK: Membuat daftar 7 hari terakhir secara otomatis untuk label grafik
+    $days = [];
+    $totals = [];
+    
+    for ($i = 6; $i >= 0; $i--) {
+        // Mengambil nama hari ke belakang (Senin, Selasa, dll)
+        $date = now()->subDays($i);
+        $days[] = $date->translatedFormat('l'); // Menghasilkan teks nama hari Indonesia
+        
+        // Menghitung berapa banyak pengaduan yang masuk di hari tersebut untuk titik grafik
+        $totals[] = \App\Models\Pengaduan::whereDate('created_at', $date->toDateString())->count();
     }
+
+    // 3. Lempar SEMUA data (termasuk $days dan $totals untuk grafik) ke file Blade Dashboard
+    return view('dashboard', compact('total', 'pending', 'proses', 'selesai', 'days', 'totals'));
+}
 
     public function create()
     {

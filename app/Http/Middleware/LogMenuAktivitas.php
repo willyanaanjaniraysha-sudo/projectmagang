@@ -20,48 +20,48 @@ class LogMenuAktivitas
             $urlPath = $request->path();
             $modul = 'navigasi';
             $deskripsi = 'Membuka halaman ' . $urlPath;
+// =================================================================
+// 🛠️ PEMETAAN MENU SUPER ADMIN, ADMIN, & USER
+// =================================================================
 
-            // =================================================================
-            // 🛠️ PEMETAAN MENU SUPER ADMIN, ADMIN, & USER
-            // =================================================================
-            
-            // Jika URL dashboard Anda di laptop ternyata bernama 'home' atau 'admin'
-            if ($urlPath === 'dashboard' || $urlPath === 'home' || $urlPath === 'admin' || str_contains($urlPath, 'dashboard')) {
-                $modul = 'dashboard';
-                $deskripsi = 'Membuka halaman utama Dashboard Ringkasan';
-            }
-            
-            // 2. KELOLA PENGADUAN & RIWAYAT (Super Admin, Admin, User)
-            elseif (str_contains($urlPath, 'pengaduan') || str_contains($urlPath, 'aspirasi')) {
-                $modul = 'pengaduan';
-                
-                if (str_contains($urlPath, 'create') || str_contains($urlPath, 'tambah') || str_contains($urlPath, 'buat')) {
-                    $deskripsi = 'Membuka halaman form Buat Pengaduan Baru';
-                } elseif (str_contains($urlPath, 'saya') || str_contains($urlPath, 'riwayat')) {
-                    $deskripsi = 'Membuka menu Riwayat Pengaduan Saya';
-                } elseif (str_contains($urlPath, 'masuk')) {
-                    $deskripsi = 'Membuka halaman daftar Laporan Masuk';
-                } elseif (str_contains($urlPath, 'proses')) {
-                    $deskripsi = 'Membuka halaman daftar Laporan Dalam Proses';
-                } elseif (str_contains($urlPath, 'selesai')) {
-                    $deskripsi = 'Membuka halaman daftar Riwayat Selesai';
-                } else {
-                    $deskripsi = 'Membuka menu utama Kelola Pengaduan';
-                }
-            } 
-            
-            // 3. DATA MASTER & KELOLA USER & PENGATURAN (Super Admin & Admin)
-            elseif (str_contains($urlPath, 'user') || str_contains($urlPath, 'master') || str_contains($urlPath, 'sistem') || str_contains($urlPath, 'pengaturan')) {
-                $modul = 'data master';
-                
-                if (str_contains($urlPath, 'create') || str_contains($urlPath, 'tambah')) {
-                    $deskripsi = 'Membuka halaman Aktivitas Menambahkan User Baru';
-                } elseif (str_contains($urlPath, 'sistem') || str_contains($urlPath, 'pengaturan')) {
-                    $deskripsi = 'Membuka menu Pengaturan Sistem Utama';
-                } else {
-                    $deskripsi = 'Membuka menu utama Kelola User';
-                }
-            } 
+// 1. KUNCI PERBAIKAN: Cek kata 'dashboard' di baris PALING ATAS agar tidak tertukar dengan role/data master
+if ($urlPath === 'dashboard' || str_contains($urlPath, 'dashboard')) {
+    $modul = 'dashboard';
+    $deskripsi = 'Membuka halaman utama Dashboard Ringkasan';
+} 
+
+// 2. KELOLA PENGADUAN & RIWAYAT (Super Admin, Admin, User)
+elseif (str_contains($urlPath, 'pengaduan') || str_contains($urlPath, 'aspirasi')) {
+    $modul = 'pengaduan';
+    
+    if (str_contains($urlPath, 'create') || str_contains($urlPath, 'tambah') || str_contains($urlPath, 'buat')) {
+        $deskripsi = 'Membuka halaman form Buat Pengaduan Baru';
+    } elseif (str_contains($urlPath, 'saya') || str_contains($urlPath, 'riwayat')) {
+        $deskripsi = 'Membuka menu Riwayat Pengaduan Saya';
+    } elseif (str_contains($urlPath, 'masuk')) {
+        $deskripsi = 'Membuka halaman daftar Laporan Masuk';
+    } elseif (str_contains($urlPath, 'proses')) {
+        $deskripsi = 'Membuka halaman daftar Laporan Dalam Proses';
+    } elseif (str_contains($urlPath, 'selesai')) {
+        $deskripsi = 'Membuka halaman daftar Riwayat Selesai';
+    } else {
+        $deskripsi = 'Membuka menu utama Kelola Pengaduan';
+    }
+} 
+
+// 3. DATA MASTER & KELOLA USER & ROLE
+elseif (str_contains($urlPath, 'user') || str_contains($urlPath, 'master') || str_contains($urlPath, 'sistem') || str_contains($urlPath, 'pengaturan') || $urlPath === 'admin' || str_contains($urlPath, 'admin/')) {
+    $modul = 'data master';
+    
+    if (str_contains($urlPath, 'create') || str_contains($urlPath, 'tambah')) {
+        $deskripsi = 'Membuka halaman Aktivitas Menambahkan User Baru';
+    } elseif (str_contains($urlPath, 'sistem') || str_contains($urlPath, 'pengaturan')) {
+        $deskripsi = 'Membuka menu Pengaturan Sistem Utama';
+    } else {
+        $deskripsi = 'Membuka menu utama Kelola User';
+    }
+} 
+
             
             // 4. LAPORAN & CETAK (Super Admin & Admin)
             elseif (str_contains($urlPath, 'laporan') || str_contains($urlPath, 'cetak')) {

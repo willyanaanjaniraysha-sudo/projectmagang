@@ -30,7 +30,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', LogMenuAktivitas::class])->group(function () {
 
     // 1. DASHBOARD (Cukup 1 rute ini saja, diarahkan ke AdminController yang valid)
-   Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+   // KODE PERBAIKAN: Arahkan ke DashboardController utama dengan fungsi bernama 'index'
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
 
 
     // 2. LOG AKTIVITAS
