@@ -1,0 +1,75 @@
+.logout-modal {
+    border: none !important;
+    border-radius: 12px !important;
+    background: white !important;
+    padding: 24px !important;
+    max-width: 400px !important;
+    width: 90% !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    text-align: center !important;
+    position: fixed !important;
+    margin: auto !important;
+    top: 0% !important;
+    left: 0 !important; /* 130px adalah setengah dari lebar sidebar 260px */
+    right: 0 !important;
+    bottom: 0 !important;   
+    transform: none !important;
+    background: #ffffff !important;
+}
+
+
+/* Membuat latar belakang di luar kotak dialog menjadi gelap transparan */
+.logout-modal::backdrop {
+    background: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(2px) !important;
+    position: fixed !important; 
+    inset: 0 !important;    
+}
+
+/* Mengatur style tombol di dalam kotak dialog */
+.modal-btn {
+    padding: 10px 16px !important;
+    border-radius: 6px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+}
+
+.btn-batal {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+}
+
+.btn-batal:hover {
+    background: #e2e8f0 !important;
+}
+.main-content {
+        flex: 1;
+        padding: 30px;
+        min-width: 0;
+        margin-left: 260px;
+    }
+.btn-keluar-modal {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+.btn-keluar-modal:hover {
+    background: #dc2626 !important;
+}
+
+.logout-btn {
+    margin: 20px;
+    padding: 14px;
+    border-radius: 14px;
+    background: #fdecec;
+    color: #ef4444 !important;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    transition: .2s;
+}
