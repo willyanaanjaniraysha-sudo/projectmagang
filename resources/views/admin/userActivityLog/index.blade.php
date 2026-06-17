@@ -59,25 +59,35 @@
                                         </span>
                                     </td>
 
-                                    <!-- 4. Aksi (Ukuran Kotak LOGIN/LOGOUT Disamakan) -->
+                                   <!-- 4. Aksi (Ukuran Kotak Disamakan) -->
                                     <td class="text-nowrap">
-                                    @php
-                                        $actionColors = [
-                                            'LOGIN' => 'bg-success',
-                                            'LOGOUT' => 'bg-secondary',
-                                            'CREATE' => 'bg-info',
-                                            'UPDATE' => 'bg-warning text-dark',
-                                            'DELETE' => 'bg-danger', 
-                                            'DOWNLOAD' => 'bg-primary'
-                                        ];
-                                        $badgeColor = $actionColors[strtoupper($log->action ?? 'LOGIN')] ?? 'bg-dark';
-                                    @endphp
-
-                                        <!-- Ditambahkan d-inline-block text-center dan style width agar tombol LOGIN dan LOGOUT sama besarnya -->
-                                        <span class="badge {{ $badgeColor }} d-inline-block text-center px-2 py-1.5 text-uppercase" style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px; width: 90px;">
-                                            {{ $log->action ?? 'LOGIN' }}
-                                        </span>
+                                        @php
+                                            $actionColors = [
+                                                'LOGIN' => 'bg-success text-white',
+                                                'LOGOUT' => 'bg-secondary text-white',
+                                                'CREATE' => 'bg-info text-white',
+                                                'UPDATE' => 'bg-warning text-dark',
+                                                'DELETE' => 'bg-danger text-white', 
+                                                'DOWNLOAD' => 'bg-primary text-white',
+                                            ];
+                                            $badgeColor = $actionColors[strtoupper($log->action ?? 'LOGIN')] ?? '';
+                                        @endphp
+                                    
+                                        @if(strtoupper($log->action ?? '') === 'VIEW')
+                                            <!-- Desain Kotak Warna Lilac Spesial Khusus untuk VIEW -->
+                                            <span class="badge d-inline-block text-center px-2 py-1.5 text-uppercase" 
+                                                  style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px; width: 90px; background-color: #e2d1f9; color: #5a3791; border: 1px solid #d1bbf2; border-radius: 6px;">
+                                                {{ $log->action }}
+                                            </span>
+                                        @else
+                                            <!-- Warna Badge Standar Lainnya -->
+                                            <span class="badge {{ $badgeColor }} d-inline-block text-center px-2 py-1.5 text-uppercase" 
+                                                  style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px; width: 90px; border-radius: 6px;">
+                                                {{ $log->action ?? 'LOGIN' }}
+                                            </span>
+                                        @endif
                                     </td>
+                                    
 
                                     <!-- 5. Modul & Deskripsi (Disatukan di kolom luas agar teks panjang leluasa ke kanan) -->
                                     <td>
