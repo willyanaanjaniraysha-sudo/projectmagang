@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use App\Models\User;
+use App\Models\UserActivity;
 
 class ProfileController extends Controller
 {
@@ -16,11 +17,9 @@ class ProfileController extends Controller
      */
     public function show(): View
     {
-        // Ambil data user yang sedang login saat ini
-        $user = Auth::user(); 
+        $user = Auth::user();
 
-        // Kembalikan ke halaman view profil
-        return view('profil', compact('user')); 
+        return view('profil', compact('user'));
     }
 
     /**
@@ -28,37 +27,45 @@ class ProfileController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        /** @var \App\Models\User $user */
+       /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // 1. Validasi input nama dan file foto profil
         $request->validate([
             'name'  => 'required|string|max:255',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maksimal 2MB
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // 2. Perbarui nama user
         $user->name = $request->name;
 
-        // 3. Cek apakah user juga mengunggah file foto baru
         if ($request->hasFile('photo')) {
-            
-            // Hapus foto lama di storage jika ada berkasnya
+
+            $oldPhoto = $user->photo;
+
             if ($user->photo && Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);
             }
 
-            // Simpan foto baru ke folder 'storage/app/public/uploads'
             $path = $request->file('photo')->store('uploads', 'public');
 
-            // Set properti kolom foto ke path yang baru
             $user->photo = $path;
+
+            UserActivity::create([
+                'user_id' => Auth::id(),
+                'role' => Auth::user()->role,
+                'action' => empty($oldPhoto) ? 'CREATE' : 'UPDATE',
+                'resource' => 'profile',
+                'ip_address' => $request->ip(),
+                'device_info' => $request->userAgent(),
+                'description' => empty($oldPhoto)
+                    ? 'Menambahkan foto profil'
+                    : 'Mengubah foto profil',
+            ]);
         }
 
-        // 4. Simpan seluruh perubahan ke database
         $user->save();
 
-        return redirect()->route('profil')->with('success', 'Profil dan foto berhasil diperbarui!');
+        return redirect()->route('profil')
+            ->with('success', 'Profil dan foto berhasil diperbarui!');
     }
 
     /**
@@ -66,64 +73,98 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        /** @var \App\Models\User $user */
         $user = User::findOrFail(Auth::id());
 
-        // Hapus file fisik gambar dari folder storage jika ada agar tidak jadi sampah berkas
         if ($user->photo && Storage::disk('public')->exists($user->photo)) {
             Storage::disk('public')->delete($user->photo);
         }
 
-        // Proses logout pengamanan sesi Laravel
+        UserActivity::create([
+            'user_id' => Auth::id(),
+            'role' => Auth::user()->role,
+            'action' => 'DELETE',
+            'resource' => 'profile',
+            'ip_address' => $request->ip(),
+            'device_info' => $request->userAgent(),
+            'description' => 'Menghapus akun dan foto profil',
+        ]);
+
         Auth::logout();
 
-        // Hapus data user dari database secara permanen
         $user->delete();
 
-        // Hancurkan session yang tersisa
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('success', 'Akun Anda telah berhasil dihapus permanen.');
+        return redirect('/login')
+            ->with('success', 'Akun Anda telah berhasil dihapus permanen.');
     }
 
     /**
-     * Fungsi opsional jika Anda masih membutuhkan tombol khusus 
-     * untuk menghapus fotonya saja tanpa menghapus akun.
+     * Menghapus foto profil saja.
      */
     public function deletePhoto(): RedirectResponse
     {
-        /** @var \App\Models\User $user */
         $user = User::findOrFail(Auth::id());
 
         if ($user->photo) {
+
             if (Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);
             }
 
             $user->photo = null;
             $user->save();
+
+            UserActivity::create([
+                'user_id' => Auth::id(),
+                'role' => Auth::user()->role,
+                'action' => 'DELETE',
+                'resource' => 'profile',
+                'ip_address' => request()->ip(),
+                'device_info' => request()->userAgent(),
+                'description' => 'Menghapus foto profil',
+            ]);
         }
 
-        return redirect()->back()->with('success', 'Foto profil berhasil dihapus!');
-    }
-   public function updatePhoto(Request $request): RedirectResponse
-{
-    $request->validate([
-        'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    $user = User::findOrFail(Auth::id());
-
-    if ($user->photo && Storage::disk('public')->exists($user->photo)) {
-        Storage::disk('public')->delete($user->photo);
+        return redirect()->back()
+            ->with('success', 'Foto profil berhasil dihapus!');
     }
 
-    $path = $request->file('photo')->store('uploads', 'public');
+    /**
+     * Upload atau ganti foto profil.
+     */
+    public function updatePhoto(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    $user->photo = $path;
-    $user->save();
+        $user = User::findOrFail(Auth::id());
 
-    return back()->with('success', 'Foto profil berhasil diperbarui.');
-}
+        $oldPhoto = $user->photo;
+
+        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        $path = $request->file('photo')->store('uploads', 'public');
+
+        $user->photo = $path;
+        $user->save();
+
+        UserActivity::create([
+            'user_id' => Auth::id(),
+            'role' => Auth::user()->role,
+            'action' => empty($oldPhoto) ? 'CREATE' : 'UPDATE',
+            'resource' => 'profile',
+            'ip_address' => request()->ip(),
+            'device_info' => request()->userAgent(),
+            'description' => empty($oldPhoto)
+                ? 'Menambahkan foto profil'
+                : 'Mengubah foto profil',
+        ]);
+
+        return back()->with('success', 'Foto profil berhasil diperbarui.');
+    }
 }
