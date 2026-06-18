@@ -17,8 +17,8 @@
 
   <div class="login-card">
 
-    <h2>Login Akun</h2>
-    <p>Silahkan masuk dengan akun kamu</p>
+    <h2 style="text-align: center;">Login Akun</h2>
+    <p style="text-align: center; font-weight: bold;">Pantau Aspirasi dengan Mudah dan Efisien</p>
 
     {{-- Error Session --}}
     @if (session('error'))

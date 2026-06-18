@@ -65,7 +65,7 @@ class AspirasiController extends Controller
         'description' => "Status pengaduan ID {$pengaduan->id} diubah menjadi {$request->status}"
     ]);
 
-    return back();
+    return back()->with('success', 'Status berhasil diperbarui');
 }
     public function kelola(Request $request)
     {
