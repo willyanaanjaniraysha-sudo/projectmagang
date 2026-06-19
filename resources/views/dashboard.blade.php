@@ -59,6 +59,95 @@
             border-radius:20px;
         }
 
+        .icon-circle{
+            width:60px;
+            height:60px;
+            background:#09c190;
+            color:#fff;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-shrink:0;
+        }
+
+        /* Card */
+.info-card{
+    background:#FFFFFF;
+    border-radius:18px;
+    transition:.3s;
+}
+
+.info-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 28px rgba(47,93,80,.12);
+}
+
+/* Judul */
+.info-title{
+    color:#09c190;
+}
+
+/* Icon */
+.info-title i{
+    color:#09c190;
+}
+
+/* Alert */
+.info-alert{
+    background:#F2F8F5;
+    border-left:5px solid #09c190;
+    padding:16px 18px;
+    border-radius:10px;
+    color:#374151;
+    font-size:15px;
+    line-height:1.7;
+}
+
+/* Tulisan Pemberitahuan */
+.info-alert strong{
+    color:#09c190;
+}
+
+/* Badge Umum */
+.device-badge,
+.role-badge{
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+/* Desktop */
+.desktop-badge{
+    background:#E8F2EE;
+    color:#2F5D50;
+    border:1px solid #C7DDD4;
+}
+
+/* Mobile */
+.mobile-badge{
+    background:#FFF7E6;
+    color:#B7791F;
+    border:1px solid #F6D48B;
+}
+
+/* Role */
+.role-badge{
+    background:#09c190;
+    color:#fff;
+}
+
+/* Hover */
+.device-badge:hover,
+.role-badge:hover{
+    transform:translateY(-2px);
+    transition:.3s;
+}
+
        
     </style>
 </head>
@@ -93,20 +182,22 @@
            <div class="text-end d-flex align-items-center gap-2">
 </div>
 <div class="text-end d-flex align-items-center gap-2">
-    <!-- Indikator Deteksi Perangkat Agent (Tampilan Kecil & Rapi) -->
+
     @if(Agent::isMobile())
-        <span class="badge bg-warning text-dark px-3 py-2">
+        <span class="device-badge mobile-badge">
             <i class="fas fa-mobile-alt me-1"></i> Mobile
         </span>
     @else
-        <span class="badge bg-secondary text-white px-3 py-2" style="background-color: #64748b;">
+        <span class="device-badge desktop-badge">
             <i class="fas fa-desktop me-1"></i> Desktop
         </span>
     @endif
 
-    <span class="badge bg-soft-primary text-primary px-3 py-2" style="background: #e0e7ff;">
-        <i class="fas fa-user-shield me-1"></i> {{ strtoupper(Auth::user()->role) }}
+    <span class="role-badge">
+        <i class="fas fa-user-shield me-1"></i>
+        {{ strtoupper(Auth::user()->role) }}
     </span>
+
 </div>
         </div>
 
@@ -119,7 +210,7 @@
             <div class="col-md-3">
                 <div class="card stat-card shadow-sm p-3">
                     <div class="d-flex align-items-center">
-                        <div class="bg-primary text-white rounded-circle p-3 me-3">
+                        <div class="icon-circle me-3">
                             <i class="fas fa-envelope-open-text fa-lg"></i>
                         </div>
 
@@ -193,20 +284,23 @@
             </div>
         </div>
 
-        <!-- INFORMASI -->
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-3">
-                    <i class="fas fa-bullhorn text-primary me-2"></i>
-                    Informasi Terbaru
-                </h5>
-                <div class="alert alert-light border-start border-primary border-4">
-                    <strong>Pemberitahuan:</strong>
-                    Pastikan setiap pengaduan disertai dengan bukti foto
-                    yang jelas untuk mempercepat proses tindak lanjut.
-                </div>
-            </div>
+       <!-- INFORMASI -->
+<div class="card info-card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body p-4">
+
+        <h5 class="fw-bold mb-3 info-title">
+            <i class="fas fa-bullhorn me-2"></i>
+            Informasi Terbaru
+        </h5>
+
+        <div class="info-alert">
+            <strong>Pemberitahuan:</strong>
+            Pastikan setiap pengaduan disertai dengan bukti foto
+            yang jelas untuk mempercepat proses tindak lanjut.
         </div>
+
+    </div>
+</div>
 
         <!-- CHART -->
         <div class="card border-0 shadow-sm chart-card">
