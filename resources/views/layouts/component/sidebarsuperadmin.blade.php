@@ -112,7 +112,7 @@
 
     .nav-toggle.active {
         background: rgba(255, 255, 255, 0.1);
-        border-left-color: #818cf8;
+        border-left-color: #09c190;
         color: #fff;
     }
 

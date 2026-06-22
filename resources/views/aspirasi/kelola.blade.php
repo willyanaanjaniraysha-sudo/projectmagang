@@ -10,6 +10,26 @@
         .nav-link { color: #a2a2c2; padding: 12px 20px; transition: 0.3s; }
         .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255,255,255,0.1); border-left: 4px solid #818cf8; }
         .main-content { flex: 1; padding: 30px; margin-left: 260px; width: calc(100% - 260px); }
+
+        /* TAMBAHAN: Style komponen kustom bertema hijau #2F5D50 */
+        .text-custom-green {
+            color: #2F5D50 !important;
+        }
+        .btn-custom-green {
+            background-color: #2F5D50 !important;
+            border-color: #2F5D50 !important;
+            color: #fff !important;
+            transition: all 0.3s ease;
+        }
+        .btn-custom-green:hover {
+            background-color: #214339 !important;
+            border-color: #214339 !important;
+            color: #fff !important;
+        }
+        .form-select:focus {
+            border-color: #2F5D50 !important;
+            box-shadow: 0 0 0 0.25rem rgba(47, 93, 80, 0.25) !important;
+        }
     </style>
 </head>
 <body>
@@ -20,12 +40,14 @@
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h4 class="fw-bold mb-1"><i class="fas fa-tasks me-2 text-primary"></i>Kelola Pengaduan</h4>
+                <!-- MODIFIKASI: Mengubah warna icon judul ke text-custom-green -->
+                <h4 class="fw-bold mb-1"><i class="fas fa-tasks me-2 text-custom-green"></i>Kelola Pengaduan</h4>
                 <p class="text-muted mb-0">Semua pengaduan masuk dari pengguna</p>
             </div>
             {{-- Filter Status --}}
             <div class="d-flex gap-2">
-                <a href="/aspirasi" class="btn btn-sm {{ !request('status') ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">Semua</a>
+                <!-- MODIFIKASI: Mengubah filter tombol aktif "Semua" ke warna hijau tema -->
+                <a href="/aspirasi" class="btn btn-sm {{ !request('status') ? 'btn-custom-green' : 'btn-outline-secondary' }} rounded-3">Semua</a>
                 <a href="/aspirasi?status=Pending" class="btn btn-sm {{ request('status') == 'Pending' ? 'btn-warning' : 'btn-outline-warning' }} rounded-3">Pending</a>
                 <a href="/aspirasi?status=Proses" class="btn btn-sm {{ request('status') == 'Proses' ? 'btn-info' : 'btn-outline-info' }} rounded-3">Proses</a>
                 <a href="/aspirasi?status=Selesai" class="btn btn-sm {{ request('status') == 'Selesai' ? 'btn-success' : 'btn-outline-success' }} rounded-3">Selesai</a>
@@ -62,15 +84,13 @@
                             <td>{{ $item->judul }}</td>
                             <td>{{ Str::limit($item->deskripsi, 50) }}</td>
                             <td>
-
-        <a href="{{ asset('upload/' . $item->gambar) }}" target="_blank">
-        <img src="{{ asset('upload/' . $item->gambar) }}"
-             width="55"
-             height="55"
-             style="object-fit:cover; border-radius:8px;">
-         </a>
-                    </td>
-
+                                <a href="{{ asset('upload/' . $item->gambar) }}" target="_blank">
+                                    <img src="{{ asset('upload/' . $item->gambar) }}"
+                                         width="55"
+                                         height="55"
+                                         style="object-fit:cover; border-radius:8px;">
+                                </a>
+                            </td>
                             <td>
                                 @if($item->status == 'Pending')
                                     <span class="badge rounded-pill px-3 py-2" style="background:#fef3c7; color:#92400e;">Pending</span>
@@ -85,6 +105,7 @@
                                 <form action="{{ route('aspirasi.updateStatus', $item->id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
+                                    <!-- MODIFIKASI: Input select otomatis mendapatkan efek fokus ring outline hijau kustom saat diklik -->
                                     <select name="status" class="form-select form-select-sm d-inline w-auto"
                                             onchange="this.form.submit()"
                                             {{ $item->status == 'Selesai' ? 'disabled' : '' }}>

@@ -6,6 +6,23 @@
 
 @extends($layout)
 
+<style>
+    .btn-custom-green {
+        background-color: #2F5D50 !important;
+        border-color: #2F5D50 !important;
+        transition: all 0.3s ease;
+    }
+    .btn-custom-green:hover {
+        background-color: #214339 !important; /* Warna hijau sedikit lebih gelap saat di-hover */
+        border-color: #214339 !important;
+        transform: translateY(-1px); /* Efek sedikit terangkat */
+    }
+    .form-control:focus {
+        border-color: #2F5D50 !important;
+        box-shadow: 0 0 0 0.25rem rgba(47, 93, 80, 0.25) !important; /* Glow hijau transparan */
+    }
+</style>
+
 @section('content')
 <div class="container-fluid py-4">
     <div class="row">
@@ -21,7 +38,8 @@
 
             <!-- Kartu Utama Profil Terpadu -->
             <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
-                <div class="card-header bg-primary text-white py-3">
+                <!-- MODIFIKASI: Mengubah warna background header ke #2F5D50 -->
+                <div class="card-header text-white py-3" style="background-color: #2F5D50;">
                     <h5 class="mb-0 fw-bold"><i class="fas fa-user-circle me-2"></i>Profil Saya</h5>
                 </div>
                 
@@ -39,8 +57,9 @@
                                      class="rounded-circle border border-3 border-light shadow" 
                                      width="110" height="110" style="object-fit: cover;" alt="User Photo">
                             @else
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow mx-auto fw-bold" 
-                                     style="width: 110px; height: 110px; font-size: 38px;">
+                                <!-- MODIFIKASI: Mengubah background inisial nama ke #2F5D50 -->
+                                <div class="text-white rounded-circle d-flex align-items-center justify-content-center shadow mx-auto fw-bold" 
+                                     style="width: 110px; height: 110px; font-size: 38px; background-color: #2F5D50;">
                                     {{ strtoupper(substr($user->name, 0, 1)) }}
                                 </div>
                             @endif
@@ -90,8 +109,9 @@
                         </div>
 
                         <!-- Tombol Utama: Simpan Perubahan Nama & Foto -->
+                        <!-- MODIFIKASI: Mengubah tombol submit menggunakan warna #2F5D50 dan efek hover/border dasar -->
                         <div class="px-2 mb-2">
-                            <button type="submit" class="btn btn-primary w-100 fw-bold rounded-pill shadow-sm">
+                            <button type="submit" class="btn text-white w-100 fw-bold rounded-pill shadow-sm" style="background-color: #2F5D50; border-color: #2F5D50;">
                                 <i class="fas fa-save me-1"></i> Simpan Perubahan Profil
                             </button>
                         </div>
