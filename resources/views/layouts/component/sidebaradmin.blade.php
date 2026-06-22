@@ -1,9 +1,4 @@
 <style>
-/* ========================================================= */
-/*   PENGATURAN RESPONSIVE (MENGIKUTI STRUKTUR .sidebar-fixed)*/
-/* ========================================================= */
-
-/* 1. SAAT TAMPILAN DI HP & TABLET (Maksimal 991px) */
 @media (max-width: 991.98px) {
     .sidebar-fixed {
         /* Mengubah posisi jadi kotak melayang di tengah mirip modal acuan */
