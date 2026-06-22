@@ -46,7 +46,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(47, 93, 80);
         backdrop-filter: blur(4px);
         z-index: 1050;
     }
@@ -73,25 +73,18 @@
     }
 }
     .logout-modal {
-    border: none !important;
-    border-radius: 12px !important;
-    background: white !important;
-    padding: 24px !important;
-    max-width: 400px !important;
-    width: 90% !important;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
-    text-align: center !important;
-    position: fixed !important;
-    margin: auto !important;
-    top: 0% !important;
-    left: 0 !important; /* 130px adalah setengah dari lebar sidebar 260px */
-    right: 0 !important;
-    bottom: 0 !important;   
-    transform: none !important;
-    background: #ffffff !important;
+    width: 380px;
+        max-width: 90%;
+        border: none;
+        border-radius: 16px;
+        padding: 30px;
+        text-align: center;
+        background: #fff;
+        box-shadow: 0 20px 40px rgba(47, 93, 80);
+        animation: modal-popup 0.25s ease;
     }
     .logout-modal::backdrop {
-    background: rgba(0, 0, 0, 0.5) !important;
+    background: rgba(47, 93, 80) !important;
     backdrop-filter: blur(2px) !important;
     position: fixed !important; 
     inset: 0 !important;    
@@ -105,15 +98,15 @@
     </div>
     
     <!-- Brand (Teruskan kode bawaan Anda ke bawah...) -->
-    <div class="p-4 text-center" style="background: rgba(0,0,0,0.1);">
-        <h5 class="mb-0 fw-bold text-white">
+    <div class="p-4 text-center" style="background: rgba(255, 255, 255, 0.1);">
+        <h5 class="mb-0 fw-bold text-black">
             <i class="fas fa-school me-2"></i>E-Aspirasi
         </h5>
     </div>
 
     <!-- User Panel -->
     <a href="{{ route('profil') }}" class="text-decoration-none">
-    <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
+    <div class="d-flex align-items-center px-3 py-3" style="border-bottom: 1px solid rgba(159, 255, 212, 0.1); cursor: pointer;">
         @if(Auth::user()->photo)
             <img src="{{ asset('storage/' . Auth::user()->photo) }}" 
                  class="rounded-circle me-2" width="40" height="40" style="object-fit: cover;" alt="User">
@@ -178,9 +171,9 @@
 
         <a class="btn btn-sm btn-block btn-soft btn-error" 
            onclick="document.getElementById('account_modal').showModal(); event.preventDefault();" 
-           style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 14px; background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; text-decoration: none; transition: all 0.2s ease-in-out;"
-           onmouseover="this.style.background='#ef4444'; this.style.color='#ffffff'; this.style.borderColor='#ef4444';" 
-           onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'; this.style.color='#f87171'; this.style.borderColor='rgba(239, 68, 68, 0.2)';">
+           style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 14px; background: rgba(189, 223, 205, 0.1); color: #6ce5a3; border: 1px solid rgba(6, 198, 131, 0.2); border-radius: 8px; text-decoration: none; transition: all 0.2s ease-in-out;"
+           onmouseover="this.style.background='#18db83'; this.style.color='#ffffff'; this.style.borderColor='#18db83';" 
+           onmouseout="this.style.background='rgba(94, 190, 140, 0.1)'; this.style.color='#71f8b7'; this.style.borderColor='rgba(180, 255, 216, 0.1)';">
             
             <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.3px;">Logout</span>
             
@@ -195,15 +188,15 @@
 
 <dialog id="account_modal" class="logout-modal">
     <div style="font-size: 40px; margin-bottom: 12px;">📄</div>
-    <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Konfirmasi Keluar</h3>
+    <h3 style="font-size: 18px; font-weight: 700; color: #2F5D50; margin-bottom: 8px;">Konfirmasi Keluar</h3>
     <p style="font-size: 14px; color: #64748b; margin-bottom: 24px; line-height: 1.5;">
         Apakah Anda yakin ingin keluar dari sistem E-Aspirasi? Sesi Anda saat ini akan diakhiri.
     </p>
     <div style="display: flex; gap: 12px; justify-content: center;">
-        <button class="modal-btn btn-batal" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: white; cursor: pointer; font-weight: 600;" onclick="document.getElementById('account_modal').close()">
+        <button class="modal-btn btn-batal" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #D8E3DE; background: white; cursor: pointer; font-weight: 600; color: #2F5D50" onclick="document.getElementById('account_modal').close()">
             Batal
         </button>
-        <button class="modal-btn btn-keluar-modal" style="flex: 1; padding: 10px; border-radius: 6px; border: none; background: #ef4444; color: white; cursor: pointer; font-weight: 600;" onclick="document.getElementById('logout-form-sidebar').submit();">
+        <button class="modal-btn btn-keluar-modal" style="flex: 1; padding: 10px; border-radius: 6px; border: none; background: #2F5D50; color: white; cursor: pointer; font-weight: 600;" onclick="document.getElementById('logout-form-sidebar').submit();">
             Ya, Keluar
         </button>
     </div>

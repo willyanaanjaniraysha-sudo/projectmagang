@@ -22,7 +22,7 @@
     <style>
         body{
             font-family: 'Inter', sans-serif;
-            background-color: #f4f7f6;
+            background-color: #e6fff6;
         }
 
         .nav-link{
