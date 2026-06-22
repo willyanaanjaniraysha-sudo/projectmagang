@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h4 class="fw-bold text-dark mb-1">
-                    <i class="fas fa-history me-2 text-primary"></i>Log Aktivitas Pengguna
+                    <i class="fas fa-history me-2 text-custom-green"></i>Log Aktivitas Pengguna
                 </h4>
                 <p class="text-muted small mb-0">Memantau rekam jejak digital, login, dan aksi CRUD seluruh pengguna sistem.</p>
             </div>
@@ -123,17 +123,34 @@
 
                 <!-- Pagination -->
                 @if($activities->hasPages())
-                    <div class="d-flex justify-content-between align-items-center px-4 py-3 border-top bg-light">
-                        <small class="text-muted">
-                            Menampilkan {{ $activities->firstItem() }} sampai {{ $activities->lastItem() }} dari {{ $activities->total() }} riwayat
-                        </small>
-                        <div>
-                            {{ $activities->links('pagination::bootstrap-5') }}
-                        </div>
-                    </div>
-                @endif
+                <div class="d-flex justify-content-between align-items-center px-4 py-3 border-top bg-light">
+                    <small class="text-muted">
+                        Menampilkan {{ $activities->firstItem() }} sampai {{ $activities->lastItem() }} dari {{ $activities->total() }} riwayat
+                    </small>
+                    <div>
+                        <!-- TAMBAHAN: Tag style disatukan langsung di sini agar tidak merusak struktur atas -->
+                        <style scoped>
+                            .pagination .page-item.active .page-link {
+                                background-color: #2F5D50 !important;
+                                border-color: #2F5D50 !important;
+                                color: #ffffff !important;
+                            }
+                            .pagination .page-link {
+                                color: #2F5D50 !important;
+                            }
+                            .pagination .page-link:hover {
+                                background-color: #eaf1ef !important;
+                                color: #214339 !important;
+                            }
+                        </style>
 
-            </div>
+                        {{ $activities->links('pagination::bootstrap-5') }}
+                    </div>
+                </div>
+            @endif
+            
+
+                        </div>
         </div>
 
     </div>

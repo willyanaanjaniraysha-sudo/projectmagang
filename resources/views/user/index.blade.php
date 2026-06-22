@@ -10,9 +10,41 @@
         .nav-link { color: #a2a2c2; padding: 12px 20px; transition: 0.3s; }
         .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255,255,255,0.1); border-left: 4px solid #818cf8; }
         .main-content { flex: 1; padding: 30px; margin-left: 260px; width: calc(100% - 260px); }
-        .badge-admin { background: #dbeafe; color: #1e40af; }
-        .badge-superadmin { background: #ede9fe; color: #5b21b6; }
-        .badge-user { background: #d1fae5; color: #065f46; }
+        
+        /* MODIFIKASI: Penyelarasan skema warna badge penanda role */
+        .badge-superadmin { background: #ede9fe; color: #6d28d9; } /* Ungu gelap agar kontras */
+        .badge-admin { background: #e0f2fe; color: #0369a1; }      /* Biru soft profesional */
+        .badge-user { background: #d1fae5; color: #065f46; }       /* Hijau bawaan */
+
+        /* TAMBAHAN: Style komponen kustom bertema hijau #2F5D50 */
+        .text-custom-green {
+            color: #2F5D50 !important;
+        }
+        .btn-custom-green {
+            background-color: #2F5D50 !important;
+            border-color: #2F5D50 !important;
+            color: #fff !important;
+            transition: all 0.3s ease;
+        }
+        .btn-custom-green:hover {
+            background-color: #214339 !important;
+            border-color: #214339 !important;
+        }
+        .btn-outline-custom-green {
+            color: #2F5D50 !important;
+            border-color: #2F5D50 !important;
+            background-color: transparent;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-custom-green:hover, .btn-outline-custom-green.active {
+            background-color: #2F5D50 !important;
+            border-color: #2F5D50 !important;
+            color: #fff !important;
+        }
+        .form-control:focus {
+            border-color: #2F5D50 !important;
+            box-shadow: 0 0 0 0.25rem rgba(47, 93, 80, 0.25) !important;
+        }
     </style>
 </head>
 <body>
@@ -30,7 +62,8 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h4 class="fw-bold mb-1">
-                    <i class="fas fa-users-cog me-2 text-primary"></i>Kelola User
+                    <!-- PERBAIKAN: Memperbaiki typo nama class text-custom-green -->
+                    <i class="fas fa-users-cog me-2 text-custom-green"></i>Kelola User
                 </h4>
                 <p class="text-muted mb-0">Manajemen akun pengguna sistem</p>
             </div>
@@ -46,18 +79,22 @@
                         style="width:250px;"
                     >
                 </form>
-               <div class="d-flex gap-2">
-                <a href="/user" class="btn btn-sm {{ !request('search') ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">Semua</a>
-                <a href="/user?search=admin" class="btn btn-sm {{ request('search') == 'admin' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">Admin</a>
-                <a href="/user?search=user" class="btn btn-sm {{ request('search') == 'user' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">User</a>
-            @if(Auth::user()->role == 'admin')
-                <a href="#" class="btn btn-sm btn-outline-secondary rounded-3 disabled" aria-disabled="true">Super Admin</a>
-            @else
-                <a href="/user?search=super admin" class="btn btn-sm {{ request('search') == 'super admin' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-3">Super Admin</a>
-            @endif
+                
+                <div class="d-flex gap-2">
+                    <!-- MODIFIKASI: Menyelaraskan seluruh tombol filter agar aktif berwarna hijau tema -->
+                    <a href="/user" class="btn btn-sm {{ !request('search') ? 'btn-custom-green' : 'btn-outline-secondary' }} rounded-3">Semua</a>
+                    <a href="/user?search=admin" class="btn btn-sm {{ request('search') == 'admin' ? 'btn-custom-green' : 'btn-outline-secondary' }} rounded-3">Admin</a>
+                    <a href="/user?search=user" class="btn btn-sm {{ request('search') == 'user' ? 'btn-custom-green' : 'btn-outline-secondary' }} rounded-3">User</a>
+                
+                    @if(Auth::user()->role == 'admin')
+                        <a href="#" class="btn btn-sm btn-outline-secondary rounded-3 disabled" aria-disabled="true">Super Admin</a>
+                    @else
+                        <a href="/user?search=super admin" class="btn btn-sm {{ request('search') == 'super admin' ? 'btn-custom-green' : 'btn-outline-secondary' }} rounded-3">Super Admin</a>
+                    @endif
                 </div>
                 
-                <a href="{{ route('user.create') }}" class="btn btn-primary rounded-3">
+                <!-- MODIFIKASI: Mengubah tombol "Tambah User" ke warna hijau tema -->
+                <a href="{{ route('user.create') }}" class="btn btn-custom-green rounded-3">
                     <i class="fas fa-plus me-1"></i> Tambah User
                 </a>
             </div>
@@ -89,8 +126,9 @@
                             <td class="ps-4">{{ $index + 1 }}</td>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
-                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
-                                         style="width:35px; height:35px; font-size:13px;">
+                                    <!-- MODIFIKASI: Mengubah latar inisial nama di tabel menjadi hijau #2F5D50 -->
+                                    <div class="text-white rounded-circle d-flex align-items-center justify-content-center"
+                                         style="width:35px; height:35px; font-size:13px; background-color: #2F5D50;">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </div>
                                     {{ $user->name }}
@@ -168,4 +206,5 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
