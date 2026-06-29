@@ -1,0 +1,47 @@
+/* ===============================
+   Badge Warna E-Aspirasi
+================================= */
+
+.badge-login{
+    background:#2F5D50;
+    color:#fff;
+}
+
+.badge-logout{
+    background:#6C757D;
+    color:#fff;
+}
+
+.badge-create{
+    background:#6DAA93;
+    color:#fff;
+}
+
+.badge-update{
+    background:#E7C66B;
+    color:#2F2F2F;
+}
+
+.badge-delete{
+    background:#C65A5A;
+    color:#fff;
+}
+
+.badge-download{
+    background:#4D8771;
+    color:#fff;
+}
+
+/* Tampilan Badge */
+.badge-login,
+.badge-logout,
+.badge-create,
+.badge-update,
+.badge-delete,
+.badge-download{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+    display:inline-block;
+}
