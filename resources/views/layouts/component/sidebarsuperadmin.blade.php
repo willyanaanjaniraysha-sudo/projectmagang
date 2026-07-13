@@ -18,7 +18,7 @@
     }
 
     .sidebar-brand {
-        padding: 16px;
+        padding: 30px;
         text-align: center;
         background: #2F5D50;
     }
@@ -269,7 +269,7 @@
     {{-- Brand --}}
     <div class="sidebar-brand">
         <h5 class="mb-0 fw-bold text-white">
-            <i class="fas fa-school me-2"></i>E-Aspirasi
+            <i class="fas fa-school me-2"></i>SIPERSA
         </h5>
     </div>
 

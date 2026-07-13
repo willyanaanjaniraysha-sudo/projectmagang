@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Sistem Aspirasi</title>
+    <title>Dashboard | SIPERSA</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -148,6 +148,81 @@
     transition:.3s;
 }
 
+/* ===========================
+   DASHBOARD SIPERSA
+=========================== */
+
+.stat-card{
+    border: none;
+    border-radius: 18px;
+    transition: all .3s ease;
+    background: #fff;
+}
+
+.stat-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(47,93,80,.12);
+}
+
+/* ICON */
+
+.icon-total,
+.icon-masuk,
+.icon-proses,
+.icon-disposisi{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:22px;
+}
+
+.icon-total{
+    background:#2F5D50;
+}
+
+.icon-masuk{
+    background:#3B82F6;
+}
+
+.icon-proses{
+    background:#F59E0B;
+}
+
+.icon-disposisi{
+    background:#8B5CF6;
+}
+
+/* TEXT */
+
+.text-total{
+    color:#2F5D50;
+}
+
+.text-masuk{
+    color:#3B82F6;
+}
+
+.text-proses{
+    color:#F59E0B;
+}
+
+.text-disposisi{
+    color:#8B5CF6;
+}
+
+.stat-card h6{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.stat-card h4{
+    font-weight:700;
+    font-size:30px;
+}
        
     </style>
 </head>
@@ -176,7 +251,8 @@
                      <span id="greeting"></span>, {{ Auth::user()->name }}!
                 </h3>
                 <p class="text-muted">
-                    Pantau dan kelola aspirasi kelurahan dalam satu pintu.
+                    Selamat datang di SIPERSA,
+                    Sistem Informasi Persuratan Sekolah.
                 </p>
             </div>
            <div class="text-end d-flex align-items-center gap-2">
@@ -206,83 +282,93 @@
 
             <!-- TOTAL -->
         <!-- STATS BOXES -->
-        <div class="row g-4 mb-2">
-            <div class="col-md-3">
-                <div class="card stat-card shadow-sm p-3">
-                    <div class="d-flex align-items-center">
-                        <div class="icon-circle me-3">
-                            <i class="fas fa-envelope-open-text fa-lg"></i>
-                        </div>
+<div class="row g-4 mb-2">
 
-                        <div>
-                            <h6 class="text-muted mb-0">
-                                Total Laporan
-                            </h6>
-                            <h4 class="fw-bold mb-0">
-                                {{ $total }}
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Total Surat -->
+    <div class="col-md-3">
+        <div class="card stat-card p-3 shadow-sm">
+            <div class="d-flex align-items-center">
 
-            <!-- PENDING -->
-            <div class="col-md-3">
-                <div class="card stat-card shadow-sm p-3">
-                    <div class="d-flex align-items-center">
-                        <div class="bg-warning text-white rounded-circle p-3 me-3">
-                            <i class="fas fa-clock fa-lg"></i>
-                        </div>
-                        <div>
-                            <h6 class="text-muted mb-0">
-                                Pending
-                            </h6>
-                            <h4 class="fw-bold mb-0 text-warning">
-                                {{ $pending }}
-                            </h4>
-                        </div>
-                    </div>
+                <div class="icon-total me-3">
+                    <i class="fas fa-envelope-open-text"></i>
                 </div>
-            </div>
-            
-            <!-- PROSES -->
-            <div class="col-md-3">
-                <div class="card stat-card shadow-sm p-3">
-                    <div class="d-flex align-items-center">
-                        <div class="bg-info text-white rounded-circle p-3 me-3">
-                            <i class="fas fa-spinner fa-lg"></i>
-                        </div>
-                        <div>
-                            <h6 class="text-muted mb-0">
-                                Proses
-                            </h6>
-                            <h4 class="fw-bold mb-0 text-info">
-                                {{ $proses }}
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- SELESAI -->
-            <div class="col-md-3">
-                <div class="card stat-card shadow-sm p-3">
-                    <div class="d-flex align-items-center">
-                        <div class="bg-success text-white rounded-circle p-3 me-3">
-                            <i class="fas fa-check-circle fa-lg"></i>
-                        </div>
-                        <div>
-                            <h6 class="text-muted mb-0">
-                                Selesai
-                            </h6>
-                            <h4 class="fw-bold mb-0 text-success">
-                                {{ $selesai }}
-                            </h4>
-                        </div>
-                    </div>
+                <div>
+                    <h6 class="mb-1">Total Surat</h6>
+
+                    <h4 class="mb-0 text-total">
+                        {{ $total }}
+                    </h4>
                 </div>
+
             </div>
         </div>
+    </div>
+
+    <!-- Surat Masuk -->
+    <div class="col-md-3">
+        <div class="card stat-card p-3 shadow-sm">
+            <div class="d-flex align-items-center">
+
+                <div class="icon-masuk me-3">
+                    <i class="fas fa-inbox"></i>
+                </div>
+
+                <div>
+                    <h6 class="mb-1">Surat Masuk</h6>
+
+                    <h4 class="mb-0 text-masuk">
+                        {{ $pending }}
+                    </h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Surat Diproses -->
+    <div class="col-md-3">
+        <div class="card stat-card p-3 shadow-sm">
+            <div class="d-flex align-items-center">
+
+                <div class="icon-proses me-3">
+                    <i class="fas fa-file-signature"></i>
+                </div>
+
+                <div>
+                    <h6 class="mb-1">Diproses</h6>
+
+                    <h4 class="mb-0 text-proses">
+                        {{ $proses }}
+                    </h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Disposisi -->
+    <div class="col-md-3">
+        <div class="card stat-card p-3 shadow-sm">
+            <div class="d-flex align-items-center">
+
+                <div class="icon-disposisi me-3">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+
+                <div>
+                    <h6 class="mb-1">Disposisi</h6>
+
+                    <h4 class="mb-0 text-disposisi">
+                        {{ $selesai }}
+                    </h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
 
        <!-- INFORMASI -->
 <div class="card info-card border-0 shadow-sm rounded-4 mb-4">
@@ -296,7 +382,7 @@
         <div class="info-alert">
             <strong>Pemberitahuan:</strong>
             Pastikan setiap pengaduan disertai dengan bukti foto
-            yang jelas untuk mempercepat proses tindak lanjut.
+            yang jelas untuk mempercepat proses tindak lanjut.  
         </div>
 
     </div>
@@ -307,10 +393,10 @@
 
             <div class="card-body p-4">
                 <h4 class="fw-bold">
-                    Aktivitas Pengaduan
+                    Statistik Persuratan
                 </h4>
                 <p class="text-muted mb-4">
-                    Statistik status pengaduan saat ini
+                   Statistik Surat Mingguan
                 </p>
                 <canvas id="pengaduanChart" height="50"></canvas>
             </div>
@@ -334,27 +420,40 @@ new Chart(ctx, {
 
         // PENDING
         {
-            label: 'Pending',
+            label: 'Surat Masuk',
             data: {!! json_encode($chartPending) !!},
-            borderColor: '#facc15',
-            backgroundColor: 'rgba(250,204,21,0.2)',
+            borderColor:  '#2F5D50',
+            backgroundColor: 'rgba(15,118,110,0.08)',
             tension: 0.4,
-            fill: true,
+            fill: false,
             borderWidth: 3,
-            pointBackgroundColor: '#facc15',
+            pointBackgroundColor: '#2F5D50',
             pointRadius: 5
         },
 
         // PROSES
         {
-            label: 'Proses',
+            label: 'Surat Keluar',
             data: {!! json_encode($chartProses) !!},
-            borderColor: '#38bdf8',
-            backgroundColor: 'rgba(56,189,248,0.2)',
+            borderColor: '#3B82F6',
+            backgroundColor: 'rgba(37,99,235,0.08)',
             tension: 0.4,
-            fill: true,
+            fill: false,
             borderWidth: 3,
-            pointBackgroundColor: '#38bdf8',
+            pointBackgroundColor: '#3B82F6',
+            pointRadius: 5
+        },
+
+        // disposisi
+        {
+            label: 'Disposisi',
+            data: {!! json_encode($chartDisposisi) !!},
+            borderColor: '#F59E0B',
+            backgroundColor: 'rgba(217,119,6,0.08)',
+            tension: 0.4,
+            fill: false,
+            borderWidth: 3,
+            pointBackgroundColor: '#F59E0B',
             pointRadius: 5
         },
 
@@ -362,12 +461,12 @@ new Chart(ctx, {
         {
             label: 'Selesai',
             data: {!! json_encode($chartSelesai) !!},
-            borderColor: '#22c55e',
-            backgroundColor: 'rgba(34,197,94,0.2)',
+            borderColor:'#8B5CF6',
+            backgroundColor: 'rgba(22,163,74,0.2)',
             tension: 0.4,
-            fill: true,
+            fill: false,
             borderWidth: 3,
-            pointBackgroundColor: '#22c55e',
+            pointBackgroundColor: '#8B5CF6',
             pointRadius: 5
         }
 

@@ -49,7 +49,7 @@ class UserController extends Controller
 
         User::create([
             'name' => $request->name,
-            'email' => strtolower(str_replace(' ', '', $request->name)) . '@aspirasi.com',
+            'email' => strtolower(str_replace(' ', '', $request->name)) . '@gmail.com',
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
