@@ -58,8 +58,8 @@
         @include('layouts.component.sidebaruser')
     @endif
 
-    <div class="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="main-content" style="background-color:#e2faf1;">
+        <div class="d-flex justify-content-between align-items-center mb-4 badge bg-light text-dark rounded-4 p-3">
             <div>
                 <h4 class="fw-bold mb-1">
                     <!-- PERBAIKAN: Memperbaiki typo nama class text-custom-green -->

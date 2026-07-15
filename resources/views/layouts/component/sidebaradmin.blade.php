@@ -91,7 +91,7 @@
     }
 </style>
 
-<div id="sidebarMenu" class="sidebar sidebar-fixed d-none d-lg-flex flex-column" style="background: #1a1a2c; color: #fff; width: 260px;">
+<div id="sidebarMenu" class="sidebar sidebar-fixed d-none d-lg-flex flex-column" style="background: #f5fffb; color: #fff; width: 260px;">
     <!-- Tombol Silang (X) Penutup di HP -->
     <div class="d-flex justify-content-end d-lg-none p-2 w-100">
         <button type="button" class="btn-close btn-close-white" id="sidebarCloseBtn" aria-label="Close" style="font-size: 1.1rem;"></button>
@@ -103,6 +103,7 @@
             <i class="fas fa-school me-2"></i>E-Aspirasi
         </h5>
     </div>
+    
 
     <!-- User Panel -->
     <a href="{{ route('profil') }}" class="text-decoration-none">

@@ -24,8 +24,8 @@
 </style>
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="row">
+<div class="container-fluid py-4" style="background-color:#e2faf1;">
+    <div class="row" style="background-color:#e2faf1;">
         <div class="col-12 col-md-8 col-lg-6 mx-auto">
             
             <!-- Notifikasi Sukses Pembaruan -->

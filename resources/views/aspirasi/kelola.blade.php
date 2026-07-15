@@ -37,7 +37,7 @@
 
     @include('layouts.component.sidebarsuperadmin')
 
-    <div class="main-content">
+    <div class="main-content" style="background-color:#e2faf1;  ">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <!-- MODIFIKASI: Mengubah warna icon judul ke text-custom-green -->

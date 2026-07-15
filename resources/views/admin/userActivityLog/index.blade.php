@@ -2,11 +2,11 @@
 
 @section('content')
 <!-- Container Utama Tanpa Batasan Ukuran -->
-<div class="w-100" style="background: #f8fafc; min-height: 100vh;">
+<div class="w-100" style="background: #d4f8e9; min-height: 100vh;">
     <div class="container-fluid px-0">
         
         <!-- Header Halaman -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 background-light rounded-4 p-3" style="background: #ffffff;">
             <div>
                 <h4 class="fw-bold text-dark mb-1">
                     <i class="fas fa-history me-2 text-custom-green"></i>Log Aktivitas Pengguna

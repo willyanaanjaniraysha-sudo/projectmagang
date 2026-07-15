@@ -18,7 +18,7 @@
 
     @include('layouts.component.sidebaradmin')
 
-    <div class="main-content">
+    <div class="main-content" style="background-color:#e2faf1;">
         <h4 class="fw-bold mb-1"><i class="fas fa-spinner me-2 text-primary"></i>Dalam Proses</h4>
         <p class="text-muted mb-4">Daftar pengaduan dengan status <strong>Proses</strong></p>
 

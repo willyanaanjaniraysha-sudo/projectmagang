@@ -42,7 +42,7 @@
     </style>
 </head>
 <body>
-<div class="d-flex">
+<div class="d-flex" style="background-color:#e2faf1;">
 
     @if(Auth::user()->role == 'super admin')
         @include('layouts.component.sidebarsuperadmin')
@@ -54,7 +54,7 @@
 
     <div class="main-content">
         <!-- Judul Halaman tetap menggunakan aksen merah khas dokumen PDF -->
-        <h4 class="fw-bold mb-1"><i class="fas fa-file-pdf me-2 text-custom-green"></i>Cetak Laporan</h4>
+        <h4 class="fw-bold mb-1"><i class="fas fa-file-pdf me-2 text-custom-green "></i>Cetak Laporan</h4>
         <p class="text-muted mb-4">Filter dan unduh laporan pengaduan dalam format PDF</p>
 
         {{-- Filter & Cetak --}}
