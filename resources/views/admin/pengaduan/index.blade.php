@@ -1,15 +1,9 @@
-@extends('layouts.mainuser')
+@extends('layouts.mainadmin')
 
 @section('content')
-    <title>Pengaduan</title>
+    <title>Kelola Pengaduan</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: Arial;
-            background: #f4f7fb;
-            margin-left: 260px;
-        }
+        * { box-sizing: border-box; }
 
         .top-bar {
             display: flex;
@@ -18,40 +12,32 @@
             margin-bottom: 24px;
         }
 
-        h1 {
-            color: #1e293b;
-            font-size: 22px;
-        }
-
         .list { display: flex; flex-direction: column; gap: 16px; }
 
-        /* KARTU: Tetap memanjang ke bawah sebagai list, menggunakan flexbox */
         .card {
             background: white;
             border-radius: 12px;
             padding: 20px;
-            display: flex; /* Membuat gambar dan text-body berjejer ke samping */
-            flex-direction: row; /* Memastikan arahnya horizontal (Gambar kiri, Teks kanan) */
+            display: flex;
+            flex-direction: row;
             gap: 20px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-            align-items: center; /* Membuat isi konten tegak lurus di tengah secara vertikal */
+            align-items: center;
         }
 
-        /* GAMBAR: Diatur ukurannya agar pas di sebelah kiri */
         .card img {
-            width: 140px;      /* Lebar gambar diperbesar sedikit agar proporsional */
-            height: 110px;     /* Tinggi gambar */
+            width: 140px;
+            height: 110px;
             object-fit: cover;
             border-radius: 8px;
-            flex-shrink: 0;    /* Mencegah gambar gepeng atau mengecil */
+            flex-shrink: 0;
         }
 
-        /* KONTEN TEKS: Dibuat memenuhi sisa ruang di sebelah kanan gambar */
-        .card-body { 
-            flex: 1; 
+        .card-body {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 4px; /* Memberi jarak konsisten antara judul, deskripsi, dan status */
+            gap: 4px;
         }
 
         .card-body h3 {
@@ -67,11 +53,17 @@
             line-height: 1.5;
         }
 
-        /* Pembungkus status dan tanggal agar sejajar horizontal di bawah deskripsi */
+        .card-body small {
+            color: #94a3b8;
+        }
+
         .meta-info {
             display: flex;
             align-items: center;
             gap: 12px;
+            justify-content: space-between;
+            width: 100%;
+            flex-wrap: wrap;
         }
 
         .badge {
@@ -92,6 +84,19 @@
             color: #94a3b8;
         }
 
+        .status-form {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-form select {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-size: 13px;
+        }
+
         .empty {
             text-align: center;
             color: #94a3b8;
@@ -99,13 +104,10 @@
             font-size: 15px;
         }
     </style>
-    
 
     <div class="top-bar">
-        <h1>📋 Riwayat Pengaduan</h1>
+        <h1>🗂️ Kelola Pengaduan</h1>
     </div>
-
-    <a href="/pengaduan/create" class="btn btn-primary mb-3">+ Buat Pengaduan</a>
 
     @if(session('success'))
         <div class="alert alert-success d-block mb-3">{{ session('success') }}</div>
@@ -121,10 +123,11 @@
                         <i class="fas fa-image fa-2x"></i>
                     </div>
                 @endif
-                
+
                 <div class="card-body">
                     <h3>{{ $item->judul }}</h3>
                     <p>{{ $item->deskripsi }}</p>
+                    <small>Oleh: {{ $item->user->name ?? 'Pengguna dihapus' }}</small>
 
                     @php
                         $badgeClass = match($item->status) {
@@ -135,24 +138,28 @@
                         };
                     @endphp
 
-                <div class="meta-info" style="justify-content: space-between; width: 100%;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                    <span class="badge {{ $badgeClass }}">{{ $item->status }}</span>
-                        <div class="tanggal">Dikirim: {{ $item->created_at->format('d M Y, H:i') }}</div>
-                    </div>
-            <form action="{{ route('pengaduan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengaduan ini?')">
-        @csrf
-        @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger" style="padding: 4px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; background-color: #ef4444; color: white; border: none;">
-                     🗑️ Hapus
-                </button>
-            </form>
-                </div>
+                    <div class="meta-info">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span class="badge {{ $badgeClass }}">{{ $item->status }}</span>
+                            <div class="tanggal">Dikirim: {{ $item->created_at->format('d M Y, H:i') }}</div>
+                        </div>
 
-            </div>
+                        <form action="{{ route('admin.pengaduan.updateStatus', $item->id) }}" method="POST" class="status-form">
+                            @csrf
+                            @method('PATCH')
+                            <select name="status" onchange="this.form.submit()">
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status }}" @selected($item->status === $status)>
+                                        {{ $status }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </div>
+                </div>
             </div>
         @empty
-            <div class="empty">😴 Belum ada pengaduan. Silakan buat pengaduan baru.</div>
+            <div class="empty">😴 Belum ada pengaduan.</div>
         @endforelse
     </div>
 @endsection

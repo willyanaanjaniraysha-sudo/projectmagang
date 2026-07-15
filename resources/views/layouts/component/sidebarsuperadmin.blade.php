@@ -6,7 +6,7 @@
     /* ── Sidebar ─────────────────────────────────────────── */
     .sidebar {
         min-height: 100vh;
-        background: #2F5D50;
+        background: #ffffff;
         color: #fff;
         width: 260px;
         position: fixed;
@@ -18,10 +18,15 @@
     }
 
     .sidebar-brand {
-        padding: 30px;
-        text-align: center;
-        background: #2F5D50;
+    padding: 30px 0px;
+    text-align: center;
+    background: #ffffff;
     }
+
+    /* Warnai link di dalamnya menjadi hitam */
+    .sidebar-brand a {
+        color: #000000;
+    }       
 
     .sidebar-user {
         display: flex;
@@ -43,12 +48,12 @@
     .sidebar-user .user-name {
         font-size: 13px;
         font-weight: 700;
-        color: #fff;
+        color: #000000;
     }
 
     .sidebar-user .user-role {
         font-size: 12px;
-        color: #a2a2c2;
+        color: #000000;
     }
 
     /* ── Nav Links ───────────────────────────────────────── */
@@ -64,7 +69,7 @@
         margin: 3px 12px;
         border-radius: 8px;
         border-left: 4px solid transparent;
-        color: #a2a2c2;
+        color: #000000;
         text-decoration: none;
         font-size: 14px;
         transition: background 0.2s, color 0.2s;
@@ -72,13 +77,13 @@
 
     .nav-item:hover {
         background: rgba(255, 255, 255, 0.06);
-        color: #fff;
+        color: #70bf93;
     }
 
     .nav-item.active {
         background: rgba(255, 255, 255, 0.1);
         border-left-color: #09c190;
-        color: #fff;
+        color: #000000;
     }
 
     .nav-item i {
@@ -98,7 +103,7 @@
         margin: 3px 12px;
         border-radius: 8px;
         border-left: 4px solid transparent;
-        color: #a2a2c2;
+        color: #000000;
         cursor: pointer;
         font-size: 14px;
         box-sizing: border-box;
@@ -107,7 +112,7 @@
 
     .nav-toggle:hover {
         background: rgba(255, 255, 255, 0.06);
-        color: #fff;
+        color: #70bf93;
     }
 
     .nav-toggle.active {
@@ -267,11 +272,17 @@
 <aside class="sidebar">
 
     {{-- Brand --}}
-    <div class="sidebar-brand">
-        <h5 class="mb-0 fw-bold text-white">
-            <i class="fas fa-school me-2"></i>SIPERSA
-        </h5>
-    </div>
+    <div class="sidebar-brand text-center py-3">
+    <!-- Judul Utama (Diubah menjadi warna #2F5D50 lewat inline style) -->
+    <h5 class="mb-1 fw-bold" style="color: #2F5D50 !important;">
+        <i class="fas fa-school me-2"></i>SIPERSA
+    </h5>
+    <!-- Tulisan Kecil di Bawah (Juga diselaraskan warnanya) -->
+    <small class="d-block lh-sm fw-bold" style="color: #2F5D50 !important; font-size: 0.72rem;">
+        Sistem Informasi Persuratan Sekolah
+    </small>
+</div>
+
 
     {{-- User Panel --}}
     <a href="{{ route('profil') }}" class="sidebar-user">

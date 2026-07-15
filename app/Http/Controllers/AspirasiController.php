@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AspirasiController extends Controller
 {
-    public function masuk() 
+    /**
+     * Sumber kebenaran tunggal untuk alur status pengaduan.
+     */
+    public const STATUSES = ['Pending', 'Proses', 'Disposisi', 'Selesai'];
+
+    public function masuk()
     {
         $pengaduans = Pengaduan::with('user')
                         ->where('status', 'Pending')
@@ -29,6 +34,16 @@ class AspirasiController extends Controller
         return view('aspirasi.proses', compact('pengaduans'));
     }
 
+    public function disposisi()
+    {
+        $pengaduans = Pengaduan::with('user')
+                        ->where('status', 'Disposisi')
+                        ->latest()
+                        ->get();
+
+        return view('aspirasi.disposisi', compact('pengaduans'));
+    }
+
     public function selesai()
     {
         $pengaduans = Pengaduan::with('user')
@@ -40,43 +55,52 @@ class AspirasiController extends Controller
     }
 
     public function updateStatus(Request $request, $id)
-{
-    $pengaduan = Pengaduan::findOrFail($id);
+    {
+        $request->validate([
+            'status' => 'required|in:' . implode(',', self::STATUSES),
+        ]);
 
-    $pengaduan->status = $request->status;
+        $pengaduan = Pengaduan::findOrFail($id);
 
-    if ($request->status == 'Proses') {
-        $pengaduan->tanggal_proses = now();
+        $pengaduan->status = $request->status;
+
+        if ($request->status == 'Proses') {
+            $pengaduan->tanggal_proses = now();
+        }
+
+        if ($request->status == 'Disposisi') {
+            $pengaduan->tanggal_disposisi = now();
+        }
+
+        if ($request->status == 'Selesai') {
+            $pengaduan->tanggal_selesai = now();
+        }
+
+        $pengaduan->save();
+
+        $log = UserActivity::create([
+            'user_id' => Auth::id(),
+            'role' => Auth::user()->role,
+            'action' => 'UPDATE',
+            'resource' => 'pengaduan',
+            'ip_address' => $request->ip(),
+            'device_info' => $request->userAgent(),
+            'description' => "Status pengaduan ID {$pengaduan->id} diubah menjadi {$request->status}"
+        ]);
+
+        return back()->with('success', 'Status berhasil diperbarui');
     }
 
-    if ($request->status == 'Selesai') {
-        $pengaduan->tanggal_selesai = now();
-    }
-
-    $pengaduan->save();
-
-    $log = UserActivity::create([
-        'user_id' => Auth::id(),
-        'role' => Auth::user()->role,
-        'action' => 'UPDATE',
-        'resource' => 'pengaduan',
-        'ip_address' => $request->ip(),
-        'device_info' => $request->userAgent(),
-        'description' => "Status pengaduan ID {$pengaduan->id} diubah menjadi {$request->status}"
-    ]);
-
-    return back()->with('success', 'Status berhasil diperbarui');
-}
     public function kelola(Request $request)
     {
-    $query = Pengaduan::with('user')->latest();
+        $query = Pengaduan::with('user')->latest();
 
-    if ($request->status) {
-        $query->where('status', $request->status);
-    }
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
 
-    $pengaduans = $query->get();
-    return view('aspirasi.kelola', compact('pengaduans'));
+        $pengaduans = $query->get();
+        return view('aspirasi.kelola', compact('pengaduans'));
     }
 
     public function history()
@@ -90,6 +114,4 @@ class AspirasiController extends Controller
 
         return view('aspirasi.history', compact('history'));
     }
-
-    
 }

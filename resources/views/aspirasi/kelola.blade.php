@@ -30,6 +30,21 @@
             border-color: #2F5D50 !important;
             box-shadow: 0 0 0 0.25rem rgba(47, 93, 80, 0.25) !important;
         }
+
+        /* TAMBAHAN: Tema ungu untuk status Disposisi (belum ada warna bawaan Bootstrap-nya) */
+        .btn-disposisi {
+            background-color: #8B5CF6 !important;
+            border-color: #8B5CF6 !important;
+            color: #fff !important;
+        }
+        .btn-outline-disposisi {
+            border-color: #8B5CF6 !important;
+            color: #8B5CF6 !important;
+        }
+        .btn-outline-disposisi:hover {
+            background-color: #8B5CF6 !important;
+            color: #fff !important;
+        }
     </style>
 </head>
 <body>
@@ -50,6 +65,7 @@
                 <a href="/aspirasi" class="btn btn-sm {{ !request('status') ? 'btn-custom-green' : 'btn-outline-secondary' }} rounded-3">Semua</a>
                 <a href="/aspirasi?status=Pending" class="btn btn-sm {{ request('status') == 'Pending' ? 'btn-warning' : 'btn-outline-warning' }} rounded-3">Pending</a>
                 <a href="/aspirasi?status=Proses" class="btn btn-sm {{ request('status') == 'Proses' ? 'btn-info' : 'btn-outline-info' }} rounded-3">Proses</a>
+                <a href="/aspirasi?status=Disposisi" class="btn btn-sm {{ request('status') == 'Disposisi' ? 'btn-disposisi' : 'btn-outline-disposisi' }} rounded-3">Disposisi</a>
                 <a href="/aspirasi?status=Selesai" class="btn btn-sm {{ request('status') == 'Selesai' ? 'btn-success' : 'btn-outline-success' }} rounded-3">Selesai</a>
             </div>
         </div>
@@ -96,6 +112,8 @@
                                     <span class="badge rounded-pill px-3 py-2" style="background:#fef3c7; color:#92400e;">Pending</span>
                                 @elseif($item->status == 'Proses')
                                     <span class="badge rounded-pill px-3 py-2" style="background:#dbeafe; color:#1e40af;">Proses</span>
+                                @elseif($item->status == 'Disposisi')
+                                    <span class="badge rounded-pill px-3 py-2" style="background:#ede9fe; color:#5b21b6;">Disposisi</span>
                                 @else
                                     <span class="badge rounded-pill px-3 py-2" style="background:#d1fae5; color:#065f46;">Selesai</span>
                                 @endif
@@ -109,9 +127,10 @@
                                     <select name="status" class="form-select form-select-sm d-inline w-auto"
                                             onchange="this.form.submit()"
                                             {{ $item->status == 'Selesai' ? 'disabled' : '' }}>
-                                        <option value="Pending"  {{ $item->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                                        <option value="Proses"   {{ $item->status == 'Proses'  ? 'selected' : '' }}>Proses</option>
-                                        <option value="Selesai"  {{ $item->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                                        <option value="Pending"   {{ $item->status == 'Pending'   ? 'selected' : '' }}>Pending</option>
+                                        <option value="Proses"    {{ $item->status == 'Proses'    ? 'selected' : '' }}>Proses</option>
+                                        <option value="Disposisi" {{ $item->status == 'Disposisi' ? 'selected' : '' }}>Disposisi</option>
+                                        <option value="Selesai"   {{ $item->status == 'Selesai'   ? 'selected' : '' }}>Selesai</option>
                                     </select>
                                 </form>
                             </td>
