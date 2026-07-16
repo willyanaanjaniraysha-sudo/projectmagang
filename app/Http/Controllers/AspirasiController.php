@@ -21,7 +21,9 @@ class AspirasiController extends Controller
                         ->latest()
                         ->get();
 
-        return view('aspirasi.masuk', compact('pengaduans'));
+        $layout = $this->getLayout();
+
+        return view('aspirasi.masuk', compact('pengaduans', 'layout'));
     }
 
     public function proses()
@@ -31,7 +33,9 @@ class AspirasiController extends Controller
                         ->latest()
                         ->get();
 
-        return view('aspirasi.proses', compact('pengaduans'));
+        $layout = $this->getLayout();
+
+        return view('aspirasi.proses', compact('pengaduans', 'layout'));
     }
 
     public function disposisi()
@@ -41,7 +45,9 @@ class AspirasiController extends Controller
                         ->latest()
                         ->get();
 
-        return view('aspirasi.disposisi', compact('pengaduans'));
+        $layout = $this->getLayout();
+
+        return view('aspirasi.disposisi', compact('pengaduans', 'layout'));
     }
 
     public function selesai()
@@ -51,7 +57,9 @@ class AspirasiController extends Controller
                         ->latest()
                         ->get();
 
-        return view('aspirasi.selesai', compact('pengaduans'));
+        $layout = $this->getLayout();
+
+        return view('aspirasi.selesai', compact('pengaduans', 'layout'));
     }
 
     public function updateStatus(Request $request, $id)
@@ -100,7 +108,10 @@ class AspirasiController extends Controller
         }
 
         $pengaduans = $query->get();
-        return view('aspirasi.kelola', compact('pengaduans'));
+
+        $layout = $this->getLayout();
+
+        return view('aspirasi.kelola', compact('pengaduans', 'layout'));
     }
 
     public function history()
@@ -112,6 +123,22 @@ class AspirasiController extends Controller
                             ->latest()
                             ->paginate(10);
 
-        return view('aspirasi.history', compact('history'));
+        $layout = $this->getLayout();
+
+        return view('aspirasi.history', compact('history', 'layout'));
+    }
+
+    /**
+     * Tentukan layout berdasarkan role user yang login.
+     */
+    private function getLayout()
+    {
+        if (Auth::user()->role === 'super admin') {
+            return 'layouts.mainsuperadmin';
+        } elseif (Auth::user()->role === 'admin') {
+            return 'layouts.mainadmin';
+        }
+
+        return 'layouts.mainuser';
     }
 }

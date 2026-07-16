@@ -349,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let greeting = '';
 
     if (hour >= 5 && hour < 12) {
-        greeting = 'Selamat Pagi ☀️';
+        greeting = 'Selamat Pagi ';
     } else if (hour >= 12 && hour < 15) {
         greeting = 'Selamat Siang 🌤️';
     } else if (hour >= 15 && hour < 18) {
@@ -366,73 +366,67 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <!-- SCRIPT: CHART -->
+<!-- SCRIPT CHART -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const ctx = document.getElementById('pengaduanChart');
+    if (!ctx) return;
 
-    if (!ctx) {
-        console.error("Elemen dengan ID 'pengaduanChart' tidak ditemukan di halaman!");
-        return;
-    }
-
-    const labelDays    = {!! json_encode($days ?? []) !!};
-    const dataMasuk     = {!! json_encode($chartMasuk ?? []) !!};     // Surat Masuk (Pending)
-    const dataProses    = {!! json_encode($chartProses ?? []) !!};    // Proses
-    const dataDisposisi = {!! json_encode($chartDisposisi ?? []) !!}; // Disposisi
-    const dataSelesai   = {!! json_encode($chartSelesai ?? []) !!};   // Selesai
+    // Ambil data yang dikirim dari controller perbaikan terbaru
+    const labelDays = {!! json_encode($days ?? []) !!};
+    const dataMasuk = {!! json_encode($chartMasuk ?? []) !!};
+    const dataProses = {!! json_encode($chartProses ?? []) !!};
+    const dataDisposisi = {!! json_encode($chartDisposisi ?? []) !!};
+    const dataSelesai = {!! json_encode($chartSelesai ?? []) !!};
 
     new Chart(ctx, {
         type: 'line',
         data: {
             labels: labelDays,
             datasets: [
-                // Selaras dengan warna kartu "Surat Masuk"
                 {
                     label: 'Surat Masuk',
                     data: dataMasuk,
-                    borderColor: '#F59E0B',
-                    backgroundColor: 'rgba(245,158,11,0.08)',
+                    borderColor: '#F59E0B', /* Warna Oranye Amber sesuai legenda kotak Anda */
+                    backgroundColor: 'rgba(245, 158, 11, 0.05)',
                     tension: 0.4,
                     fill: false,
                     borderWidth: 3,
                     pointBackgroundColor: '#F59E0B',
-                    pointRadius: 5
+                    pointRadius: 4
                 },
-                // Selaras dengan warna kartu "Proses"
                 {
                     label: 'Proses',
                     data: dataProses,
-                    borderColor: '#3B82F6',
-                    backgroundColor: 'rgba(59,130,246,0.08)',
+                    borderColor: '#3B82F6', /* Warna Biru sesuai legenda kotak Anda */
+                    backgroundColor: 'rgba(59, 130, 246, 0.05)',
                     tension: 0.4,
                     fill: false,
                     borderWidth: 3,
                     pointBackgroundColor: '#3B82F6',
-                    pointRadius: 5
+                    pointRadius: 4
                 },
-                // Selaras dengan warna kartu "Disposisi"
                 {
                     label: 'Disposisi',
                     data: dataDisposisi,
-                    borderColor: '#8B5CF6',
-                    backgroundColor: 'rgba(139,92,246,0.08)',
+                    borderColor: '#8B5CF6', /* Warna Ungu sesuai legenda kotak Anda */
+                    backgroundColor: 'rgba(139, 92, 246, 0.05)',
                     tension: 0.4,
                     fill: false,
                     borderWidth: 3,
                     pointBackgroundColor: '#8B5CF6',
-                    pointRadius: 5
+                    pointRadius: 4
                 },
-                // Selaras dengan warna kartu "Selesai"
                 {
                     label: 'Selesai',
                     data: dataSelesai,
-                    borderColor: '#09c190',
-                    backgroundColor: 'rgba(9,193,144,0.08)',
+                    borderColor: '#10B981', /* Warna Hijau Emerald sesuai legenda kotak Anda */
+                    backgroundColor: 'rgba(16, 185, 129, 0.05)',
                     tension: 0.4,
                     fill: false,
                     borderWidth: 3,
-                    pointBackgroundColor: '#09c190',
-                    pointRadius: 5
+                    pointBackgroundColor: '#10B981',
+                    pointRadius: 4
                 }
             ]
         },
@@ -440,21 +434,35 @@ document.addEventListener("DOMContentLoaded", function () {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top'
+                    position: 'top',
+                    labels: {
+                        boxWidth: 12,
+                        font: { size: 12, weight: 'bold' }
+                    }
                 }
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 1
+                  scales: {
+            y: {
+                beginAtZero: true,
+                min: 0,              // Memulai grafik tegas dari angka 0
+                suggestedMax: 4,     // Memaksa batas atas grafik naik ke angka 4 jika data tertinggi masih rendah
+                ticks: {
+                    stepSize: 1,     // Memaksa lompatan angka bernilai 1
+                    precision: 0,    // Menghilangkan angka desimal koma (0.5, 1.5)
+                    // Fungsi Callback untuk menyaring hanya angka bulat (integer) yang lolos cetak
+                    callback: function(value) {
+                        if (value % 1 === 0) {
+                            return value;
+                        }
                     }
                 }
             }
         }
+        }
     });
 });
 </script>
+
 
 </body>
 </html>

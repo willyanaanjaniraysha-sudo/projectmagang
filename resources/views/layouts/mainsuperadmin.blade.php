@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        html {
+            overflow-y: scroll; /* selalu sediakan ruang scrollbar, cegah lebar halaman berubah-ubah antar page */
+            scrollbar-gutter: stable;
+        }
         body { font-family: 'Inter', sans-serif; background-color: #f4f7f6; margin: 0; }
         .main-wrapper { margin-left: 260px; flex-grow: 1; min-height: 100vh; width: calc(100% - 260px); }
         .top-navbar { background: #fff; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
@@ -35,14 +39,16 @@
     @if(Auth::user()->role === 'super admin')
         @include('layouts.component.sidebarsuperadmin')
     @endif
-    <div class="main-wrapper">
+   <div class="main-wrapper">
+    @unless(View::hasSection('hide-header'))
         <header class="top-navbar">
             <h4 style="margin:0; color:#333;">PANEL SUPER ADMIN</h4>
             <div>Halo, <strong>{{ Auth::user()->name }}</strong></div>
         </header>
-        <main class="content-area">
-            @yield('content')
-        </main>
+    @endunless
+    <main class="content-area">
+        @yield('content')
+    </main>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

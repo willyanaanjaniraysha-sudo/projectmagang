@@ -1,5 +1,7 @@
 @extends($layout)
 
+@section('hide-header', 'yes')
+
 @section('content')
 <!-- Container Utama Tanpa Batasan Ukuran -->
 <div class="w-100" style="background: #f8fafc; min-height: 100vh;">

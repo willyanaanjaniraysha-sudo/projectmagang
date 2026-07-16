@@ -24,7 +24,9 @@
     }
 
     /* Warnai link di dalamnya menjadi hitam */
-    .sidebar-brand a {
+    .sidebar-brand a,
+    .sidebar-brand a:link,
+    .sidebar-brand a:visited {
         color: #000000;
     }       
 
@@ -62,28 +64,34 @@
         margin-top: 12px;
     }
 
-    .nav-item {
+    /* Base state + eksplisit :link & :visited agar warna bawaan browser
+       untuk link "sudah dikunjungi" tidak menimpa warna kita */
+    .nav-item,
+    .nav-item:link,
+    .nav-item:visited {
         display: flex;
         align-items: center;
         padding: 12px 20px;
         margin: 3px 12px;
         border-radius: 8px;
         border-left: 4px solid transparent;
-        color: #000000;
+        color: #000000 !important;
         text-decoration: none;
         font-size: 14px;
         transition: background 0.2s, color 0.2s;
     }
 
-    .nav-item:hover {
+    .nav-item:hover,
+    .nav-item:visited:hover {
         background: rgba(255, 255, 255, 0.06);
-        color: #70bf93;
+        color: #70bf93 !important;
     }
 
-    .nav-item.active {
+    .nav-item.active,
+    .nav-item.active:visited {
         background: rgba(255, 255, 255, 0.1);
         border-left-color: #09c190;
-        color: #000000;
+        color: #000000 !important;
     }
 
     .nav-item i {
@@ -103,7 +111,7 @@
         margin: 3px 12px;
         border-radius: 8px;
         border-left: 4px solid transparent;
-        color: #000000;
+        color: #000000 !important;
         cursor: pointer;
         font-size: 14px;
         box-sizing: border-box;
@@ -112,13 +120,13 @@
 
     .nav-toggle:hover {
         background: rgba(255, 255, 255, 0.06);
-        color: #70bf93;
+        color: #70bf93 !important;
     }
 
     .nav-toggle.active {
         background: rgba(255, 255, 255, 0.1);
         border-left-color: #09c190;
-        color: #fff;
+        color: #000000 !important;
     }
 
     .nav-toggle .arrow {
@@ -137,7 +145,7 @@
 
     /* ── Logout button ───────────────────────────────────── */
     .sidebar-footer {
-        margin-top: auto;
+        margin-top: 12px;
         padding: 16px 20px;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -275,7 +283,7 @@
     <div class="sidebar-brand text-center py-3">
     <!-- Judul Utama (Diubah menjadi warna #2F5D50 lewat inline style) -->
     <h5 class="mb-1 fw-bold" style="color: #2F5D50 !important;">
-        <i class="fas fa-school me-2"></i>SIPERSA
+        <i class="fas fa-envelope-open-text me-2"></i>SIPERSA
     </h5>
     <!-- Tulisan Kecil di Bawah (Juga diselaraskan warnanya) -->
     <small class="d-block lh-sm fw-bold" style="color: #2F5D50 !important; font-size: 0.72rem;">
@@ -338,27 +346,27 @@
            class="nav-item {{ request()->is('admin/activity-logs*') ? 'active' : '' }}">
             <i class="fas fa-history"></i> Log Aktivitas
         </a>
+
+        {{-- Logout --}}
+        <div class="sidebar-footer">
+            <form id="logout-form-sidebar" action="{{ route('logout') }}" method="POST" style="display:none;">
+                @csrf
+            </form>
+
+            <button type="button"
+                    class="btn-logout"
+                    onclick="document.getElementById('logout-modal').showModal()">
+                <span>Logout</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor"
+                     stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m16 17 5-5-5-5"></path>
+                    <path d="M21 12H9"></path>
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                </svg>
+            </button>
+        </div>
     </nav>
-
-    {{-- Logout --}}
-    <div class="sidebar-footer">
-        <form id="logout-form-sidebar" action="{{ route('logout') }}" method="POST" style="display:none;">
-            @csrf
-        </form>
-
-        <button type="button"
-                class="btn-logout"
-                onclick="document.getElementById('logout-modal').showModal()">
-            <span>Logout</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor"
-                 stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m16 17 5-5-5-5"></path>
-                <path d="M21 12H9"></path>
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            </svg>
-        </button>
-    </div>
 
 </aside>
 

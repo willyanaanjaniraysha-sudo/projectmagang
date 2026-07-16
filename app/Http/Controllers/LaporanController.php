@@ -13,7 +13,14 @@ class LaporanController extends Controller
     public function index()
     {
         $pengaduans = Pengaduan::with('user')->latest()->get();
-        return view('laporan.index', compact('pengaduans'));
+
+        if (Auth::user()->role === 'super admin') {
+            $layout = 'layouts.mainsuperadmin'; // Layout untuk super admin
+        } else {
+            $layout = 'layouts.mainadmin'; // Layout untuk admin biasa
+        }
+
+        return view('laporan.index', compact('pengaduans', 'layout'));
     }
 
     public function cetak(Request $request)

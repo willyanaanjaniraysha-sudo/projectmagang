@@ -17,11 +17,15 @@ class PengaduanController extends Controller
             ->latest()
             ->get();
 
-        return view('pengaduan.index', compact('pengaduan'));
+        $layout = $this->getLayout();
+
+        return view('pengaduan.index', compact('pengaduan', 'layout'));
     }
     public function create()
     {
-        return view('pengaduan.create');
+        $layout = $this->getLayout();
+
+        return view('pengaduan.create', compact('layout'));
     }
     public function store(Request $request)
     {
@@ -81,7 +85,10 @@ class PengaduanController extends Controller
                             })
                             ->latest()
                             ->get();
-        return view('pengaduan.saya', compact('user', 'history'));
+
+        $layout = $this->getLayout();
+
+        return view('pengaduan.saya', compact('user', 'history', 'layout'));
     }
     public function history()
     {
@@ -92,7 +99,9 @@ class PengaduanController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('pengaduan.history', compact('history')); // Kita arahkan ke folder pengaduan.history
+        $layout = $this->getLayout();
+
+        return view('pengaduan.history', compact('history', 'layout')); // Kita arahkan ke folder pengaduan.history
     }
     public function destroy($id)
     {
@@ -111,5 +120,20 @@ class PengaduanController extends Controller
             'description' => 'Menghapus pengaduan: '.$pengaduan->judul,
         ]);
         return back()->with('success', 'Pengaduan berhasil dihapus!');
+    }
+
+    /**
+     * Tentukan layout berdasarkan role user yang login.
+     * Sesuaikan nama layout lain (mis. 'layouts.mainuser') jika berbeda.
+     */
+    private function getLayout()
+    {
+        if (Auth::user()->role === 'super admin') {
+            return 'layouts.mainsuperadmin';
+        } elseif (Auth::user()->role === 'admin') {
+            return 'layouts.mainadmin';
+        }
+
+        return 'layouts.mainuser';
     }
 }
