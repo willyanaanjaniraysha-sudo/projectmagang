@@ -46,12 +46,40 @@ class DashboardController extends Controller
             $chartSelesai[]   = $baseQuery()->whereDate('created_at', '<=', $date->toDateString())->where('status', 'Selesai')->count();
         }
 
+        $layout = $this->getLayout();
+
         return view('dashboard', compact(
             'total', 'masuk', 'proses', 'disposisi', 'selesai',
-            'days', 'chartMasuk', 'chartProses', 'chartDisposisi', 'chartSelesai'
+            'days', 'chartMasuk', 'chartProses', 'chartDisposisi', 'chartSelesai',
+            'layout'
         ));
     }
 
-    public function pengaturan() { return view('pengaturan'); }
-    public function profil() { return view('profil'); }
+    public function pengaturan()
+    {
+        $layout = $this->getLayout();
+
+        return view('pengaturan', compact('layout'));
+    }
+
+    public function profil()
+    {
+        $layout = $this->getLayout();
+
+        return view('profil', compact('layout'));
+    }
+
+    /**
+     * Tentukan layout berdasarkan role user yang login.
+     */
+    private function getLayout()
+    {
+        if (Auth::user()->role === 'super admin') {
+            return 'layouts.mainsuperadmin';
+        } elseif (Auth::user()->role === 'admin') {
+            return 'layouts.mainadmin';
+        }
+
+        return 'layouts.mainuser';
+    }
 }

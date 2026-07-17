@@ -31,12 +31,16 @@ class UserController extends Controller
             ->paginate($perPage) 
             ->withQueryString();
 
-        return view('user.index', compact('users'));
+        $layout = $this->getLayout();
+
+        return view('user.index', compact('users', 'layout'));
     }
 
     public function create()
     {
-        return view('user.create');
+        $layout = $this->getLayout();
+
+        return view('user.create', compact('layout'));
     }
 
     public function store(Request $request)
@@ -70,7 +74,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::withTrashed()->findOrFail($id);
-        return view('user.edit', compact('user'));
+
+        $layout = $this->getLayout();
+
+        return view('user.edit', compact('user', 'layout'));
     }
 
     public function update(Request $request, $id)
@@ -124,13 +131,19 @@ class UserController extends Controller
     public function roleIndex()
     {
         $users = User::latest()->paginate(10);
-        return view('role', compact('users'));
+
+        $layout = $this->getLayout();
+
+        return view('role', compact('users', 'layout'));
     }
 
     public function adminIndex()
     {
         $users = User::where('role', 'admin')->latest()->paginate(10);
-        return view('role', compact('users'));
+
+        $layout = $this->getLayout();
+
+        return view('role', compact('users', 'layout'));
     }
 
     // FUNGSI RESTORE DIUBAH MENJADI MODEL USER
@@ -154,5 +167,17 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Akun user berhasil dikembalikan!');
     }
 
-    
+    /**
+     * Tentukan layout berdasarkan role user yang login.
+     */
+    private function getLayout()
+    {
+        if (Auth::user()->role === 'super admin') {
+            return 'layouts.mainsuperadmin';
+        } elseif (Auth::user()->role === 'admin') {
+            return 'layouts.mainadmin';
+        }
+
+        return 'layouts.mainuser';
+    }
 }

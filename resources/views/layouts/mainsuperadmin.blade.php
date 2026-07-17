@@ -28,10 +28,6 @@
         .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
         .btn-primary { background: #4e73df; color: #fff; }
         .btn-danger { background: #e74a3b; color: #fff; }
-
-        /* Tambahan ini untuk fix warna sidebar */
-        .sidebar a, .sidebar button { color: #a2a2c2 !important; text-decoration: none !important; }
-        .sidebar a:hover, .sidebar button:hover { color: #fff !important; }
     </style>
 </head>
 <body>
