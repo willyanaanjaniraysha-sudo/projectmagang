@@ -66,6 +66,7 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'ind
     // 7. LAPORAN
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+    Route::get('/laporan/export-excel', [LaporanController::class, 'exportExcel'])->name('laporan.exportExcel');
 
     // 8. PENGATURAN SISTEM
     Route::get('/pengaturan', [DashboardController::class, 'pengaturan'])->name('pengaturan');

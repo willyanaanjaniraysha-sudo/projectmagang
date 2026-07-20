@@ -45,8 +45,29 @@
                 <i class="fas fa-download me-1"></i> Download PDF
             </button>
         </div>
+        <div class="col-md-3">
+            <a href="{{ route('laporan.exportExcel') }}?status={{ request('status', 'semua') }}"
+               class="btn btn-success w-100 rounded-3 fw-bold py-2 text-white"
+               id="btn-export-excel">
+                <i class="fas fa-file-excel me-1"></i> Export Excel
+            </a>
+        </div>
     </form>
 </div>
+
+<script>
+    // Sinkronkan link Export Excel dengan filter status yang lagi dipilih,
+    // tanpa perlu submit ulang form (biar user bisa langsung klik export)
+    document.addEventListener('DOMContentLoaded', function () {
+        const statusSelect = document.querySelector('select[name="status"]');
+        const excelBtn = document.getElementById('btn-export-excel');
+        if (statusSelect && excelBtn) {
+            statusSelect.addEventListener('change', function () {
+                excelBtn.href = "{{ route('laporan.exportExcel') }}?status=" + this.value;
+            });
+        }
+    });
+</script>
 
 {{-- Preview Tabel --}}
 <div class="card border-0 shadow-sm rounded-4 overflow-hidden">

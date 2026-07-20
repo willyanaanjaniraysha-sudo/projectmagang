@@ -319,7 +319,7 @@
 
         {{-- Data Master Dropdown --}}
         <button type="button"
-                class="nav-toggle {{ request()->is('user*') || request()->is('admin*') || request()->is('pengaturan*') ? 'active open' : '' }}"
+                class="nav-toggle {{ request()->is('user*') || request()->is('pengaturan*') ? 'active open' : '' }}"
                 onclick="toggleRole(this)">
             <span><i class="fas fa-user-shield" style="margin-right:10px;"></i>Data Master</span>
             <i class="fas fa-angle-left arrow"></i>

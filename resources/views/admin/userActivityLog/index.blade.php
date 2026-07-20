@@ -17,6 +17,47 @@
             </div>
         </div>
 
+        <!-- Filter Bar -->
+        <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px; padding: 20px;">
+            <form action="{{ route('admin.activity-logs.index') }}" method="GET" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold text-muted">CARI PENGGUNA</label>
+                    <input type="text" name="search" value="{{ request('search') }}"
+                           class="form-control form-control-sm rounded-3"
+                           placeholder="Nama atau email...">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-bold text-muted">JENIS AKSI</label>
+                    <select name="action" class="form-select form-select-sm rounded-3">
+                        <option value="">Semua Aksi</option>
+                        @foreach($actionOptions as $opt)
+                            <option value="{{ $opt }}" {{ request('action') == $opt ? 'selected' : '' }}>{{ $opt }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-bold text-muted">DARI TANGGAL</label>
+                    <input type="date" name="date_from" value="{{ request('date_from') }}"
+                           class="form-control form-control-sm rounded-3">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-bold text-muted">SAMPAI TANGGAL</label>
+                    <input type="date" name="date_to" value="{{ request('date_to') }}"
+                           class="form-control form-control-sm rounded-3">
+                </div>
+                <div class="col-md-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-sm rounded-3 text-white" style="background-color:#2F5D50;">
+                        <i class="fas fa-filter me-1"></i> Terapkan
+                    </button>
+                    @if(request()->anyFilled(['search', 'action', 'date_from', 'date_to']))
+                        <a href="{{ route('admin.activity-logs.index') }}" class="btn btn-sm btn-outline-secondary rounded-3">
+                            Reset
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+
         <!-- Tabel Log Card - Dipaksa Melebar Penuh 100% -->
         <div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden; background: #fff; width: 100% !important; padding: 20px !important;">
             <div class="card-body p-0">

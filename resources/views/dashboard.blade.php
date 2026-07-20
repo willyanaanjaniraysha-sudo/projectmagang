@@ -152,7 +152,7 @@
 
     .chart-wrapper {
         position: relative;
-        height: 380px; /* Kontrol tinggi chart di sini */
+        height: 280px; /* Kontrol tinggi chart di sini */
         width: 100%;
     }
 </style>
@@ -297,11 +297,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (hour >= 5 && hour < 12) {
         greeting = 'Selamat Pagi ';
     } else if (hour >= 12 && hour < 15) {
-        greeting = 'Selamat Siang 🌤️';
+        greeting = 'Selamat Siang ';
     } else if (hour >= 15 && hour < 18) {
-        greeting = 'Selamat Sore 🌅';
+        greeting = 'Selamat Sore ';
     } else {
-        greeting = 'Selamat Malam 🌙';
+        greeting = 'Selamat Malam ';
     }
 
     const greetingElement = document.getElementById('greeting');
